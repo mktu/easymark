@@ -10,6 +10,8 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
+CREATE EXTENSION IF NOT EXISTS "pg_net" WITH SCHEMA "extensions";
+
 CREATE EXTENSION IF NOT EXISTS "pgsodium" WITH SCHEMA "pgsodium";
 
 COMMENT ON SCHEMA "public" IS 'standard public schema';
@@ -296,6 +298,8 @@ CREATE POLICY "insert_tag_mapping" ON "public"."tag_mappings" FOR INSERT WITH CH
    FROM "public"."tags"
   WHERE (("tags"."id" = "tag_mappings"."tag_id") AND ("tags"."user_id" = "auth"."uid"()))))));
 
+CREATE POLICY "insert_user" ON "public"."users" FOR INSERT TO "authenticated" WITH CHECK (true);
+
 ALTER TABLE "public"."reminders" ENABLE ROW LEVEL SECURITY;
 
 ALTER TABLE "public"."search_queries" ENABLE ROW LEVEL SECURITY;
@@ -336,7 +340,7 @@ CREATE POLICY "update_tag_mapping" ON "public"."tag_mappings" FOR UPDATE USING (
    FROM "public"."tags"
   WHERE (("tags"."id" = "tag_mappings"."tag_id") AND ("tags"."user_id" = "auth"."uid"()))))));
 
-CREATE POLICY "update_user" ON "public"."users" FOR UPDATE USING (("auth"."uid"() = "id")) WITH CHECK (("auth"."uid"() = "id"));
+CREATE POLICY "update_user" ON "public"."users" FOR UPDATE TO "authenticated" USING (("auth"."uid"() = "id")) WITH CHECK (("auth"."uid"() = "id"));
 
 ALTER TABLE "public"."users" ENABLE ROW LEVEL SECURITY;
 
@@ -423,3 +427,8 @@ ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON TAB
 ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON TABLES  TO "service_role";
 
 RESET ALL;
+
+--
+-- Dumped schema changes for auth and storage
+--
+
