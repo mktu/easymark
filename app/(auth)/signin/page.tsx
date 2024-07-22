@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { handleSignin, SigninState } from '../_actions/authHandler';
 import { useFormState, useFormStatus } from 'react-dom';
 import ValidationErrors from '../_components/ValidationErrors';
+import { handleGoogleSignin } from '../_actions/googleHandler';
 
 export default function Signin() {
     const [state, dispatch] = useFormState<SigninState, FormData>(handleSignin, { error: null })
@@ -28,6 +29,9 @@ export default function Signin() {
                 <Link href="/signup">Sign Up</Link>
                 <ValidationErrors state={state} />
             </form>
+            <button disabled={pending} type="submit" onClick={() => {
+                handleGoogleSignin()
+            }}>Sign In with Google</button>
         </div>
     );
 }

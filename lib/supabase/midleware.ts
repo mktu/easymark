@@ -1,6 +1,8 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
+// read
+// https://supabase.com/docs/guides/getting-started/tutorials/with-nextjs#nextjs-middleware
 export async function updateSession(request: NextRequest) {
     let supabaseResponse = NextResponse.next({
         request,
@@ -32,13 +34,16 @@ export async function updateSession(request: NextRequest) {
     // issues with users being randomly logged out.
 
     const {
-        data: { user },
+        data: { user }, error
     } = await supabase.auth.getUser()
+
+    console.log(error)
 
     if (
         !user &&
         !request.nextUrl.pathname.startsWith('/signin') &&
-        !request.nextUrl.pathname.startsWith('/signup')
+        !request.nextUrl.pathname.startsWith('/signup') &&
+        !request.nextUrl.pathname.startsWith('/auth')
     ) {
         // no user, potentially respond by redirecting the user to the login page
         const url = request.nextUrl.clone()
