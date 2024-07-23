@@ -1,6 +1,7 @@
 'use server'
 import { createClientForServer } from "@/lib/supabase/supabaseServer"
 import { PostgrestError } from "@supabase/supabase-js"
+import { redirect } from "next/navigation"
 import { z } from "zod"
 
 export type ProfileState = {
@@ -43,8 +44,8 @@ const uploadImage = async (image: File, userId: string, supabase: ReturnType<typ
     }
 }
 
-export const handleRegister = async (state: ProfileState, formData: FormData) => {
 
+export const handleUpdate = async (state: ProfileState, formData: FormData) => {
     const supabase = createClientForServer();
     const { data: authData } = await supabase.auth.getUser()
     if (!authData?.user) {
@@ -75,8 +76,12 @@ export const handleRegister = async (state: ProfileState, formData: FormData) =>
     return updateError ? {
         error: updateError
     } : { success: true }
-};
-
-export const handleUpdate = async (state: ProfileState, formData: FormData) => {
-    return await handleRegister(state, formData)
 }
+
+export const handleRegister = async (state: ProfileState, formData: FormData) => {
+    const ret = handleUpdate(state, formData)
+    if ('error' in ret) {
+        return { error: ret.error }
+    }
+    redirect('/app/')
+};
