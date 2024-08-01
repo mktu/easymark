@@ -30,6 +30,13 @@ export type Database = {
             referencedRelation: "bookmarks"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "bookmark_tags_bookmark_id_fkey"
+            columns: ["bookmark_id"]
+            isOneToOne: false
+            referencedRelation: "bookmarks_with_ogp"
+            referencedColumns: ["bookmark_id"]
+          },
         ]
       }
       bookmarks: {
@@ -176,6 +183,13 @@ export type Database = {
             referencedRelation: "bookmarks"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "reminders_bookmark_id_fkey"
+            columns: ["bookmark_id"]
+            isOneToOne: false
+            referencedRelation: "bookmarks_with_ogp"
+            referencedColumns: ["bookmark_id"]
+          },
         ]
       }
       search_queries: {
@@ -233,6 +247,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "bookmarks"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "fk_bookmark"
+            columns: ["bookmark_id"]
+            isOneToOne: false
+            referencedRelation: "bookmarks_with_ogp"
+            referencedColumns: ["bookmark_id"]
           },
           {
             foreignKeyName: "fk_tag"
@@ -298,10 +319,48 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      bookmarks_with_ogp: {
+        Row: {
+          bookmark_id: number | null
+          category_id: number | null
+          created_at: string | null
+          note: string | null
+          ogp_description: string | null
+          ogp_image: string | null
+          ogp_title: string | null
+          updated_at: string | null
+          url: string | null
+          user_id: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bookmarks_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bookmarks_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Functions: {
-      [_ in never]: never
+      get_frequently_used_categories: {
+        Args: {
+          user_id: string
+        }
+        Returns: {
+          category_id: string
+          category_name: string
+          bookmark_count: number
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never
