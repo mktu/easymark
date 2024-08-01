@@ -1,12 +1,13 @@
 'use client'
 import { handleSignout } from '@/app/(auth)/_actions/authHandler';
+import { Button } from '@/components/ui/button';
 import React from 'react';
 
 const SignoutButton: React.FC = () => {
     return (
-        <button onClick={() => {
+        <Button onClick={() => {
             handleSignout()
-        }}>Logout</button>
+        }}>Logout</Button>
     );
 };
 

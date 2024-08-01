@@ -3,11 +3,11 @@ import React from 'react';
 
 const Header: React.FC = () => {
     return (
-        <header className='flex gap-2'>
+        <header className='flex w-full gap-2'>
             <div className="">
                 logo
             </div>
-            <div className="">
+            <div className="ml-auto">
                 search
             </div>
             <Link href="/app/profile">Profile</Link>

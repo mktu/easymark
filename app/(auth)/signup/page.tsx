@@ -2,6 +2,8 @@
 import ValidationErrors from '../_components/ValidationErrors';
 import { handleSignup, SigninState } from '../_actions/authHandler';
 import { useFormState, useFormStatus } from 'react-dom';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
 export default function Signup() {
     const [state, dispatch] = useFormState<SigninState, FormData>(handleSignup, { error: null })
@@ -10,19 +12,19 @@ export default function Signup() {
         <div>
             <h1>Sign Up</h1>
             <form action={dispatch}>
-                <input
+                <Input
                     name='email'
                     type="email"
                     placeholder="Email"
                     required
                 />
-                <input
+                <Input
                     name='password'
                     type="password"
                     placeholder="Password"
                     required
                 />
-                <button disabled={pending} type="submit">Sign Up</button>
+                <Button disabled={pending} type="submit">Sign Up</Button>
                 <ValidationErrors state={state} />
             </form>
         </div>

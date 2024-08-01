@@ -10,10 +10,10 @@ const Layout = async ({
 }) => {
     await redirectIfNotRegistered()
     return (
-        <main>
-            <div className="flex">
+        <main className="h-screen w-screen">
+            <div className="flex w-full">
                 <Sidebar />
-                <div>
+                <div className="w-full">
                     <Header />
                     {children}
                 </div>
