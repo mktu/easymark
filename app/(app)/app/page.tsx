@@ -1,26 +1,28 @@
+'use server'
 import { createClientForServer } from "@/lib/supabase/supabaseServer";
 import { redirect } from "next/navigation";
 import { Welcome } from "./_components/Welcome";
+import { Home } from "./_components/Home";
+import { fetchBookmarks } from "@/lib/repositories/bookmarks";
+import { fetchCategories } from "@/lib/repositories/categories";
+import { fetchUser } from "@/lib/repositories/profile";
 
-export default async function Home() {
+export default async function App() {
 
     const supabase = createClientForServer()
     // get recent bookmarks
-    const { data, error } = await supabase.auth.getUser()
-    if (error || !data?.user) {
+    const { data: userData, error } = await supabase.auth.getUser()
+    if (error || !userData?.user) {
         redirect('/signin')
     }
-    const { data: profile } = await supabase.from('users').select('*').eq('id', data?.user.id).limit(1)
-    if (profile?.length === 0) {
-        redirect('/register')
-    }
-    const { data: bookmarks } = await supabase.from('bookmarks').select('*').eq('user_id', data?.user.id).order('created_at', { ascending: false }).limit(5)
-    const categories = await supabase.from('categories').select('*').eq('user_id', data?.user.id)
+    const user = await fetchUser(supabase, userData.user.id)
+    const bookmarks = await fetchBookmarks(supabase, userData.user.id)
+    const categories = await fetchCategories(supabase, userData.user.id)
     return (
-        <div className="flex min-h-screen flex-col items-center justify-between p-24">
+        <div className="flex flex-col items-center justify-between p-24">
             {bookmarks && bookmarks.length > 0 ? (
-                <Home />) : (
-                <Welcome user={{ username: profile?.[0].username! }} />
+                <Home bookmarks={bookmarks} categories={categories} user={user} />) : (
+                <Welcome user={user} />
             )}
         </div>
     );

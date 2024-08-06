@@ -37,7 +37,6 @@ export async function updateSession(request: NextRequest) {
         data: { user }, error
     } = await supabase.auth.getUser()
 
-    console.log(error)
 
     if (
         !user &&

@@ -4,9 +4,10 @@ import { Input } from "@/components/ui/input";
 import { FC, useCallback, useEffect, useMemo, useState } from "react";
 import { validateURL } from "../../_lib/validateUrl";
 import { OgpResponse } from "@/app/api/ogp/route";
-import NoImage from "@/components/svg/NoImage";
 import { useFormState } from "react-dom";
-import { AddBookmarkState, handleAddBookmark } from "../../_actions/handleAddBookmark";
+import { AddBookmarkState, handleBookmarkSubmit } from "../../_actions/handleAddBookmark";
+import OgpCard from "@/components/domain/OgpCard";
+import { useBookmarkInput } from "../../hooks/useBookmarkInput";
 
 type Props = {
     user: {
@@ -17,40 +18,9 @@ type Props = {
 const Welcome: FC<Props> = ({
     user
 }) => {
-    const [state, dispatch] = useFormState<AddBookmarkState, FormData>(handleAddBookmark, { error: null })
-    const [bookmark, setBookmark] = useState('')
-    const [ogp, setOgp] = useState<OgpResponse | null>(null)
-    const validBookmark = useMemo(() => validateURL(bookmark), [bookmark])
-    const fetchOgp = useCallback(async () => {
-        const params = new URLSearchParams({ url: bookmark });
-        const res = await fetch('/api/ogp?' + params.toString());
-        return await res.json() as OgpResponse;
-    }, [bookmark])
-    // const getOgp = useCallback((async (url: string) => {
-    //     const params = new URLSearchParams({ url });
-    //     const res = await fetch('/api/ogp?' + params.toString());
-    //     return await res.json() as OgpResponse;
-    // }), [])
-    // const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
-    //     const inputValue = e.target.value
-    //     setBookmark(inputValue)
-    //     startTransition(() => {
-    //         if (validateURL(inputValue)) {
-    //             getOgp(inputValue).then(setOgp)
-    //         }
-    //     })
-    // };
-    useEffect(() => {
-        let canGo = true
-        validBookmark && fetchOgp().then((ogp) => {
-            if (canGo) {
-                setOgp(ogp)
-            }
-        })
-        return () => {
-            canGo = false
-        }
-    }, [fetchOgp, validBookmark])
+    const { ogp, setBookmark, bookmark, validBookmark } = useBookmarkInput()
+    const handleAddBookmarkWithOgp = handleBookmarkSubmit.bind(null, ogp || null)
+    const [state, dispatch] = useFormState<AddBookmarkState, FormData>(handleAddBookmarkWithOgp, { error: null })
     return (
         <form className='w-full' action={dispatch}>
             <div> Welcome {user.username} !<br /> Lets add first bookmark</div>
@@ -62,16 +32,14 @@ const Welcome: FC<Props> = ({
             </div>
 
             {ogp && (
-                <div className='flex items-center gap-2'>
-                    {ogp.image ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img src={ogp.image.url} width={200} height={200} alt={ogp.title || bookmark} />
-                    ) : <NoImage width={200} height={200} />}
-                    <div>
-                        <div>{ogp.title}</div>
-                        <div>{ogp.description}</div>
-                    </div>
-                </div>
+                <OgpCard
+                    url={ogp.url}
+                    title={ogp.title}
+                    description={ogp.description}
+                    image={ogp.image?.url}
+                    height={200}
+                    width={200}
+                />
             )}
 
             {'error' in state && <div>{state.error}</div>}

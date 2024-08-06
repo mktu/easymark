@@ -1,5 +1,7 @@
 import { redirectIfNotRegistered } from "../../(profile)/_loaders/assertkRegistration";
+import BookmarkDialog from "./_components/BookmarkDialog/BookmarkDialog";
 import Header from "./_components/Header/Header";
+import Provider from "./_components/Provider";
 import { Sidebar } from "./_components/Sidebar";
 
 
@@ -10,15 +12,18 @@ const Layout = async ({
 }) => {
     await redirectIfNotRegistered()
     return (
-        <main className="h-screen w-screen">
-            <div className="flex w-full">
+        <Provider>
+            <div className="flex h-screen w-screen">
                 <Sidebar />
-                <div className="w-full">
+                <div className="size-full">
                     <Header />
-                    {children}
+                    <main>
+                        <BookmarkDialog />
+                        {children}
+                    </main>
                 </div>
             </div>
-        </main>
+        </Provider>
     )
 }
 

@@ -1,5 +1,7 @@
+import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import React from 'react';
+import AddBookmark from './AddBookmark';
 
 const Header: React.FC = () => {
     return (
@@ -7,7 +9,9 @@ const Header: React.FC = () => {
             <div className="">
                 logo
             </div>
-            <div className="ml-auto">
+            <div className='ml-auto' />
+            <AddBookmark />
+            <div >
                 search
             </div>
             <Link href="/app/profile">Profile</Link>
