@@ -18,7 +18,7 @@ const Home: FC<Props> = ({
     categories
 }) => {
     return (
-        <div className="flex h-full flex-col items-center justify-between p-24">
+        <div className="flex h-full flex-col items-center justify-between p-4">
             <h1> Hello {user.username} !</h1>
             <div className='flex flex-col items-center gap-1'>
                 <section>
