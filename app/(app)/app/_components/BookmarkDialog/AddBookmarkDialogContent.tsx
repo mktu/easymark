@@ -9,7 +9,7 @@ import { useBookmarkInput } from "../../hooks/useBookmarkInput"
 import AddBookmarkErrors from "../ValidationError/AddBookmarkErrors"
 
 
-const BookmarkDialogContent: FC = () => {
+const AddBookmarkDialogContent: FC = () => {
     const { close } = useAddBookmarkContext()
     const { ogp, setBookmark, bookmark, validBookmark } = useBookmarkInput()
     const [errors, setErrors] = useState<AddBookmarkState | null>(null)
@@ -40,4 +40,4 @@ const BookmarkDialogContent: FC = () => {
     )
 }
 
-export default BookmarkDialogContent
+export default AddBookmarkDialogContent

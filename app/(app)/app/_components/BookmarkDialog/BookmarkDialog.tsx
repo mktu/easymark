@@ -2,11 +2,12 @@
 import { FC } from "react"
 import { useAddBookmarkContext } from "../../_contexts/addBookmarkDialogContext"
 import { Dialog, DialogContent } from "@/components/ui/dialog"
-import BookmarkDialogContent from "./BookmarkDialogContent"
+import AddBookmarkDialogContent from "./AddBookmarkDialogContent"
+import EditBookmarkDialogContent from "./EditBookmarkDialogContent"
 
 
 const BookmarkDialog: FC = () => {
-    const { isOpen, close } = useAddBookmarkContext()
+    const { isOpen, close, bookmark } = useAddBookmarkContext()
     return (
         <Dialog
             modal
@@ -17,8 +18,8 @@ const BookmarkDialog: FC = () => {
                 }
             }}
         >
-            <DialogContent>
-                <BookmarkDialogContent />
+            <DialogContent className='h-full overflow-auto'>
+                {bookmark ? <EditBookmarkDialogContent /> : <AddBookmarkDialogContent />}
             </DialogContent>
 
         </Dialog>

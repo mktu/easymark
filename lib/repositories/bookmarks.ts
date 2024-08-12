@@ -1,21 +1,25 @@
 import { SupabaseClient } from "@supabase/supabase-js";
 import { Database } from "../supabase/schema";
 
-const convertBookmarks = (bookmarks: Database['public']['Views']['bookmarks_with_ogp']['Row'][]) => {
-    return bookmarks.map(bookmark => {
-        return {
-            bookmarkId: bookmark.bookmark_id!,
-            categoryId: bookmark.category_id!,
-            createdAt: bookmark.created_at!,
-            userId: bookmark.user_id!,
-            url: bookmark.url!,
-            note: bookmark.note,
-            ogpDescription: bookmark.ogp_description,
-            ogpImage: bookmark.ogp_image,
-            ogpTitle: bookmark.ogp_title,
-            updatedAt: bookmark.updated_at,
-        }
-    })
+export type RawBookmarkType = Database['public']['Views']['bookmarks_with_ogp']['Row']
+
+const convertBookmarks = (bookmarks: RawBookmarkType[]) => {
+    return bookmarks.map(convertBookmark)
+}
+
+export const convertBookmark = (bookmark: RawBookmarkType) => {
+    return {
+        bookmarkId: bookmark.bookmark_id!,
+        categoryId: bookmark.category_id!,
+        createdAt: bookmark.created_at!,
+        userId: bookmark.user_id!,
+        url: bookmark.url!,
+        note: bookmark.note,
+        ogpDescription: bookmark.ogp_description,
+        ogpImage: bookmark.ogp_image,
+        ogpTitle: bookmark.ogp_title,
+        updatedAt: bookmark.updated_at,
+    }
 }
 
 export const fetchBookmarks = async (supabase: SupabaseClient<Database>, userId: string) => {

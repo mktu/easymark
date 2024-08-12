@@ -27,10 +27,7 @@ const Home: FC<Props> = ({
                         {bookmarks.map((bookmark) => (
                             <li key={bookmark.bookmarkId}>
                                 <BookmarkListItem
-                                    title={bookmark.ogpTitle || bookmark.url}
-                                    image={bookmark.ogpImage}
-                                    url={bookmark.url}
-                                    createdAt={bookmark.createdAt}
+                                    bookmark={bookmark}
                                 />
                             </li>))}
                     </ul>

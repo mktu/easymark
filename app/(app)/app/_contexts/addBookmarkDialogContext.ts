@@ -1,8 +1,10 @@
+import { BookmarkType } from "@/lib/repositories/bookmarks";
 import { createContext, useContext } from "react";
 
 type ContextType = {
     isOpen: boolean,
-    open: () => void,
+    bookmark?: BookmarkType,
+    open: (bookmark?: BookmarkType) => void,
     close: () => void
 }
 

@@ -1,6 +1,7 @@
 'use client'
 import { useState } from "react"
 import AddBookmarkDialogContext from "../../_contexts/addBookmarkDialogContext"
+import { BookmarkType } from "@/lib/repositories/bookmarks"
 
 type Props = {
     children: React.ReactNode
@@ -8,11 +9,17 @@ type Props = {
 
 const AddBookmarkDialogProvider: React.FC<Props> = ({ children }) => {
     const [isOpen, setIsOpen] = useState(false)
-    const open = () => setIsOpen(true)
+    const [bookmark, setBookmark] = useState<BookmarkType>()
+    const open = (bookmark?: BookmarkType) => {
+        setIsOpen(true)
+        if (bookmark) {
+            setBookmark(bookmark)
+        }
+    }
     const close = () => setIsOpen(false)
 
     return (
-        <AddBookmarkDialogContext.Provider value={{ open, close, isOpen }}>
+        <AddBookmarkDialogContext.Provider value={{ open, close, isOpen, bookmark }}>
             {children}
         </AddBookmarkDialogContext.Provider>
     )

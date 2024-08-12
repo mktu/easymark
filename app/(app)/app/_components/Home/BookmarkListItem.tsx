@@ -1,37 +1,45 @@
+'use client'
 import BrowserTime from "@/components/domain/BrowserTime"
 import NoImage from "@/components/svg/NoImage"
+import { Button } from "@/components/ui/button"
+import { EditIcon } from "lucide-react"
+import Link from "next/link"
 import { FC } from "react"
+import { useAddBookmarkContext } from "../../_contexts/addBookmarkDialogContext"
+import { BookmarkType } from "@/lib/repositories/bookmarks"
+import OgpImage from "@/components/domain/OgpImage"
 
 type Props = {
-    title: string,
-    url: string,
-    image: string | null,
-    createdAt: string
+    bookmark: BookmarkType
 }
 
-const ImageSize = 48
+const ImageSize = 72
 
 const BookmarkListItem: FC<Props> = ({
-    title,
-    url,
-    image,
-    createdAt
+    bookmark
 }) => {
+    const { open } = useAddBookmarkContext()
+    const { bookmarkId, ogpImage, ogpTitle, url, createdAt } = bookmark
     return (
-        <a href={url} target='_blank' rel='noopener noreferrer' className='flex w-full gap-2'>
-            {image ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={image} alt={title} width={ImageSize} height={ImageSize} />
-            ) : (
-                <NoImage className="rounded" width={ImageSize} height={ImageSize} />
-            )}
-            <div className='flex flex-col'>
-                <div>{title}</div>
-                <div className="mt-auto">
-                    <BrowserTime timestamp={createdAt} />
+        <div className='flex w-full gap-2'>
+            <OgpImage image={ogpImage} alt={ogpTitle || ''} width={ImageSize} height={ImageSize} />
+            <div className='flex items-center gap-2'>
+                <div className='flex flex-col'>
+                    <a href={url} target='_blank' rel='noopener noreferrer' className="underline">{ogpTitle || url}</a>
+                    <div className="mt-auto">
+                        <BrowserTime timestamp={createdAt} />
+                    </div>
                 </div>
+                <Link className='ml-auto md:hidden' href={`/app/bookmarks/${bookmarkId}`}>
+                    <EditIcon className="size-6" />
+                </Link>
+                <Button variant={'ghost'} size='icon' onClick={() => {
+                    open(bookmark)
+                }}>
+                    <EditIcon className="size-6" />
+                </Button>
             </div>
-        </a>
+        </div>
     )
 }
 
