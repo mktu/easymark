@@ -18,7 +18,7 @@ const BookmarkDialog: FC = () => {
                 }
             }}
         >
-            <DialogContent className='h-full overflow-auto'>
+            <DialogContent className='flex h-full flex-col overflow-auto'>
                 {bookmark ? <EditBookmarkDialogContent /> : <AddBookmarkDialogContent />}
             </DialogContent>
 

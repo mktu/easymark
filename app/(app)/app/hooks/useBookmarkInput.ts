@@ -4,6 +4,7 @@ import { useOgp } from "./useOgp"
 
 export const useBookmarkInput = () => {
     const [bookmark, setBookmark] = useState('')
+    const [note, setNote] = useState('')
     const validBookmark = useMemo(() => bookmark && validateURL(bookmark), [bookmark])
     const { ogp } = useOgp(bookmark && validBookmark ? bookmark : null);
     return {
@@ -11,5 +12,7 @@ export const useBookmarkInput = () => {
         bookmark,
         setBookmark,
         ogp,
+        note,
+        setNote
     }
 }

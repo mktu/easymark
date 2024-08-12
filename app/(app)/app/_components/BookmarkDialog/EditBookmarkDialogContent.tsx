@@ -50,14 +50,14 @@ const EditBookmarkDialogContent: FC = () => {
                 <label htmlFor="description">Description</label>
                 <Textarea id='description' name='description' value={ogp?.description || bookmark.ogpDescription || ''} disabled />
                 <div className='flex w-full items-center'>
-                    <Button className='ml-auto w-fit' variant='ghost' onClick={refetch}>
+                    <Button className='ml-auto w-fit' variant='ghost' type='button' onClick={refetch}>
                         <RotateCwIcon className='mr-1 size-5' />
                         Update OGP Info
                     </Button>
                 </div>
                 <label htmlFor="note">Note</label>
-                {errors && <AddBookmarkErrors state={errors} />}
                 <Textarea id='note' name='note' value={note} onChange={(e) => { setNote(e.target.value) }} />
+                {errors && <AddBookmarkErrors state={errors} />}
 
                 <DialogFooter className='mt-2'>
                     <Popover>

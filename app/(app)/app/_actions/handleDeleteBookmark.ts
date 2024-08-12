@@ -21,6 +21,7 @@ export const deleteBookmark = async (data: {
     if (!authData?.user) {
         return { error: 'not authenticated' }
     }
+
     const { error: bookmarkerror } = await supabase.from('bookmarks').delete().eq('id', bookmarkId).eq('user_id', authData.user.id);
     if (bookmarkerror) {
         console.error(bookmarkerror)

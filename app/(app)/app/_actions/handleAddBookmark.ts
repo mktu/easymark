@@ -3,8 +3,8 @@
 import { createClientForServer } from '@/lib/supabase/supabaseServer';
 import { z } from 'zod';
 import { createUrlRegExp } from '../_lib/validateUrl';
-import { OgpResponse } from '@/app/api/ogp/route';
 import { revalidatePath } from 'next/cache';
+import { doScrape, OgpResponse } from '@/lib/supabase/ogp';
 
 export type AddBookmarkState = {
     error: string | null,
@@ -26,27 +26,50 @@ const schema = {
     title: z.string().optional(),
     description: z.string().optional(),
     imageUrl: z.string().optional(),
+    note: z.string().optional()
 }
 
 export const addBookmark = async (data: {
     url: string,
     title?: string,
     description?: string,
-    imageUrl?: string
+    imageUrl?: string,
+    note?: string
 }) => {
     const validated = z.object(schema).safeParse(data)
     if (!validated.success) {
         return { validatedErrors: validated.error.flatten().fieldErrors }
     }
-    const { url, title, description, imageUrl } = validated.data
+    let description = validated.data.description
+    let imageUrl = validated.data.imageUrl
+    let title = validated.data.title
+    const { url, note } = validated.data
     const supabase = createClientForServer();
     const { data: authData } = await supabase.auth.getUser();
-    const { error: bookmarkerror } = await supabase.from('bookmarks').insert({ url, user_id: authData?.user?.id });
+    const { error: bookmarkerror } = await supabase.from('bookmarks').insert({ url, user_id: authData?.user?.id, note });
     if (bookmarkerror) {
         if (bookmarkerror.code === '23505') {
             return { error: 'already bookmarked' }
         }
         return { error: 'cannnot add bookmark' }
+    }
+    if (!description) {
+        try {
+            const ret = await doScrape(url)
+            description = ret.description
+            imageUrl = ret.image?.url
+            title = ret.title
+        } catch (e) {
+            console.error(e)
+        }
+    }
+    // check if already exitst ogp data
+    const { data: ogpData } = await supabase.from('ogp_data').select('url').eq('url', url);
+    if (ogpData && ogpData.length > 0) {
+        revalidatePath('/')
+        return {
+            success: true
+        }
     }
     const { error: ogpError } = await supabase.from('ogp_data').insert({ url, title, description, image_url: imageUrl });
     if (ogpError) {
