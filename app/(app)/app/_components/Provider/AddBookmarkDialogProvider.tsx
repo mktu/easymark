@@ -16,7 +16,10 @@ const AddBookmarkDialogProvider: React.FC<Props> = ({ children }) => {
             setBookmark(bookmark)
         }
     }
-    const close = () => setIsOpen(false)
+    const close = () => {
+        setIsOpen(false)
+        setBookmark(undefined)
+    }
 
     return (
         <AddBookmarkDialogContext.Provider value={{ open, close, isOpen, bookmark }}>

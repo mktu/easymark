@@ -7,7 +7,6 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { updateBookmark } from "../../_actions/handleUpdateBookmark"
 import { Textarea } from "@/components/ui/textarea"
-import { useOgp } from "../../hooks/useOgp"
 import OgpImage from "@/components/domain/OgpImage"
 import CopyableItem from "@/components/domain/CopyableItem"
 import { RotateCwIcon, TrashIcon } from "lucide-react"
@@ -15,6 +14,7 @@ import AddBookmarkErrors from "../ValidationError/AddBookmarkErrors"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { PopoverClose } from "@radix-ui/react-popover"
 import { useBookmarkUpdate } from "../../hooks/useBookmarkUpdate"
+import { deleteBookmark } from "../../_actions/handleDeleteBookmark"
 
 
 const ImageWitdth = 460
@@ -72,8 +72,14 @@ const EditBookmarkDialogContent: FC = () => {
                                 <PopoverClose asChild>
                                     <Button type='button' variant='ghost' >Cancel</Button>
                                 </PopoverClose>
-                                <Button type='button' variant='destructive' onClick={() => {
-                                    // Delete()
+                                <Button type='button' variant='destructive' onClick={async () => {
+                                    const { error } = await deleteBookmark({ bookmarkId: bookmark.bookmarkId })
+                                    if (error) {
+                                        console.error(error)
+                                        setErrors({ error })
+                                    } else {
+                                        close()
+                                    }
                                 }}>Delete</Button>
                             </div>
                         </PopoverContent>
