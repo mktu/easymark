@@ -2,7 +2,7 @@
 import { FC, useState } from "react"
 import { useAddBookmarkContext } from "../../_contexts/addBookmarkDialogContext"
 import { addBookmark, AddBookmarkState } from "../../_actions/handleAddBookmark"
-import { DialogFooter, DialogTitle } from "@/components/ui/dialog"
+import { DialogDescription, DialogFooter, DialogTitle } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { useBookmarkInput } from "../../hooks/useBookmarkInput"
@@ -22,6 +22,7 @@ const AddBookmarkDialogContent: FC = () => {
     return (
         <>
             <DialogTitle>Add Bookmark</DialogTitle>
+            <DialogDescription>Input url you want to bookmark.</DialogDescription>
             <form className='flex h-full flex-col gap-1' action={async () => {
                 const result = await addBookmark({
                     url: bookmark,

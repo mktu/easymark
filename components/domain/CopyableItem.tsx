@@ -4,10 +4,11 @@ import { Input } from "../ui/input";
 import { CheckIcon, ClipboardIcon } from "lucide-react";
 
 type Props = {
-    content: string
+    content: string,
+    id: string
 }
 
-const CopyableItem: FC<Props> = ({ content }) => {
+const CopyableItem: FC<Props> = ({ id, content }) => {
     const [isCopied, setIsCopied] = useState(false);
 
     const handleCopy = () => {
@@ -21,7 +22,7 @@ const CopyableItem: FC<Props> = ({ content }) => {
     return (
         <div className="flex items-center">
             <div className="w-full">
-                <Input className='rounded-none rounded-s-md border-e-0 focus:outline-none
+                <Input id={id} className='rounded-none rounded-s-md border-e-0 focus:outline-none
                  focus-visible:outline-none' disabled defaultValue={content} />
             </div>
             <Button type='button' variant='outline' onClick={handleCopy} className='flex w-[150px] items-center gap-1 rounded-none rounded-e-md'>

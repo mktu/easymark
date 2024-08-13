@@ -2,7 +2,7 @@
 import { FC, useState } from "react"
 import { useAddBookmarkContext } from "../../_contexts/addBookmarkDialogContext"
 import { AddBookmarkState } from "../../_actions/handleAddBookmark"
-import { DialogFooter, DialogTitle } from "@/components/ui/dialog"
+import { DialogDescription, DialogFooter, DialogTitle } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { updateBookmark } from "../../_actions/handleUpdateBookmark"
@@ -28,6 +28,7 @@ const EditBookmarkDialogContent: FC = () => {
     return (
         <>
             <DialogTitle>Update Bookmark</DialogTitle>
+            <DialogDescription>Edit your bookmark information.</DialogDescription>
             <form className='flex flex-col gap-1' action={async (form) => {
                 const result = await updateBookmark({
                     url: bookmark.url,
@@ -44,7 +45,7 @@ const EditBookmarkDialogContent: FC = () => {
             }}>
                 <OgpImage image={ogp?.image?.url || bookmark?.ogpImage} alt={ogp?.title || bookmark?.ogpTitle || bookmark?.url} width={ImageWitdth} height={ImageHeight} />
                 <label htmlFor="url">URL</label>
-                <CopyableItem content={bookmark.url} />
+                <CopyableItem id='url' content={bookmark.url} />
                 <label htmlFor="title">Title</label>
                 <Input id='title' name='title' value={ogp?.title || bookmark.ogpTitle || bookmark?.url} disabled />
                 <label htmlFor="description">Description</label>

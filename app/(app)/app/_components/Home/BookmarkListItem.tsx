@@ -1,8 +1,7 @@
 'use client'
 import BrowserTime from "@/components/domain/BrowserTime"
-import NoImage from "@/components/svg/NoImage"
 import { Button } from "@/components/ui/button"
-import { EditIcon } from "lucide-react"
+import { ExternalLinkIcon } from "lucide-react"
 import Link from "next/link"
 import { FC } from "react"
 import { useAddBookmarkContext } from "../../_contexts/addBookmarkDialogContext"
@@ -21,26 +20,29 @@ const BookmarkListItem: FC<Props> = ({
     const { open } = useAddBookmarkContext()
     const { bookmarkId, ogpImage, ogpTitle, url, createdAt, ogpDescription } = bookmark
     return (
-        <div className='flex w-full gap-2 rounded border p-2'>
+        <Link href={`/app/bookmarks/${bookmarkId}`} className='flex w-full gap-2 rounded border p-2' onClick={(e) => {
+            open(bookmark)
+            e.preventDefault()
+            e.stopPropagation()
+        }}>
             <OgpImage image={ogpImage} alt={ogpTitle || ''} width={ImageSize} height={ImageSize} />
             <div className='flex w-full gap-2'>
                 <div className='flex w-full flex-col'>
-                    <a href={url} target='_blank' rel='noopener noreferrer' className="underline">{ogpTitle || url}</a>
+                    <div className="underline">{ogpTitle || url}</div>
                     <p className='line-clamp-2 text-sm'>{ogpDescription}</p>
                     <div className="mt-auto text-sm">
                         <BrowserTime timestamp={createdAt} />
                     </div>
                 </div>
-                <Link className='ml-auto md:hidden' href={`/app/bookmarks/${bookmarkId}`}>
-                    <EditIcon className="size-6" />
-                </Link>
-                <Button className='ml-auto hidden md:block' variant={'ghost'} size='icon' onClick={() => {
-                    open(bookmark)
+                <Button className='ml-auto flex items-center justify-center' variant={'ghost'} size='icon' onClick={(e) => {
+                    window.open(url, '_blank', 'noopener,noreferrer');
+                    e.preventDefault()
+                    e.stopPropagation()
                 }}>
-                    <EditIcon className="size-6" />
+                    <ExternalLinkIcon className="size-6" />
                 </Button>
             </div>
-        </div>
+        </Link>
     )
 }
 
