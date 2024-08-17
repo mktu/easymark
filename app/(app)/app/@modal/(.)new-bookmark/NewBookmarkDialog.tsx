@@ -30,7 +30,7 @@ const NewBookmarkDialog: FC = () => {
             <DialogContent className='flex h-full flex-col overflow-hidden'>
                 <DialogTitle>Add Bookmark</DialogTitle>
                 <DialogDescription>Input url you want to bookmark.</DialogDescription>
-                <form className='flex h-full flex-col gap-1 flex-1 overflow-hidden' action={async () => {
+                <form className='flex h-full flex-1 flex-col gap-1 overflow-hidden' action={async () => {
                     const result = await addBookmark({
                         url: bookmark,
                         title: ogp?.title,
@@ -44,7 +44,7 @@ const NewBookmarkDialog: FC = () => {
                     }
                     router.back()
                 }}>
-                    <div className='flex flex-col gap-1 flex-1 overflow-y-auto px-3'>
+                    <div className='flex flex-1 flex-col gap-1 overflow-y-auto px-3'>
                         <label htmlFor="url">URL</label>
                         <Input id='url' name='url' value={bookmark} onChange={(e) => {
                             setBookmark(e.target.value)
