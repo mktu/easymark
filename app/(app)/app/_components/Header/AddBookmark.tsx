@@ -2,14 +2,14 @@
 
 import { Button } from "@/components/ui/button";
 import { useAddBookmarkContext } from "../../_contexts/addBookmarkDialogContext";
+import Link from "next/link";
 
 const AddBookmark = () => {
 
-    const { open } = useAddBookmarkContext()
     return (
-        <Button onClick={() => {
-            open()
-        }} className="ml-auto">Add Bookmark</Button>
+        <Link className="ml-auto" href="/app/new-bookmark" >
+            Add Bookmark
+        </Link>
     );
 }
 

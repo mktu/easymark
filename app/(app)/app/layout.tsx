@@ -1,3 +1,4 @@
+import React from "react";
 import { redirectIfNotRegistered } from "../../(profile)/_loaders/assertkRegistration";
 import BookmarkDialog from "./_components/BookmarkDialog/BookmarkDialog";
 import Header from "./_components/Header/Header";
@@ -7,19 +8,21 @@ import { Sidebar } from "./_components/Sidebar";
 
 const Layout = async ({
     children,
+    modal,
 }: {
-    children: React.ReactNode
+    children: React.ReactNode,
+    modal: React.ReactNode,
 }) => {
     await redirectIfNotRegistered()
     return (
         <Provider>
-            <div className="flex h-screen w-screen">
+            <div className="flex h-screen w-screen relative">
                 <Sidebar />
-                <div className="size-full">
+                <div className="size-full overflow-hidden flex flex-col">
                     <Header />
-                    <main>
-                        <BookmarkDialog />
+                    <main className="size-full flex-1 overflow-auto">
                         {children}
+                        {modal}
                     </main>
                 </div>
             </div>

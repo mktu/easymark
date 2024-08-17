@@ -3,11 +3,10 @@ import { FC } from "react"
 import { useAddBookmarkContext } from "../../_contexts/addBookmarkDialogContext"
 import { Dialog, DialogContent } from "@/components/ui/dialog"
 import AddBookmarkDialogContent from "./AddBookmarkDialogContent"
-import EditBookmarkDialogContent from "./EditBookmarkDialogContent"
 
 
 const BookmarkDialog: FC = () => {
-    const { isOpen, close, bookmark } = useAddBookmarkContext()
+    const { isOpen, close } = useAddBookmarkContext()
     return (
         <Dialog
             modal
@@ -18,8 +17,8 @@ const BookmarkDialog: FC = () => {
                 }
             }}
         >
-            <DialogContent className='flex h-full flex-col overflow-auto'>
-                {bookmark ? <EditBookmarkDialogContent /> : <AddBookmarkDialogContent />}
+            <DialogContent className='flex h-full flex-col'>
+                <AddBookmarkDialogContent />
             </DialogContent>
 
         </Dialog>
