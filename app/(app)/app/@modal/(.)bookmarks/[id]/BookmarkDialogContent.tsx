@@ -12,9 +12,9 @@ import { PopoverClose } from "@radix-ui/react-popover"
 import { BookmarkType } from "@/lib/repositories/bookmarks"
 import { useBookmarkUpdate } from "../../../hooks/useBookmarkUpdate"
 import { AddBookmarkState } from "../../../_actions/handleAddBookmark"
-import { updateBookmark } from "../../../_actions/handleUpdateBookmark"
+import { handleUpdateBookmark } from "../../../_actions/handleUpdateBookmark"
 import AddBookmarkErrors from "../../../_components/ValidationError/AddBookmarkErrors"
-import { deleteBookmark } from "../../../_actions/handleDeleteBookmark"
+import { handleDeleteBookmark } from "../../../_actions/handleDeleteBookmark"
 import { useRouter } from 'next/navigation';
 
 
@@ -44,7 +44,7 @@ const BookmarkDialogContent: FC<Props> = ({ bookmark }) => {
                 <DialogTitle>Update Bookmark</DialogTitle>
                 <DialogDescription>Edit your bookmark information.</DialogDescription>
                 <form className='flex flex-col gap-1' action={async (form) => {
-                    const result = await updateBookmark({
+                    const result = await handleUpdateBookmark({
                         url: bookmark.url,
                         title: ogp?.title || bookmark.ogpTitle,
                         description: ogp?.description || bookmark.ogpDescription,
@@ -88,7 +88,7 @@ const BookmarkDialogContent: FC<Props> = ({ bookmark }) => {
                                         <Button type='button' variant='ghost' >Cancel</Button>
                                     </PopoverClose>
                                     <Button type='button' variant='destructive' onClick={async () => {
-                                        const { error } = await deleteBookmark({ bookmarkId: bookmark.bookmarkId })
+                                        const { error } = await handleDeleteBookmark({ bookmarkId: bookmark.bookmarkId })
                                         if (error) {
                                             console.error(error)
                                             setErrors({ error })

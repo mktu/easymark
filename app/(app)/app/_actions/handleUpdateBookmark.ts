@@ -3,6 +3,8 @@ import { z } from "zod"
 import { createUrlRegExp } from "../_lib/validateUrl"
 import { createClientForServer } from "@/lib/supabase/supabaseServer"
 import { revalidatePath } from "next/cache"
+import { updateBookmark } from "@/lib/repositories/bookmarks"
+import { upsertOgp } from "@/lib/repositories/ogps"
 
 const schema = {
     url: z.string().regex(
@@ -17,7 +19,7 @@ const schema = {
     note: z.string().optional()
 }
 
-export const updateBookmark = async (data: {
+export const handleUpdateBookmark = async (data: {
     url: string,
     title: string | null,
     description: string | null,
@@ -34,24 +36,13 @@ export const updateBookmark = async (data: {
     if (!authData?.user) {
         return { error: 'not authenticated' }
     }
-    const { error: bookmarkerror } = await supabase.from('bookmarks').update({
-        url,
-        user_id: authData.user.id,
-        note
-    }).eq('url', url).eq('user_id', authData.user.id);
+    const { error: bookmarkerror } = await updateBookmark(supabase, { url, note, userId: authData.user.id })
     if (bookmarkerror) {
-        console.log(bookmarkerror)
-        return { error: 'cannnot add bookmark' }
+        return { error: bookmarkerror }
     }
-    const { error: ogpError } = await supabase.from('ogp_data').upsert({
-        url,
-        title,
-        description,
-        image_url: imageUrl
-    });
+    const { error: ogpError } = await upsertOgp(supabase, { url, title, description, imageUrl })
     if (ogpError) {
-        console.error(ogpError)
-        return { error: 'cannnot add ogp data' }
+        return { error: ogpError }
     }
     revalidatePath('/')
     return {

@@ -1,7 +1,7 @@
 'use client'
 import { FC, useState } from "react"
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogTitle } from "@/components/ui/dialog"
-import { addBookmark, AddBookmarkState } from "../../_actions/handleAddBookmark"
+import { handleAddBookmark, AddBookmarkState } from "../../_actions/handleAddBookmark"
 import { Input } from "@/components/ui/input"
 import { CircleAlertIcon } from "lucide-react"
 import { Textarea } from "@/components/ui/textarea"
@@ -31,7 +31,7 @@ const NewBookmarkDialog: FC = () => {
                 <DialogTitle>Add Bookmark</DialogTitle>
                 <DialogDescription>Input url you want to bookmark.</DialogDescription>
                 <form className='flex h-full flex-1 flex-col gap-1 overflow-hidden' action={async () => {
-                    const result = await addBookmark({
+                    const result = await handleAddBookmark({
                         url: bookmark,
                         title: ogp?.title,
                         description: ogp?.description,

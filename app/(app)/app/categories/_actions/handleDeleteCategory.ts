@@ -1,29 +1,26 @@
 'use server'
-import { z } from "zod"
-import { createUrlRegExp } from "../_lib/validateUrl"
+import { deleteCategory } from "@/lib/repositories/categories"
 import { createClientForServer } from "@/lib/supabase/supabaseServer"
 import { revalidatePath } from "next/cache"
-import { deleteBookmark } from "@/lib/repositories/bookmarks"
+import { z } from "zod"
 
 const schema = {
-    bookmarkId: z.number(),
+    categoryId: z.number(),
 }
 
-export const handleDeleteBookmark = async (data: {
-    bookmarkId: number
-}) => {
+export const handleDeleteCategory = async (data: { categoryId: number }) => {
     const validated = z.object(schema).safeParse(data)
     if (!validated.success) {
         return { validatedErrors: validated.error.flatten().fieldErrors }
     }
-    const { bookmarkId } = validated.data
+    const { categoryId } = validated.data
     const supabase = createClientForServer();
     const { data: authData } = await supabase.auth.getUser();
     if (!authData?.user) {
         return { error: 'not authenticated' }
     }
 
-    const { error: bookmarkerror } = await deleteBookmark(supabase, { bookmarkId, userId: authData.user.id })
+    const { error: bookmarkerror } = await deleteCategory(supabase, { categoryId, userId: authData.user.id })
     if (bookmarkerror) {
         return { error: bookmarkerror }
     }

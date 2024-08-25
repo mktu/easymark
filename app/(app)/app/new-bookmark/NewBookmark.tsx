@@ -8,7 +8,7 @@ import OgpImage from "@/components/domain/OgpImage"
 import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation"
 import { useBookmarkInput } from "../hooks/useBookmarkInput"
-import { addBookmark, AddBookmarkState } from "../_actions/handleAddBookmark"
+import { handleAddBookmark, AddBookmarkState } from "../_actions/handleAddBookmark"
 
 const ImageWitdth = 460
 const ImageHeight = Math.floor(ImageWitdth / 1.91)
@@ -19,7 +19,7 @@ const NewBookmark: FC = () => {
     const router = useRouter();
     return (
         <form className='flex flex-col gap-4 size-full items-center py-2 overflow-hidden' action={async () => {
-            const result = await addBookmark({
+            const result = await handleAddBookmark({
                 url: bookmark,
                 title: ogp?.title,
                 description: ogp?.description,

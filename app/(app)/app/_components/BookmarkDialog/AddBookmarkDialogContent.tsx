@@ -1,7 +1,7 @@
 'use client'
 import { FC, useState } from "react"
 import { useAddBookmarkContext } from "../../_contexts/addBookmarkDialogContext"
-import { addBookmark, AddBookmarkState } from "../../_actions/handleAddBookmark"
+import { handleAddBookmark, AddBookmarkState } from "../../_actions/handleAddBookmark"
 import { DialogDescription, DialogFooter, DialogTitle } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -24,7 +24,7 @@ const AddBookmarkDialogContent: FC = () => {
             <DialogTitle>Add Bookmark</DialogTitle>
             <DialogDescription>Input url you want to bookmark.</DialogDescription>
             <form className='flex h-full flex-col gap-1' action={async () => {
-                const result = await addBookmark({
+                const result = await handleAddBookmark({
                     url: bookmark,
                     title: ogp?.title,
                     description: ogp?.description,

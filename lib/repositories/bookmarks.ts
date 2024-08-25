@@ -22,6 +22,59 @@ export const convertBookmark = (bookmark: RawBookmarkType) => {
     }
 }
 
+export const addBookmark = async (supabase: SupabaseClient<Database>, {
+    url,
+    userId,
+    note
+}: {
+    url: string,
+    userId: string,
+    note?: string
+}) => {
+    const { error: bookmarkerror } = await supabase.from('bookmarks').insert({ url, user_id: userId, note })
+    if (bookmarkerror) {
+        console.error(bookmarkerror)
+        if (bookmarkerror.code === '23505') {
+            return { error: 'already bookmarked' }
+        }
+        return { error: 'cannnot add bookmark' }
+    }
+    return { error: null }
+}
+
+export const updateBookmark = async (supabase: SupabaseClient<Database>, {
+    url,
+    userId,
+    note
+}: {
+    url: string,
+    userId: string,
+    note?: string
+}) => {
+    const { error: bookmarkerror } = await supabase.from('bookmarks').update({ url, note, user_id: userId }).eq('url', url).eq('user_id', userId);
+    if (bookmarkerror) {
+        console.error(bookmarkerror)
+        return { error: 'cannnot update bookmark' }
+    }
+    return { error: null }
+}
+
+export const deleteBookmark = async (supabase: SupabaseClient<Database>, {
+    bookmarkId,
+    userId
+}: {
+    bookmarkId: number,
+    userId: string
+}) => {
+    const { error: bookmarkerror } = await supabase.from('bookmarks').delete().eq('id', bookmarkId).eq('user_id', userId);
+    if (bookmarkerror) {
+        console.error(bookmarkerror)
+        return { error: 'cannnot delete bookmark' }
+    }
+    return { error: null }
+}
+
+
 export const fetchBookmarks = async (supabase: SupabaseClient<Database>, userId: string) => {
     const { data: bookmarksBase, error: bookmarkError } = await supabase.from('bookmarks_with_ogp').select('*').eq('user_id', userId).order('created_at', { ascending: false }).limit(5)
     if (bookmarkError) {

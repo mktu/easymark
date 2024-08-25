@@ -1,10 +1,11 @@
 'use server'
-
 import { createClientForServer } from '@/lib/supabase/supabaseServer';
 import { z } from 'zod';
 import { createUrlRegExp } from '../_lib/validateUrl';
 import { revalidatePath } from 'next/cache';
 import { doScrape, OgpResponse } from '@/lib/supabase/ogp';
+import { addBookmark } from '@/lib/repositories/bookmarks';
+import { addOgp, hasOgp } from '@/lib/repositories/ogps';
 
 export type AddBookmarkState = {
     error: string | null,
@@ -29,7 +30,7 @@ const schema = {
     note: z.string().optional()
 }
 
-export const addBookmark = async (data: {
+export const handleAddBookmark = async (data: {
     url: string,
     title?: string,
     description?: string,
@@ -46,12 +47,12 @@ export const addBookmark = async (data: {
     const { url, note } = validated.data
     const supabase = createClientForServer();
     const { data: authData } = await supabase.auth.getUser();
-    const { error: bookmarkerror } = await supabase.from('bookmarks').insert({ url, user_id: authData?.user?.id, note });
+    if (!authData?.user) {
+        return { error: 'not authenticated' }
+    }
+    const { error: bookmarkerror } = await addBookmark(supabase, { url, note, userId: authData?.user?.id })
     if (bookmarkerror) {
-        if (bookmarkerror.code === '23505') {
-            return { error: 'already bookmarked' }
-        }
-        return { error: 'cannnot add bookmark' }
+        return { error: bookmarkerror }
     }
     if (!description) {
         try {
@@ -63,18 +64,15 @@ export const addBookmark = async (data: {
             console.error(e)
         }
     }
-    // check if already exitst ogp data
-    const { data: ogpData } = await supabase.from('ogp_data').select('url').eq('url', url);
-    if (ogpData && ogpData.length > 0) {
+    if (await hasOgp(supabase, url)) {
         revalidatePath('/')
         return {
             success: true
         }
     }
-    const { error: ogpError } = await supabase.from('ogp_data').insert({ url, title, description, image_url: imageUrl });
+    const { error: ogpError } = await addOgp(supabase, { url, title, description, imageUrl });
     if (ogpError) {
-        console.error(ogpError)
-        return { error: 'cannnot add ogp data' }
+        return { error: ogpError }
     }
     revalidatePath('/')
     return {

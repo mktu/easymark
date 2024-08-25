@@ -13,8 +13,8 @@ import AddBookmarkErrors from "../../_components/ValidationError/AddBookmarkErro
 import { BookmarkType } from "@/lib/repositories/bookmarks"
 import { useBookmarkUpdate } from "../../hooks/useBookmarkUpdate"
 import { AddBookmarkState } from "../../_actions/handleAddBookmark"
-import { updateBookmark } from "../../_actions/handleUpdateBookmark"
-import { deleteBookmark } from "../../_actions/handleDeleteBookmark"
+import { handleUpdateBookmark } from "../../_actions/handleUpdateBookmark"
+import { handleDeleteBookmark } from "../../_actions/handleDeleteBookmark"
 import { useRouter } from "next/navigation";
 
 type Props = {
@@ -32,7 +32,7 @@ const BookmarkContent: FC<Props> = ({
     const router = useRouter();
     return (
         <form className='flex flex-col gap-4 size-full items-center py-2' action={async (form) => {
-            const result = await updateBookmark({
+            const result = await handleUpdateBookmark({
                 url: bookmark.url,
                 title: ogp?.title || bookmark.ogpTitle,
                 description: ogp?.description || bookmark.ogpDescription,
@@ -80,7 +80,7 @@ const BookmarkContent: FC<Props> = ({
                                     <Button type='button' variant='ghost' >Cancel</Button>
                                 </PopoverClose>
                                 <Button type='button' variant='destructive' onClick={async () => {
-                                    const { error } = await deleteBookmark({ bookmarkId: bookmark.bookmarkId })
+                                    const { error } = await handleDeleteBookmark({ bookmarkId: bookmark.bookmarkId })
                                     if (error) {
                                         console.error(error)
                                         setErrors({ error })

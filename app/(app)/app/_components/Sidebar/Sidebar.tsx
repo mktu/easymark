@@ -17,7 +17,11 @@ const Sidebar: FC = () => {
                 </Link>
             </Button>
 
-            <div>Categories</div>
+            <Button variant='ghost' asChild>
+                <Link href="/app/categories" className="flex items-center gap-2">
+                    <span>Categories</span>
+                </Link>
+            </Button>
             <div>Tags</div>
             <div>Recent Bookmarks</div>
             <SignoutButton />
