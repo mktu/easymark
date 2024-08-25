@@ -1,8 +1,10 @@
 import { FC } from "react"
 import NoImage from "../svg/NoImage"
+import { Button } from "../ui/button"
 
 type Props = {
     image?: string | null,
+    url?: string,
     alt: string,
     width?: number,
     height?: number
@@ -11,10 +13,11 @@ type Props = {
 const OgpImage: FC<Props> = ({
     image,
     alt,
+    url,
     width = 200,
     height = 200
 }) => {
-    return image ? (
+    const img = image ? (
         // eslint-disable-next-line @next/next/no-img-element
         <img src={image} alt={alt} width={width} height={height} className='rounded border border-input object-cover' style={{
             width, height
@@ -22,6 +25,11 @@ const OgpImage: FC<Props> = ({
     ) : (
         <NoImage width={width} height={height} />
     )
+    return url ? (
+        <a href={url} target='_blank' rel='noreferrer' >
+            {img}
+        </a>
+    ) : img
 }
 
 export default OgpImage

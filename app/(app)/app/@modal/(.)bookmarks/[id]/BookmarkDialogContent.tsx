@@ -57,7 +57,7 @@ const BookmarkDialogContent: FC<Props> = ({ bookmark }) => {
                     }
                     router.back()
                 }}>
-                    <OgpImage image={ogp?.image?.url || bookmark?.ogpImage} alt={ogp?.title || bookmark?.ogpTitle || bookmark?.url} width={ImageWitdth} height={ImageHeight} />
+                    <OgpImage url={bookmark.url} image={ogp?.image?.url || bookmark?.ogpImage} alt={ogp?.title || bookmark?.ogpTitle || bookmark?.url} width={ImageWitdth} height={ImageHeight} />
                     <label htmlFor="url">URL</label>
                     <CopyableItem id='url' content={bookmark.url} />
                     <label htmlFor="title">Title</label>

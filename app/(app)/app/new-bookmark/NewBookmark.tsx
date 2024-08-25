@@ -32,32 +32,34 @@ const NewBookmark: FC = () => {
             }
             router.back()
         }}>
-            <div className='flex-1 overflow-y-auto w-full flex justify-center'>
-                <div className='flex flex-col gap-1 flex-1 px-[250px] py-2'>
-                    <label htmlFor="url">URL</label>
-                    <Input id='url' name='url' value={bookmark} onChange={(e) => {
-                        setBookmark(e.target.value)
-                    }} />
-                    {errors && 'error' in errors && (
-                        <p className='flex items-center text-destructive'>
-                            <CircleAlertIcon className='mr-1 size-5' />
-                            {errors.error}
-                        </p>
-                    )}
-                    <label htmlFor="note">Note</label>
-                    <Textarea className='mb-2' id='note' name='note' value={note} onChange={(e) => { setNote(e.target.value) }} />
-                    <h3 className='my-1 font-semibold'>OGP Information</h3>
-                    {ogp ? (
-                        <>
-                            <OgpImage image={ogp?.image?.url} alt={ogp?.title || bookmark} width={ImageWitdth} height={ImageHeight} />
-                            <label htmlFor="title">Title</label>
-                            <Input id='title' name='title' value={ogp?.title || bookmark} disabled />
-                            <label htmlFor="description">Description</label>
-                            <Textarea id='description' name='description' value={ogp?.description || ''} disabled />
-                        </>
-                    ) : (
-                        <p>URLを入力すると自動取得されます（サイトによっては取得できない場合があります）</p>
-                    )}
+            <div className='max-w-[700px] flex flex-col gap-2'>
+                <div className='flex-1 overflow-y-auto w-full flex justify-center'>
+                    <div className='flex flex-col gap-1 flex-1 py-2'>
+                        <label htmlFor="url">URL</label>
+                        <Input id='url' name='url' value={bookmark} onChange={(e) => {
+                            setBookmark(e.target.value)
+                        }} />
+                        {errors && 'error' in errors && (
+                            <p className='flex items-center text-destructive'>
+                                <CircleAlertIcon className='mr-1 size-5' />
+                                {errors.error}
+                            </p>
+                        )}
+                        <label htmlFor="note">Note</label>
+                        <Textarea className='mb-2' id='note' name='note' value={note} onChange={(e) => { setNote(e.target.value) }} />
+                        <h3 className='my-1 font-semibold'>OGP Information</h3>
+                        {ogp ? (
+                            <>
+                                <OgpImage image={ogp?.image?.url} alt={ogp?.title || bookmark} width={ImageWitdth} height={ImageHeight} />
+                                <label htmlFor="title">Title</label>
+                                <Input id='title' name='title' value={ogp?.title || bookmark} disabled />
+                                <label htmlFor="description">Description</label>
+                                <Textarea id='description' name='description' value={ogp?.description || ''} disabled />
+                            </>
+                        ) : (
+                            <p>URLを入力すると自動取得されます（サイトによっては取得できない場合があります）</p>
+                        )}
+                    </div>
                 </div>
             </div>
 

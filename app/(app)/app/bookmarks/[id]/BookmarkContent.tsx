@@ -45,24 +45,26 @@ const BookmarkContent: FC<Props> = ({
             }
             toast('Bookmark updated')
         }}>
-            <div className='w-[700px] flex gap-4 justify-center'>
-                <OgpImage image={ogp?.image?.url || bookmark?.ogpImage} alt={ogp?.title || bookmark?.ogpTitle || bookmark?.url} width={ImageWitdth} height={ImageHeight} />
-                <Button className='w-fit mt-auto' variant='ghost' type='button' onClick={refetch}>
-                    <RotateCwIcon className='mr-1 size-5' />
-                    Update OGP Info
-                </Button>
-            </div>
-            <div className='w-[700px] flex flex-col gap-2'>
-                <label htmlFor="url">URL</label>
-                <CopyableItem id='url' content={bookmark.url} />
-                <label htmlFor="title">Title</label>
-                <Input id='title' name='title' value={ogp?.title || bookmark.ogpTitle || bookmark?.url} disabled />
-                <label htmlFor="description">Description</label>
-                <Textarea id='description' name='description' value={ogp?.description || bookmark.ogpDescription || ''} disabled />
+            <div className='max-w-[700px] flex flex-col gap-2'>
+                <div className='flex gap-4 justify-center'>
+                    <OgpImage url={bookmark.url} image={ogp?.image?.url || bookmark?.ogpImage} alt={ogp?.title || bookmark?.ogpTitle || bookmark?.url} width={ImageWitdth} height={ImageHeight} />
+                    <Button className='w-fit mt-auto' variant='ghost' type='button' onClick={refetch}>
+                        <RotateCwIcon className='mr-1 size-5' />
+                        Update OGP Info
+                    </Button>
+                </div>
+                <div className='flex flex-col gap-2'>
+                    <label htmlFor="url">URL</label>
+                    <CopyableItem id='url' content={bookmark.url} />
+                    <label htmlFor="title">Title</label>
+                    <Input id='title' name='title' value={ogp?.title || bookmark.ogpTitle || bookmark?.url} disabled />
+                    <label htmlFor="description">Description</label>
+                    <Textarea id='description' name='description' value={ogp?.description || bookmark.ogpDescription || ''} disabled />
 
-                <label htmlFor="note">Note</label>
-                <Textarea id='note' name='note' value={note} onChange={(e) => { setNote(e.target.value) }} />
-                {errors && <AddBookmarkErrors state={errors} />}
+                    <label htmlFor="note">Note</label>
+                    <Textarea id='note' name='note' value={note} onChange={(e) => { setNote(e.target.value) }} />
+                    {errors && <AddBookmarkErrors state={errors} />}
+                </div>
             </div>
 
             <footer className='sticky bottom-0 px-4 py-2 bg-white border-t border-input w-full flex justify-center'>
