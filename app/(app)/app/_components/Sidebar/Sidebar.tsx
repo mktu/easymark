@@ -3,7 +3,7 @@
 import { FC } from "react";
 import SignoutButton from "../SignoutButton";
 import Link from "next/link";
-import { HomeIcon } from "lucide-react";
+import { HomeIcon, LayoutGridIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 
@@ -19,6 +19,7 @@ const Sidebar: FC = () => {
 
             <Button variant='ghost' asChild>
                 <Link href="/app/categories" className="flex items-center gap-2">
+                    <LayoutGridIcon className="size-6" />
                     <span>Categories</span>
                 </Link>
             </Button>

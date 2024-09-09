@@ -45,13 +45,15 @@ export const addBookmark = async (supabase: SupabaseClient<Database>, {
 export const updateBookmark = async (supabase: SupabaseClient<Database>, {
     url,
     userId,
-    note
+    note,
+    categoryId
 }: {
     url: string,
     userId: string,
-    note?: string
+    note?: string,
+    categoryId?: number
 }) => {
-    const { error: bookmarkerror } = await supabase.from('bookmarks').update({ url, note, user_id: userId }).eq('url', url).eq('user_id', userId);
+    const { error: bookmarkerror } = await supabase.from('bookmarks').update({ url, note, user_id: userId, category_id: categoryId || null }).eq('url', url).eq('user_id', userId);
     if (bookmarkerror) {
         console.error(bookmarkerror)
         return { error: 'cannnot update bookmark' }

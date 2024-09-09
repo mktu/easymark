@@ -16,6 +16,7 @@ const schema = {
     title: z.string().optional(),
     description: z.string().optional(),
     imageUrl: z.string().optional(),
+    category: z.number().optional(),
     note: z.string().optional()
 }
 
@@ -24,19 +25,20 @@ export const handleUpdateBookmark = async (data: {
     title: string | null,
     description: string | null,
     imageUrl: string | null,
+    category?: number | null,
     note: string | null
 }) => {
     const validated = z.object(schema).safeParse(data)
     if (!validated.success) {
         return { validatedErrors: validated.error.flatten().fieldErrors }
     }
-    const { url, title, description, imageUrl, note } = validated.data
+    const { url, title, description, imageUrl, note, category } = validated.data
     const supabase = createClientForServer();
     const { data: authData } = await supabase.auth.getUser();
     if (!authData?.user) {
         return { error: 'not authenticated' }
     }
-    const { error: bookmarkerror } = await updateBookmark(supabase, { url, note, userId: authData.user.id })
+    const { error: bookmarkerror } = await updateBookmark(supabase, { url, note, userId: authData.user.id, categoryId: category })
     if (bookmarkerror) {
         return { error: bookmarkerror }
     }

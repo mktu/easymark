@@ -5,7 +5,7 @@ import { ExternalLinkIcon } from "lucide-react";
 const OpenLinkButton = ({ url }: { url: string }) => {
     'use client'
     return (
-        <Button className='ml-auto flex items-center justify-center' variant={'ghost'} size='icon' onClick={(e) => {
+        <Button className='flex items-center justify-center' variant={'ghost'} size='icon' onClick={(e) => {
             window.open(url, '_blank', 'noopener,noreferrer');
             e.preventDefault()
             e.stopPropagation()

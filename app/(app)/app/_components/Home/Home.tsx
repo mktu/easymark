@@ -28,6 +28,7 @@ const Home: FC<Props> = ({
                             <li key={bookmark.bookmarkId}>
                                 <BookmarkListItem
                                     bookmark={bookmark}
+                                    category={categories.find((c) => c.categoryId === bookmark.categoryId)}
                                 />
                             </li>))}
                     </ul>

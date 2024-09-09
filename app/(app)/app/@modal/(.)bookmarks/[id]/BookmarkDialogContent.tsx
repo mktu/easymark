@@ -16,17 +16,20 @@ import { handleUpdateBookmark } from "../../../_actions/handleUpdateBookmark"
 import AddBookmarkErrors from "../../../_components/ValidationError/AddBookmarkErrors"
 import { handleDeleteBookmark } from "../../../_actions/handleDeleteBookmark"
 import { useRouter } from 'next/navigation';
+import { CategoryType } from "@/lib/repositories/categories"
+import CategorySelector from "@/components/domain/CategorySelector"
 
 
 const ImageWitdth = 460
 const ImageHeight = Math.floor(ImageWitdth / 1.91)
 
 type Props = {
-    bookmark: BookmarkType
+    bookmark: BookmarkType,
+    categories: CategoryType[]
 }
 
-const BookmarkDialogContent: FC<Props> = ({ bookmark }) => {
-    const { ogp, setNote, note, refetch } = useBookmarkUpdate(bookmark)
+const BookmarkDialogContent: FC<Props> = ({ bookmark, categories }) => {
+    const { ogp, setNote, note, refetch, category, setCategory } = useBookmarkUpdate(bookmark)
     const [errors, setErrors] = useState<AddBookmarkState | null>(null)
     const router = useRouter();
     if (!bookmark) return null
@@ -49,7 +52,8 @@ const BookmarkDialogContent: FC<Props> = ({ bookmark }) => {
                         title: ogp?.title || bookmark.ogpTitle,
                         description: ogp?.description || bookmark.ogpDescription,
                         imageUrl: ogp?.image?.url || bookmark.ogpImage,
-                        note
+                        note,
+                        category
                     })
                     if (!('success' in result)) {
                         setErrors(result)
@@ -70,6 +74,10 @@ const BookmarkDialogContent: FC<Props> = ({ bookmark }) => {
                             Update OGP Info
                         </Button>
                     </div>
+                    <label htmlFor="category">Category</label>
+                    <CategorySelector id='category' categories={categories} selectedCategory={category} selectCategory={(c) => {
+                        setCategory(c)
+                    }} />
                     <label htmlFor="note">Note</label>
                     <Textarea id='note' name='note' value={note} onChange={(e) => { setNote(e.target.value) }} />
                     {errors && <AddBookmarkErrors state={errors} />}
