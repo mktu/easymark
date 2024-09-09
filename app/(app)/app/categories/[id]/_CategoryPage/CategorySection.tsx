@@ -23,7 +23,7 @@ const CategorySection: FC<CategorySectionProps> = ({
     const [errors, setErrors] = useState<string | null>(null)
     const [colorPalletOpen, setColorPalletOpen] = useState(false)
     return (
-        <section className="flex flex-col items-start justify-start gap-2 max-w-[700px] w-full">
+        <section className="flex w-full max-w-[700px] flex-col items-start justify-start gap-2">
             <form action={async () => {
                 const { error } = await handleUpdateCategory({
                     categoryId: category.categoryId,
@@ -37,14 +37,15 @@ const CategorySection: FC<CategorySectionProps> = ({
                 }
                 setErrors(null)
                 toast('Category updated')
-            }} className='w-full p-3 border border-input rounded flex flex-col gap-3'>
-                <h3 className='font-semibold text-md'>⚙️ Category Settings ⚙️</h3>
-                <div className='flex gap-4 w-full items-center'>
+            }} className='flex w-full flex-col gap-3 rounded border border-input p-3'>
+                <h3 className='font-semibold'>⚙️ Category Settings ⚙️</h3>
+                <p>カテゴリは、ブックマークを分類する時に役立ちます。カテゴリ名とカテゴリカラーを設定し、ブックマークの効率性をあげましょう！</p>
+                <div className='flex w-full items-center gap-4'>
                     <Input className='flex-1' aria-label="category-name" id='category-name' value={categoryName} onChange={(e) => {
                         setCategoryName(e.target.value)
                     }
                     } />
-                    <div className={'rounded border size-12'} style={{ backgroundColor: color ? color : 'white' }} />
+                    <div className={'size-12 rounded border'} style={{ backgroundColor: color ? color : 'white' }} />
                     <div className='flex flex-col items-start'>
                         <div className='text-sm text-muted-foreground'>{color}</div>
                         <Popover open={colorPalletOpen} onOpenChange={(isOpen) => {
@@ -52,7 +53,7 @@ const CategorySection: FC<CategorySectionProps> = ({
                         }}>
                             <PopoverTrigger asChild>
                                 <Button size='sm' className='p-0' variant='link' aria-label='Change Color'>
-                                    <EditIcon className='size-5 mr-2' />
+                                    <EditIcon className='mr-2 size-5' />
                                     Change Color
                                 </Button>
                             </PopoverTrigger>
