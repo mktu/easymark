@@ -93,4 +93,13 @@ export const fetchBookmark = async (supabase: SupabaseClient<Database>, userId: 
     return convertBookmark(bookmarksBase[0])
 }
 
+export const fetchBookmarksByCategory = async (supabase: SupabaseClient<Database>, userId: string, categoryId: number) => {
+    const { data: bookmarksBase, error: bookmarkError } = await supabase.from('bookmarks_with_ogp').select('*').eq('user_id', userId).eq('category_id', categoryId).order('created_at', { ascending: false })
+    if (bookmarkError) {
+        console.error(bookmarkError)
+        throw Error('cannot fetch bookmarks')
+    }
+    return convertBookmarks(bookmarksBase)
+}
+
 export type BookmarkType = ReturnType<typeof convertBookmarks>[0]

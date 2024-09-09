@@ -17,7 +17,7 @@ const AdddCategoryForm = () => {
             if (error) {
                 setErrors(error)
             }
-        }} className='flex w-full items-center justify-center gap-1'>
+        }} className='flex w-full items-center gap-1'>
             <div className="flex items-center rounded border border-input  bg-background pl-3">
                 <input className="mr-2 w-[400px] outline-none" aria-label="add-new-category" placeholder='Input category name'
                     value={categoryName} onChange={(e) => {
