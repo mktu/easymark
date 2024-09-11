@@ -9,12 +9,20 @@ import OgpImage from "@/components/domain/OgpImage"
 import { Button } from "@/components/ui/button"
 import { useBookmarkInput } from "../../hooks/useBookmarkInput"
 import { useRouter } from "next/navigation"
+import CategorySelector from "@/components/domain/CategorySelector"
+import { CategoryType } from "@/lib/repositories/categories"
 
 const ImageWitdth = 460
 const ImageHeight = Math.floor(ImageWitdth / 1.91)
 
-const NewBookmarkDialog: FC = () => {
-    const { ogp, setBookmark, bookmark, validBookmark, note, setNote } = useBookmarkInput()
+type Props = {
+    categories: CategoryType[]
+}
+
+const NewBookmarkDialog: FC<Props> = ({
+    categories
+}) => {
+    const { ogp, setBookmark, bookmark, validBookmark, note, setNote, category, setCategory } = useBookmarkInput()
     const [errors, setErrors] = useState<AddBookmarkState | null>(null)
     const router = useRouter();
     return (
@@ -36,7 +44,8 @@ const NewBookmarkDialog: FC = () => {
                         title: ogp?.title,
                         description: ogp?.description,
                         imageUrl: ogp?.image?.url,
-                        note
+                        note,
+                        category
                     })
                     if (!('success' in result)) {
                         setErrors(result)
@@ -57,7 +66,9 @@ const NewBookmarkDialog: FC = () => {
                         )}
                         <label htmlFor="note">Note</label>
                         <Textarea className='mb-2' id='note' name='note' value={note} onChange={(e) => { setNote(e.target.value) }} />
-                        <h3 className='my-1 font-semibold'>OGP Information</h3>
+                        <label htmlFor="category">Category</label>
+                        <CategorySelector id='category' categories={categories} selectedCategory={category} selectCategory={setCategory} />
+                        <h3 className='my-4 font-semibold'>OGP Information</h3>
                         {ogp ? (
                             <>
                                 <OgpImage image={ogp?.image?.url} alt={ogp?.title || bookmark} width={ImageWitdth} height={ImageHeight} />

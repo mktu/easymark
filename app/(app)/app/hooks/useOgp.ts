@@ -1,4 +1,4 @@
-import { OgpResponse } from "@/app/api/ogp/route";
+import { OgpResponse } from "@/lib/supabase/ogp";
 import { useCallback, useEffect, useState } from "react";
 
 export const useOgp = (url: string | null, manual = false) => {

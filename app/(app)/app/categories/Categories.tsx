@@ -1,17 +1,15 @@
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { CategoryType } from "@/lib/repositories/categories"
+import { CategoryWithBookmarkCountType } from "@/lib/repositories/categories"
 import AdddCategoryForm from "./AddCategoryForm"
 import CategoryListItem from "./CategoryListItem"
 
 type Props = {
-    categories: CategoryType[]
+    categories: CategoryWithBookmarkCountType[]
 }
 
 const Categories = ({ categories }: Props) => {
     return (
-        <div className='flex justify-center w-full'>
-            <div className='flex flex-col justify-start gap-4 w-full max-w-[750px]'>
+        <div className='flex w-full justify-center'>
+            <div className='flex w-full max-w-[750px] flex-col justify-start gap-4'>
                 <h2 className='text-lg font-semibold'>Categories</h2>
                 <p>カテゴリを作ることで、ブックマークをカテゴライズすることができます。カテゴリには任意の色を設定することも可能です！</p>
                 <section className='flex flex-col items-start gap-2'>
@@ -19,7 +17,7 @@ const Categories = ({ categories }: Props) => {
                     <AdddCategoryForm />
                 </section>
                 <section>
-                    <h3 className='font-semibold mb-2'>Your Categories</h3>
+                    <h3 className='mb-2 font-semibold'>Your Categories</h3>
                     {categories.length === 0 && <p>No categories</p>}
                     <ul>
                         {categories.map(category => (

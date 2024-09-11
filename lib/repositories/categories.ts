@@ -14,6 +14,20 @@ const convertCategories = (categories: Database['public']['Tables']['categories'
     })
 }
 
+const convertCategoriesWithBookmarkCount = (categories: Database['public']['Views']['categories_with_bookmark_count']['Row'][]) => {
+    return categories.map(category => {
+        return {
+            categoryId: category.id!,
+            userId: category.user_id!,
+            name: category.name!,
+            createdAt: category.created_at!,
+            parentId: category.parent_id,
+            color: category.color,
+            bookmarkCount: category.bookmark_count
+        }
+    })
+}
+
 export const fetchCategories = async (supabase: SupabaseClient<Database>, userId: string) => {
     const { data, error } = await supabase.from('categories').select('*').eq('user_id', userId).order('created_at', { ascending: false })
     if (error) {
@@ -30,6 +44,15 @@ export const fetchCategory = async (supabase: SupabaseClient<Database>, userId: 
         throw Error('cannot fetch category')
     }
     return convertCategories(data)[0]
+}
+
+export const fetchCategoriesWithBookmarkCount = async (supabase: SupabaseClient<Database>, userId: string) => {
+    const { data: categories, error: categoriesError } = await supabase.from('categories_with_bookmark_count').select('*').eq('user_id', userId).order('created_at', { ascending: false })
+    if (categoriesError) {
+        console.error(categoriesError)
+        throw Error('cannot fetch categories')
+    }
+    return convertCategoriesWithBookmarkCount(categories)
 }
 
 export const addCategory = async (supabase: SupabaseClient<Database>, {
@@ -88,3 +111,4 @@ export const deleteCategory = async (supabase: SupabaseClient<Database>, {
 }
 
 export type CategoryType = ReturnType<typeof convertCategories>[0]
+export type CategoryWithBookmarkCountType = ReturnType<typeof convertCategoriesWithBookmarkCount>[0]

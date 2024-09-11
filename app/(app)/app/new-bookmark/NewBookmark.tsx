@@ -1,24 +1,24 @@
 'use client'
 import { FC, useState } from "react"
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogTitle } from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { CircleAlertIcon } from "lucide-react"
-import { Textarea } from "@/components/ui/textarea"
-import OgpImage from "@/components/domain/OgpImage"
-import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation"
 import { useBookmarkInput } from "../hooks/useBookmarkInput"
 import { handleAddBookmark, AddBookmarkState } from "../_actions/handleAddBookmark"
+import { CategoryType } from "@/lib/repositories/categories"
+import OgpSection from "./OgpSection"
+import EditSection from "./EditSection"
 
-const ImageWitdth = 460
-const ImageHeight = Math.floor(ImageWitdth / 1.91)
+type Props = {
+    categories: CategoryType[]
+}
 
-const NewBookmark: FC = () => {
-    const { ogp, setBookmark, bookmark, validBookmark, note, setNote } = useBookmarkInput()
+const NewBookmark: FC<Props> = ({
+    categories
+}) => {
+    const { ogp, setBookmark, bookmark, validBookmark, note, setNote, category, setCategory } = useBookmarkInput()
     const [errors, setErrors] = useState<AddBookmarkState | null>(null)
     const router = useRouter();
     return (
-        <form className='flex flex-col gap-4 size-full items-center py-2 overflow-hidden' action={async () => {
+        <form className='flex size-full items-start justify-center gap-4 py-2' action={async () => {
             const result = await handleAddBookmark({
                 url: bookmark,
                 title: ogp?.title,
@@ -32,43 +32,23 @@ const NewBookmark: FC = () => {
             }
             router.back()
         }}>
-            <div className='max-w-[700px] flex flex-col gap-2'>
-                <div className='flex-1 overflow-y-auto w-full flex justify-center'>
-                    <div className='flex flex-col gap-1 flex-1 py-2'>
-                        <label htmlFor="url">URL</label>
-                        <Input id='url' name='url' value={bookmark} onChange={(e) => {
-                            setBookmark(e.target.value)
-                        }} />
-                        {errors && 'error' in errors && (
-                            <p className='flex items-center text-destructive'>
-                                <CircleAlertIcon className='mr-1 size-5' />
-                                {errors.error}
-                            </p>
-                        )}
-                        <label htmlFor="note">Note</label>
-                        <Textarea className='mb-2' id='note' name='note' value={note} onChange={(e) => { setNote(e.target.value) }} />
-                        <h3 className='my-1 font-semibold'>OGP Information</h3>
-                        {ogp ? (
-                            <>
-                                <OgpImage image={ogp?.image?.url} alt={ogp?.title || bookmark} width={ImageWitdth} height={ImageHeight} />
-                                <label htmlFor="title">Title</label>
-                                <Input id='title' name='title' value={ogp?.title || bookmark} disabled />
-                                <label htmlFor="description">Description</label>
-                                <Textarea id='description' name='description' value={ogp?.description || ''} disabled />
-                            </>
-                        ) : (
-                            <p>URLを入力すると自動取得されます（サイトによっては取得できない場合があります）</p>
-                        )}
-                    </div>
-                </div>
-            </div>
+            <OgpSection
+                url={bookmark}
+                ogp={ogp}
+                setUrl={setBookmark}
+                errors={errors}
+            />
 
-            <footer className="flex items-center w-full justify-end px-[250px] gap-2">
-                <Button variant='outline' onClick={() => {
-                    router.back()
-                }} type="button">Back</Button>
-                <Button disabled={!validBookmark} type='submit'>Add</Button>
-            </footer>
+            <div className='h-full w-0 border border-input bg-input' />
+
+            <EditSection
+                note={note}
+                setNote={setNote}
+                category={category}
+                setCategory={setCategory}
+                categories={categories}
+                validBookmark={!!validBookmark}
+            />
         </form>
     )
 }

@@ -1,4 +1,4 @@
-import { fetchCategories } from "@/lib/repositories/categories"
+import { fetchCategoriesWithBookmarkCount } from "@/lib/repositories/categories"
 import { createClientForServer } from "@/lib/supabase/supabaseServer"
 import { redirect } from "next/navigation"
 import Categories from "./Categories"
@@ -11,7 +11,7 @@ export default async function CategoriesPage() {
         redirect('/signin')
     }
 
-    const categories = await fetchCategories(supabase, userData.user.id)
+    const categories = await fetchCategoriesWithBookmarkCount(supabase, userData.user.id)
 
     return <Categories categories={categories} />
 }

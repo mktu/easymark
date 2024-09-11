@@ -5,6 +5,7 @@ import { useOgp } from "./useOgp"
 export const useBookmarkInput = () => {
     const [bookmark, setBookmark] = useState('')
     const [note, setNote] = useState('')
+    const [category, setCategory] = useState<number | null>(null);
     const validBookmark = useMemo(() => bookmark && validateURL(bookmark), [bookmark])
     const { ogp } = useOgp(bookmark && validBookmark ? bookmark : null);
     return {
@@ -13,6 +14,8 @@ export const useBookmarkInput = () => {
         setBookmark,
         ogp,
         note,
-        setNote
+        setNote,
+        category,
+        setCategory
     }
 }

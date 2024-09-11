@@ -25,13 +25,15 @@ export const convertBookmark = (bookmark: RawBookmarkType) => {
 export const addBookmark = async (supabase: SupabaseClient<Database>, {
     url,
     userId,
-    note
+    note,
+    categoryId
 }: {
     url: string,
     userId: string,
     note?: string
+    categoryId?: number | null
 }) => {
-    const { error: bookmarkerror } = await supabase.from('bookmarks').insert({ url, user_id: userId, note })
+    const { error: bookmarkerror } = await supabase.from('bookmarks').insert({ url, user_id: userId, note, category_id: categoryId })
     if (bookmarkerror) {
         console.error(bookmarkerror)
         if (bookmarkerror.code === '23505') {

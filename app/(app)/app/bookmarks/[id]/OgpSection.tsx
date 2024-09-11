@@ -8,9 +8,9 @@ import { Input } from "@/components/ui/input"
 
 type Props = {
     url: string,
-    title?: string,
-    description?: string,
-    image?: string,
+    title?: string | null,
+    description?: string | null,
+    image?: string | null,
     onUpdateOgp: () => void
 }
 const ImageWitdth = 460
@@ -28,7 +28,7 @@ const OgpSection: FC<Props> = ({ url, title, description, image, onUpdateOgp }) 
                 <label htmlFor="title">Title</label>
                 <Input id='title' name='title' value={title || url} disabled />
                 <label htmlFor="description">Description</label>
-                <Textarea id='description' name='description' value={description} disabled />
+                <Textarea id='description' name='description' value={description || ''} disabled />
                 <div className='mt-4'>
                     <p>
                         情報が正しく取得されていない場合、以下のボタンで更新してください。
