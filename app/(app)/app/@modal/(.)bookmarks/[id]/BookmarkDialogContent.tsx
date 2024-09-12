@@ -25,11 +25,12 @@ const ImageHeight = Math.floor(ImageWitdth / 1.91)
 
 type Props = {
     bookmark: BookmarkType,
-    categories: CategoryType[]
+    categories: CategoryType[],
+    selectedCategoryId?: number
 }
 
-const BookmarkDialogContent: FC<Props> = ({ bookmark, categories }) => {
-    const { ogp, setNote, note, refetch, category, setCategory } = useBookmarkUpdate(bookmark)
+const BookmarkDialogContent: FC<Props> = ({ bookmark, categories, selectedCategoryId }) => {
+    const { ogp, setNote, note, refetch, category, setCategory } = useBookmarkUpdate(bookmark, selectedCategoryId)
     const [errors, setErrors] = useState<AddBookmarkState | null>(null)
     const router = useRouter();
     if (!bookmark) return null

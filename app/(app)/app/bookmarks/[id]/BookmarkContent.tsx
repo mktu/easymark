@@ -12,14 +12,16 @@ import EditSection from "./EditSection";
 
 type Props = {
     bookmark: BookmarkType,
-    categories: CategoryType[]
+    categories: CategoryType[],
+    selectedCategoryId?: number
 }
 
 const BookmarkContent: FC<Props> = ({
     bookmark,
-    categories
+    categories,
+    selectedCategoryId
 }) => {
-    const { ogp, setNote, note, refetch, category, setCategory } = useBookmarkUpdate(bookmark)
+    const { ogp, setNote, note, refetch, category, setCategory } = useBookmarkUpdate(bookmark, selectedCategoryId)
     const [errors, setErrors] = useState<AddBookmarkState | null>(null)
     return (
         <form className='flex size-full items-start justify-center gap-4 py-2' action={async (form) => {

@@ -8,13 +8,15 @@ import OgpSection from "./OgpSection"
 import EditSection from "./EditSection"
 
 type Props = {
-    categories: CategoryType[]
+    categories: CategoryType[],
+    selectedCategoryId?: number
 }
 
 const NewBookmark: FC<Props> = ({
-    categories
+    categories,
+    selectedCategoryId
 }) => {
-    const { ogp, setBookmark, bookmark, validBookmark, note, setNote, category, setCategory } = useBookmarkInput()
+    const { ogp, setBookmark, bookmark, validBookmark, note, setNote, category, setCategory } = useBookmarkInput(selectedCategoryId)
     const [errors, setErrors] = useState<AddBookmarkState | null>(null)
     const router = useRouter();
     return (

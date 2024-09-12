@@ -16,13 +16,15 @@ const ImageWitdth = 460
 const ImageHeight = Math.floor(ImageWitdth / 1.91)
 
 type Props = {
-    categories: CategoryType[]
+    categories: CategoryType[],
+    selectedCategoryId?: number
 }
 
 const NewBookmarkDialog: FC<Props> = ({
-    categories
+    categories,
+    selectedCategoryId
 }) => {
-    const { ogp, setBookmark, bookmark, validBookmark, note, setNote, category, setCategory } = useBookmarkInput()
+    const { ogp, setBookmark, bookmark, validBookmark, note, setNote, category, setCategory } = useBookmarkInput(selectedCategoryId)
     const [errors, setErrors] = useState<AddBookmarkState | null>(null)
     const router = useRouter();
     return (
