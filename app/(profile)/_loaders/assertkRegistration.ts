@@ -7,6 +7,7 @@ export const redirectIfNotRegistered = async () => {
     const supabase = createClientForServer()
     const { data, error } = await supabase.auth.getUser()
     if (error || !data?.user) {
+        console.log('ahisauicgiuasgciuagscuiga')
         redirect('/signin')
     }
     const res = await supabase.from('users').select('*').eq('id', data.user.id)

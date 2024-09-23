@@ -1,6 +1,5 @@
 import React from "react";
 import { redirectIfNotRegistered } from "../../(profile)/_loaders/assertkRegistration";
-import BookmarkDialog from "./_components/BookmarkDialog/BookmarkDialog";
 import Header from "./_components/Header/Header";
 import Provider from "./_components/Provider";
 import { Sidebar } from "./_components/Sidebar";

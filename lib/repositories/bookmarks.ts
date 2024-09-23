@@ -1,9 +1,10 @@
 import { SupabaseClient } from "@supabase/supabase-js";
 import { Database } from "../supabase/schema";
+import { BookmarkSortOption } from "../types";
 
 export type RawBookmarkType = Database['public']['Views']['bookmarks_with_ogp']['Row']
 
-const convertBookmarks = (bookmarks: RawBookmarkType[]) => {
+export const convertBookmarks = (bookmarks: RawBookmarkType[]) => {
     return bookmarks.map(convertBookmark)
 }
 
@@ -86,6 +87,35 @@ export const fetchBookmarks = async (supabase: SupabaseClient<Database>, userId:
         throw Error('cannot fetch bookmarks')
     }
     return convertBookmarks(bookmarksBase)
+}
+
+export const fetchBookmarksByPage = async (
+    supabase: SupabaseClient<Database>,
+    userId: string,
+    page: number,
+    limit: number,
+    filter?: string,
+    sortOption?: BookmarkSortOption) => {
+    const query = supabase.from('bookmarks_with_ogp').select('*').eq('user_id', userId);
+    if (filter) {
+        query.ilike('ogp_title', `%${filter}%`)
+    }
+    query.range(page * limit, (page * limit) + limit - 1);
+    if (sortOption === 'date') {
+        query.order('created_at', { ascending: false })
+    }
+    else if (sortOption === 'title') {
+        query.order('ogp_title', { ascending: true })
+    }
+    else if (sortOption === 'frequency') {
+        query.order('last_checked', { ascending: false })
+    }
+    const { data: bookmarksBase, error: bookmarkError } = await query;
+    if (bookmarkError) {
+        console.error(bookmarkError)
+        throw Error('cannot fetch bookmarks')
+    }
+    return { bookmarks: convertBookmarks(bookmarksBase), count: bookmarksBase.length }
 }
 
 export const fetchBookmark = async (supabase: SupabaseClient<Database>, userId: string, bookmarkId: number) => {
