@@ -16,7 +16,7 @@ const Categories = ({ categories }: Props) => {
                 <h2 className='text-lg font-semibold'>Categories</h2>
                 <p>カテゴリを作ることで、ブックマークをカテゴライズすることができます。カテゴリには任意の色を設定することも可能です！</p>
                 <section className='flex flex-col items-start gap-2'>
-                    <h3 className='font-semibold flex items-center gap-2'>
+                    <h3 className='flex items-center gap-2 font-semibold'>
                         <PlusCircleIcon className='size-5' />
                         Add New Category</h3>
                     <AdddCategoryForm />

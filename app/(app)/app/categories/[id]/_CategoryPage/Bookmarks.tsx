@@ -14,7 +14,7 @@ const Bookmarks = ({ bookmarks, category }: Props) => {
     return (
         <section className='flex w-full max-w-[700px] flex-col items-start justify-start gap-2'>
             <h3 className='font-semibold'>📗 Bookmarks in This Category</h3>
-            <div className='flex items-center justify-end w-full'>
+            <div className='flex w-full items-center justify-end'>
                 <Button variant='ghost' asChild>
                     <Link href={`/app/new-bookmark?category=${category?.categoryId}`}>
                         <PlusCircleIcon className='mr-2 size-5' />

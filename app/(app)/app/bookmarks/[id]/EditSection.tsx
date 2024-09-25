@@ -29,7 +29,7 @@ const EditSection: FC<Props> = ({
     onDelete
 }) => {
     return (
-        <section className='flex size-full max-w-[500px] flex-col gap-2'>
+        <section className='flex size-full max-w-[500px] flex-col gap-2 pr-2'>
             <label htmlFor="note">Note</label>
             <Textarea id='note' name='note' value={note} onChange={(e) => { setNote(e.target.value) }} />
             <label htmlFor="category">Category</label>

@@ -15,9 +15,9 @@ const Layout = async ({
     await redirectIfNotRegistered()
     return (
         <Provider>
-            <div className="flex h-screen w-screen relative">
+            <div className="relative flex h-screen w-screen">
                 <Sidebar />
-                <div className="size-full overflow-hidden flex flex-col">
+                <div className="flex size-full flex-col overflow-hidden">
                     <Header />
                     <main className="size-full flex-1 overflow-auto">
                         {children}
