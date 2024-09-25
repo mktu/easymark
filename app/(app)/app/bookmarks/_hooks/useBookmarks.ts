@@ -1,6 +1,6 @@
 import { BookmarkType } from "@/lib/repositories/bookmarks";
 import { BookmarkSortOption } from "@/lib/types";
-import { useCallback, useDeferredValue, useEffect, useState, useTransition } from "react";
+import { useCallback, useDeferredValue, useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 
 type FetchDataType = {
@@ -8,7 +8,7 @@ type FetchDataType = {
     hasMore: boolean
 }
 
-export const useBookmarks = (filter?: string, sortOption?: BookmarkSortOption, initialBookmarks?: BookmarkType[], initialHasMore?: Boolean) => {
+export const useBookmarks = (filter?: string, sortOption?: BookmarkSortOption, category?: number | null, initialBookmarks?: BookmarkType[], initialHasMore?: Boolean) => {
     const { ref: bookmarkLoaderRef, inView } = useInView({ initialInView: false });
     const [page, setPage] = useState(0);
     const deferredFilter = useDeferredValue(filter);
@@ -19,7 +19,7 @@ export const useBookmarks = (filter?: string, sortOption?: BookmarkSortOption, i
         if (page === 0) {
             return;
         }
-        const result = await fetch(`/api/bookmarks?page=${page}&filter=${deferredFilter || ''}&sort=${sortOption}&limit=10`)
+        const result = await fetch(`/api/bookmarks?page=${page}&filter=${deferredFilter || ''}&sort=${sortOption}&category=${category || ''}&limit=10`)
         const { bookmarks: dataBookmarks, hasMore: dataHasMore } = await result.json() as FetchDataType;
         setHasMore(dataHasMore);
         setBookmarks(prev => {

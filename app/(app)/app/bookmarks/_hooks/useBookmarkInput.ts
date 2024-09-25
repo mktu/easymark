@@ -3,11 +3,14 @@ import { useDebouncedCallback } from 'use-debounce';
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
 import { getSortOption } from "../_utils/parseSortOption";
+import { parseNumber } from "@/lib/urlParser";
 
 export const useBookmarkInput = () => {
     const searchParams = useSearchParams();
     const pathname = usePathname();
     const filter = searchParams.get('filter')?.toString();
+
+    const category = parseNumber(searchParams, 'category', null);
     const sortOption = getSortOption(searchParams);
     const { replace } = useRouter();
 
@@ -27,10 +30,22 @@ export const useBookmarkInput = () => {
         replace(`${pathname}?${params.toString()}`);
     }, [replace, searchParams, pathname]);
 
+    const onChangeCategory = useCallback((category: number | null) => {
+        const params = new URLSearchParams(searchParams);
+        if (category === null) {
+            params.delete('category');
+        } else {
+            params.set('category', String(category));
+        }
+        replace(`${pathname}?${params.toString()}`);
+    }, []);
+
     return {
         sortOption,
         onSort,
         onFilter,
-        filter
+        filter,
+        category,
+        onChangeCategory
     }
 }

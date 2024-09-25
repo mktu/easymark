@@ -95,10 +95,14 @@ export const fetchBookmarksByPage = async (
     page: number,
     limit: number,
     filter?: string,
-    sortOption?: BookmarkSortOption) => {
+    sortOption?: BookmarkSortOption,
+    category?: number | null) => {
     const query = supabase.from('bookmarks_with_ogp').select('*').eq('user_id', userId);
     if (filter) {
         query.ilike('ogp_title', `%${filter}%`)
+    }
+    if (category) {
+        query.eq('category_id', category)
     }
     query.range(page * limit, (page * limit) + limit - 1);
     if (sortOption === 'date') {

@@ -10,6 +10,7 @@ import { useBookmarks } from "../_hooks/useBookmarks";
 
 type Props = {
     filter?: string,
+    category?: number | null,
     sortOption?: BookmarkSortOption,
     categories: CategoryType[],
     initialBookmarks?: BookmarkType[],
@@ -18,12 +19,13 @@ type Props = {
 
 const BookmarkList: FC<Props> = ({
     filter,
+    category,
     sortOption,
     categories,
     initialBookmarks,
     initialHasMore
 }) => {
-    const { bookmarks, hasMore, bookmarkLoaderRef } = useBookmarks(filter, sortOption, initialBookmarks, initialHasMore)
+    const { bookmarks, hasMore, bookmarkLoaderRef } = useBookmarks(filter, sortOption, category, initialBookmarks, initialHasMore)
     return (
         <>
             {bookmarks.map((bookmark) => (

@@ -7,7 +7,7 @@ export function isBookmarkSortOption(sortOption: string): sortOption is Bookmark
 }
 // get sortOption from searchParams
 export function getSortOption(searchParams: { [key: string]: string | string[] | undefined } | ReadonlyURLSearchParams | URLSearchParams): BookmarkSortOption {
-    if (searchParams instanceof ReadonlyURLSearchParams) {
+    if (searchParams instanceof ReadonlyURLSearchParams || searchParams instanceof URLSearchParams) {
         return isBookmarkSortOption(searchParams.get('sort') as string) ? searchParams.get('sort') as BookmarkSortOption : 'date'
     }
     return isBookmarkSortOption(searchParams.sort as string) ? searchParams.sort as BookmarkSortOption : 'date'
