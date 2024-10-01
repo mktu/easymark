@@ -2,7 +2,7 @@
 import { FC, useState } from "react"
 import { useRouter } from "next/navigation"
 import { useBookmarkInput } from "../hooks/useBookmarkInput"
-import { handleAddBookmark, AddBookmarkState } from "../_actions/handleAddBookmark"
+import { handleAddBookmark, AddBookmarkState, HandleAddBookmarkReturnType } from "../_actions/handleAddBookmark"
 import { CategoryType } from "@/lib/repositories/categories"
 import OgpSection from "./OgpSection"
 import EditSection from "./EditSection"
@@ -17,7 +17,7 @@ const NewBookmark: FC<Props> = ({
     selectedCategoryId
 }) => {
     const { ogp, setBookmark, bookmark, validBookmark, note, setNote, category, setCategory } = useBookmarkInput(selectedCategoryId)
-    const [errors, setErrors] = useState<AddBookmarkState | null>(null)
+    const [addBookmarkResult, setAddBookmarkResult] = useState<HandleAddBookmarkReturnType>()
     const router = useRouter();
     return (
         <form className='flex size-full items-start justify-center gap-4 py-2' action={async () => {
@@ -28,8 +28,8 @@ const NewBookmark: FC<Props> = ({
                 imageUrl: ogp?.image?.url,
                 note
             })
+            setAddBookmarkResult(result)
             if (!('success' in result)) {
-                setErrors(result)
                 return
             }
             router.back()
@@ -38,7 +38,7 @@ const NewBookmark: FC<Props> = ({
                 url={bookmark}
                 ogp={ogp}
                 setUrl={setBookmark}
-                errors={errors}
+                result={addBookmarkResult}
             />
 
             <div className='h-full w-0 border border-input bg-input' />

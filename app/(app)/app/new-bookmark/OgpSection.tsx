@@ -3,19 +3,20 @@ import { Textarea } from "@/components/ui/textarea"
 import { CircleAlertIcon } from "lucide-react"
 import { FC } from "react"
 import { Input } from "@/components/ui/input"
-import { AddBookmarkState } from "../_actions/handleAddBookmark"
+import { AddBookmarkState, HandleAddBookmarkReturnType } from "../_actions/handleAddBookmark"
 import { OgpResponse } from "@/lib/supabase/ogp"
+import ErrorIndicator from "../_components/ErrorIndicator/ErrorIndicator"
 
 type Props = {
     url: string,
     ogp: OgpResponse | null,
     setUrl: (url: string) => void,
-    errors?: AddBookmarkState | null,
+    result?: HandleAddBookmarkReturnType | null,
 }
 const ImageWitdth = 460
 const ImageHeight = Math.floor(ImageWitdth / 1.91)
 
-const OgpSection: FC<Props> = ({ url, ogp, setUrl, errors }) => {
+const OgpSection: FC<Props> = ({ url, ogp, setUrl, result }) => {
     return (
         <section className='flex max-w-[500px] flex-col gap-4'>
             <div className='flex flex-col gap-2'>
@@ -23,12 +24,7 @@ const OgpSection: FC<Props> = ({ url, ogp, setUrl, errors }) => {
                 <Input id='url' name='url' value={url} onChange={(e) => {
                     setUrl(e.target.value)
                 }} />
-                {errors && 'error' in errors && (
-                    <p className='flex items-center text-destructive'>
-                        <CircleAlertIcon className='mr-1 size-5' />
-                        {errors.error}
-                    </p>
-                )}
+                <ErrorIndicator error={result?.validatedErrors?.url} />
             </div>
             {ogp ? (
                 <>

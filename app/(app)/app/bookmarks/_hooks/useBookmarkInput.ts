@@ -38,7 +38,7 @@ export const useBookmarkInput = () => {
             params.set('category', String(category));
         }
         replace(`${pathname}?${params.toString()}`);
-    }, []);
+    }, [pathname, replace, searchParams]);
 
     return {
         sortOption,

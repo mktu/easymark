@@ -1,9 +1,8 @@
 'use client'
 import { FC, useState } from "react"
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogTitle } from "@/components/ui/dialog"
-import { handleAddBookmark, AddBookmarkState } from "../../_actions/handleAddBookmark"
+import { handleAddBookmark, HandleAddBookmarkReturnType } from "../../_actions/handleAddBookmark"
 import { Input } from "@/components/ui/input"
-import { CircleAlertIcon } from "lucide-react"
 import { Textarea } from "@/components/ui/textarea"
 import OgpImage from "@/components/domain/OgpImage"
 import { Button } from "@/components/ui/button"
@@ -11,6 +10,7 @@ import { useBookmarkInput } from "../../hooks/useBookmarkInput"
 import { useRouter } from "next/navigation"
 import CategorySelector from "@/components/domain/CategorySelector"
 import { CategoryType } from "@/lib/repositories/categories"
+import ErrorIndicator from "../../_components/ErrorIndicator/ErrorIndicator"
 
 const ImageWitdth = 460
 const ImageHeight = Math.floor(ImageWitdth / 1.91)
@@ -25,7 +25,7 @@ const NewBookmarkDialog: FC<Props> = ({
     selectedCategoryId
 }) => {
     const { ogp, setBookmark, bookmark, validBookmark, note, setNote, category, setCategory } = useBookmarkInput(selectedCategoryId)
-    const [errors, setErrors] = useState<AddBookmarkState | null>(null)
+    const [addBookmarkResult, setAddBookmarkResult] = useState<HandleAddBookmarkReturnType>()
     const router = useRouter();
     return (
         <Dialog
@@ -49,8 +49,8 @@ const NewBookmarkDialog: FC<Props> = ({
                         note,
                         category
                     })
+                    setAddBookmarkResult(result)
                     if (!('success' in result)) {
-                        setErrors(result)
                         return
                     }
                     router.back()
@@ -60,16 +60,13 @@ const NewBookmarkDialog: FC<Props> = ({
                         <Input id='url' name='url' value={bookmark} onChange={(e) => {
                             setBookmark(e.target.value)
                         }} />
-                        {errors && 'error' in errors && (
-                            <p className='flex items-center text-destructive'>
-                                <CircleAlertIcon className='mr-1 size-5' />
-                                {errors.error}
-                            </p>
-                        )}
+                        <ErrorIndicator error={addBookmarkResult?.validatedErrors?.url} />
                         <label htmlFor="note">Note</label>
                         <Textarea className='mb-2' id='note' name='note' value={note} onChange={(e) => { setNote(e.target.value) }} />
+                        <ErrorIndicator error={addBookmarkResult?.validatedErrors?.note} />
                         <label htmlFor="category">Category</label>
                         <CategorySelector id='category' categories={categories} selectedCategory={category} selectCategory={setCategory} />
+                        <ErrorIndicator error={addBookmarkResult?.validatedErrors?.category} />
                         <h3 className='my-4 font-semibold'>OGP Information</h3>
                         {ogp ? (
                             <>

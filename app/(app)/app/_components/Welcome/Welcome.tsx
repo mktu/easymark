@@ -1,9 +1,7 @@
 'use client'
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { FC, useCallback, useEffect, useMemo, useState } from "react";
-import { validateURL } from "../../_lib/validateUrl";
-import { OgpResponse } from "@/app/api/ogp/route";
+import { FC } from "react";
 import { useFormState } from "react-dom";
 import { AddBookmarkState, handleBookmarkSubmit } from "../../_actions/handleAddBookmark";
 import OgpCard from "@/components/domain/OgpCard";

@@ -13,11 +13,11 @@ const schema = {
             message:
                 'need to be url format'
         }),
-    title: z.string().optional(),
-    description: z.string().optional(),
-    imageUrl: z.string().optional(),
-    category: z.number().optional(),
-    note: z.string().optional()
+    title: z.string().optional().nullable(),
+    description: z.string().optional().nullable(),
+    imageUrl: z.string().optional().nullable(),
+    category: z.number().optional().nullable(),
+    note: z.string().optional().nullable()
 }
 
 export const handleUpdateBookmark = async (data: {
@@ -51,3 +51,5 @@ export const handleUpdateBookmark = async (data: {
         success: true
     }
 }
+
+export type HandleUpdateBookmarkReturnType = Awaited<ReturnType<typeof handleUpdateBookmark>>;

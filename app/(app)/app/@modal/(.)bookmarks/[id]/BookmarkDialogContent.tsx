@@ -12,8 +12,8 @@ import { PopoverClose } from "@radix-ui/react-popover"
 import { BookmarkType } from "@/lib/repositories/bookmarks"
 import { useBookmarkUpdate } from "../../../hooks/useBookmarkUpdate"
 import { AddBookmarkState } from "../../../_actions/handleAddBookmark"
-import { handleUpdateBookmark } from "../../../_actions/handleUpdateBookmark"
-import AddBookmarkErrors from "../../../_components/ValidationError/AddBookmarkErrors"
+import { handleUpdateBookmark, HandleUpdateBookmarkReturnType } from "../../../_actions/handleUpdateBookmark"
+import ErrorIndicator from "../../../_components/ErrorIndicator/ErrorIndicator"
 import { handleDeleteBookmark } from "../../../_actions/handleDeleteBookmark"
 import { useRouter } from 'next/navigation';
 import { CategoryType } from "@/lib/repositories/categories"
@@ -31,7 +31,7 @@ type Props = {
 
 const BookmarkDialogContent: FC<Props> = ({ bookmark, categories, selectedCategoryId }) => {
     const { ogp, setNote, note, refetch, category, setCategory } = useBookmarkUpdate(bookmark, selectedCategoryId)
-    const [errors, setErrors] = useState<AddBookmarkState | null>(null)
+    const [updateResult, setUpdateResult] = useState<HandleUpdateBookmarkReturnType>()
     const router = useRouter();
     if (!bookmark) return null
     return (
@@ -47,7 +47,7 @@ const BookmarkDialogContent: FC<Props> = ({ bookmark, categories, selectedCatego
             <DialogContent className='flex h-full flex-col overflow-auto'>
                 <DialogTitle>Update Bookmark</DialogTitle>
                 <DialogDescription>Edit your bookmark information.</DialogDescription>
-                <form className='flex flex-col gap-1' action={async (form) => {
+                <form className='flex flex-col gap-1' action={async () => {
                     const result = await handleUpdateBookmark({
                         url: bookmark.url,
                         title: ogp?.title || bookmark.ogpTitle,
@@ -56,8 +56,8 @@ const BookmarkDialogContent: FC<Props> = ({ bookmark, categories, selectedCatego
                         note,
                         category
                     })
-                    if (!('success' in result)) {
-                        setErrors(result)
+                    setUpdateResult(result)
+                    if (!('success' in result) || result.success !== true) {
                         return
                     }
                     router.back()
@@ -65,6 +65,7 @@ const BookmarkDialogContent: FC<Props> = ({ bookmark, categories, selectedCatego
                     <OgpImage url={bookmark.url} image={ogp?.image?.url || bookmark?.ogpImage} alt={ogp?.title || bookmark?.ogpTitle || bookmark?.url} width={ImageWitdth} height={ImageHeight} />
                     <label htmlFor="url">URL</label>
                     <CopyableItem id='url' content={bookmark.url} />
+                    <ErrorIndicator error={updateResult?.validatedErrors?.url} />
                     <label htmlFor="title">Title</label>
                     <Input id='title' name='title' value={ogp?.title || bookmark.ogpTitle || bookmark?.url} disabled />
                     <label htmlFor="description">Description</label>
@@ -79,10 +80,10 @@ const BookmarkDialogContent: FC<Props> = ({ bookmark, categories, selectedCatego
                     <CategorySelector id='category' categories={categories} selectedCategory={category} selectCategory={(c) => {
                         setCategory(c)
                     }} />
+                    <ErrorIndicator error={updateResult?.validatedErrors?.category} />
                     <label htmlFor="note">Note</label>
                     <Textarea id='note' name='note' value={note} onChange={(e) => { setNote(e.target.value) }} />
-                    {errors && <AddBookmarkErrors state={errors} />}
-
+                    <ErrorIndicator error={updateResult?.validatedErrors?.note} />
                     <DialogFooter className='mt-2'>
                         <Popover>
                             <PopoverTrigger asChild>
@@ -100,7 +101,7 @@ const BookmarkDialogContent: FC<Props> = ({ bookmark, categories, selectedCatego
                                         const { error } = await handleDeleteBookmark({ bookmarkId: bookmark.bookmarkId })
                                         if (error) {
                                             console.error(error)
-                                            setErrors({ error })
+                                            //setErrors({ error })
                                         } else {
                                             router.back()
                                         }

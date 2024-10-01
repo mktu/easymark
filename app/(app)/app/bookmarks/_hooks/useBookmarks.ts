@@ -28,7 +28,7 @@ export const useBookmarks = (filter?: string, sortOption?: BookmarkSortOption, c
             return [...prev, ...newBookmarks];
         });
         return dataBookmarks;
-    }, [deferredFilter, page]);
+    }, [category, deferredFilter, page, sortOption]);
 
 
     useEffect(() => {

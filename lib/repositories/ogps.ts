@@ -14,9 +14,9 @@ export const addOgp = async (supabase: SupabaseClient<Database>, {
     imageUrl
 }: {
     url: string,
-    title?: string,
-    description?: string,
-    imageUrl?: string,
+    title?: string | null,
+    description?: string | null,
+    imageUrl?: string | null,
 }) => {
     const { error: ogpError } = await supabase.from('ogp_data').insert({ url, title, description, image_url: imageUrl });
     if (ogpError) {
@@ -37,9 +37,9 @@ export const upsertOgp = async (supabase: SupabaseClient<Database>, {
     imageUrl
 }: {
     url: string,
-    title?: string,
-    description?: string,
-    imageUrl?: string,
+    title?: string | null,
+    description?: string | null,
+    imageUrl?: string | null,
 }) => {
     const { error: ogpError } = await supabase.from('ogp_data').upsert({
         url,

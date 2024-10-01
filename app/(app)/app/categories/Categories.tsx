@@ -1,9 +1,7 @@
 import { CategoryWithBookmarkCountType } from "@/lib/repositories/categories"
 import AdddCategoryForm from "./AddCategoryForm"
 import CategoryListItem from "./CategoryListItem"
-import { Button } from "@/components/ui/button"
-import { PlusCircleIcon, PlusIcon } from "lucide-react"
-import Link from "next/link"
+import { PlusCircleIcon } from "lucide-react"
 
 type Props = {
     categories: CategoryWithBookmarkCountType[]

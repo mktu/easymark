@@ -2,12 +2,13 @@ import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { RefreshCwIcon, TrashIcon } from "lucide-react"
 import { FC } from "react"
-import AddBookmarkErrors from "../../_components/ValidationError/AddBookmarkErrors"
+import ErrorIndicator from "../../_components/ErrorIndicator/ErrorIndicator"
 import { AddBookmarkState } from "../../_actions/handleAddBookmark"
 import CategorySelector from "@/components/domain/CategorySelector"
 import { CategoryType } from "@/lib/repositories/categories"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { PopoverClose } from "@radix-ui/react-popover"
+import { HandleUpdateBookmarkReturnType } from "../../_actions/handleUpdateBookmark"
 
 type Props = {
     note?: string,
@@ -15,7 +16,7 @@ type Props = {
     categories: CategoryType[],
     category?: number | null,
     setCategory: (category: number | null) => void,
-    errors: AddBookmarkState | null,
+    result?: HandleUpdateBookmarkReturnType | null,
     onDelete: () => void
 }
 
@@ -25,18 +26,19 @@ const EditSection: FC<Props> = ({
     category,
     setCategory,
     categories,
-    errors,
+    result,
     onDelete
 }) => {
     return (
         <section className='flex size-full max-w-[500px] flex-col gap-2 pr-2'>
             <label htmlFor="note">Note</label>
             <Textarea id='note' name='note' value={note} onChange={(e) => { setNote(e.target.value) }} />
+            <ErrorIndicator error={result?.validatedErrors?.note} />
             <label htmlFor="category">Category</label>
             <CategorySelector id='category' categories={categories} selectedCategory={category} selectCategory={(c) => {
                 setCategory(c)
             }} />
-            {errors && <AddBookmarkErrors state={errors} />}
+            <ErrorIndicator error={result?.validatedErrors?.category} />
             <div className='mt-4 flex items-center'>
                 <div className="mr-auto">
                     <Popover>

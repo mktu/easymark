@@ -3,8 +3,7 @@ import { toast } from "sonner";
 import { FC, useState } from "react"
 import { BookmarkType } from "@/lib/repositories/bookmarks"
 import { useBookmarkUpdate } from "../../hooks/useBookmarkUpdate"
-import { AddBookmarkState } from "../../_actions/handleAddBookmark"
-import { handleUpdateBookmark } from "../../_actions/handleUpdateBookmark"
+import { handleUpdateBookmark, HandleUpdateBookmarkReturnType } from "../../_actions/handleUpdateBookmark"
 import { handleDeleteBookmark } from "../../_actions/handleDeleteBookmark"
 import { CategoryType } from "@/lib/repositories/categories";
 import OgpSection from "./OgpSection";
@@ -22,7 +21,7 @@ const BookmarkContent: FC<Props> = ({
     selectedCategoryId
 }) => {
     const { ogp, setNote, note, refetch, category, setCategory } = useBookmarkUpdate(bookmark, selectedCategoryId)
-    const [errors, setErrors] = useState<AddBookmarkState | null>(null)
+    const [updateResult, setUpdateResult] = useState<HandleUpdateBookmarkReturnType>()
     return (
         <form className='flex size-full items-start justify-center gap-4 py-2' action={async (form) => {
             const result = await handleUpdateBookmark({
@@ -33,8 +32,8 @@ const BookmarkContent: FC<Props> = ({
                 category,
                 note
             })
+            setUpdateResult(result)
             if (!('success' in result)) {
-                setErrors(result)
                 return
             }
             toast('Bookmark updated')
@@ -53,12 +52,12 @@ const BookmarkContent: FC<Props> = ({
                 category={category}
                 setCategory={setCategory}
                 categories={categories}
-                errors={errors}
+                result={updateResult}
                 onDelete={async () => {
                     const { error } = await handleDeleteBookmark({ bookmarkId: bookmark.bookmarkId })
                     if (error) {
                         console.error(error)
-                        setErrors({ error })
+                        //setErrors({ error })
                     } else {
                         toast('Bookmark deleted')
                     }

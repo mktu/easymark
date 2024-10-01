@@ -3,14 +3,14 @@
 import { FC } from "react";
 import SignoutButton from "../SignoutButton";
 import Link from "next/link";
-import { BookIcon, HomeIcon, LayoutGridIcon } from "lucide-react";
+import { BookIcon, HomeIcon, LayoutGridIcon, TagIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 
 const Sidebar: FC = () => {
     return (
-        <div className="flex flex-col p-2">
-            <Button asChild>
+        <div className="flex flex-col items-start p-2">
+            <Button asChild className="mb-2">
                 <Link href="/app" className="flex items-center gap-2">
                     <HomeIcon className="size-6" />
                     <span>Home</span>
@@ -29,8 +29,13 @@ const Sidebar: FC = () => {
                     <span>Bookmarks</span>
                 </Link>
             </Button>
-            <div>Tags</div>
-
+            <Button variant='ghost' asChild>
+                <Link href="/app/tags" className="flex items-center gap-2">
+                    <TagIcon className="size-6" />
+                    <span>Tags</span>
+                </Link>
+            </Button>
+            <div className='mt-6' />
             <SignoutButton />
         </div>
     )
