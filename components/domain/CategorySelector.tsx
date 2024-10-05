@@ -25,7 +25,7 @@ const CategorySelector: FC<Props> = ({
                 <div className='flex items-center gap-2'>
                     <CategoryBox size='sm' color={categories.find(
                         (c) => c.categoryId === selectedCategory)?.color} />
-                    <div>{categories.find((c) => c.categoryId === selectedCategory)?.name || emptyCategory.name}</div>
+                    <div className='w-full truncate'>{categories.find((c) => c.categoryId === selectedCategory)?.name || emptyCategory.name}</div>
                 </div>
             </SelectTrigger>
             <SelectContent>

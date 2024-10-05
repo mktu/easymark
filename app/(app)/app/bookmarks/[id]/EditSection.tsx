@@ -9,6 +9,8 @@ import { CategoryType } from "@/lib/repositories/categories"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { PopoverClose } from "@radix-ui/react-popover"
 import { HandleUpdateBookmarkReturnType } from "../../_actions/handleUpdateBookmark"
+import { TagSetter } from "@/components/domain/TagSetter"
+import { TagUsageType } from "@/lib/repositories/tags"
 
 type Props = {
     note?: string,
@@ -17,6 +19,10 @@ type Props = {
     category?: number | null,
     setCategory: (category: number | null) => void,
     result?: HandleUpdateBookmarkReturnType | null,
+    registeredTags: TagUsageType[],
+    unregisteredTags: TagUsageType[],
+    onSelectTag: (tag: TagUsageType, registered: boolean) => void
+    onClearTag: (tag: TagUsageType, registered: boolean) => void
     onDelete: () => void
 }
 
@@ -27,7 +33,11 @@ const EditSection: FC<Props> = ({
     setCategory,
     categories,
     result,
-    onDelete
+    onDelete,
+    registeredTags,
+    unregisteredTags,
+    onSelectTag,
+    onClearTag
 }) => {
     return (
         <section className='flex size-full max-w-[500px] flex-col gap-2 pr-2'>
@@ -39,6 +49,13 @@ const EditSection: FC<Props> = ({
                 setCategory(c)
             }} />
             <ErrorIndicator error={result?.validatedErrors?.category} />
+            <label htmlFor='tags'>Tags</label>
+            <TagSetter
+                id='tags'
+                registeredTags={registeredTags}
+                unregisteredTags={unregisteredTags}
+                onSelectTag={onSelectTag}
+                onClearTag={onClearTag} />
             <div className='mt-4 flex items-center'>
                 <div className="mr-auto">
                     <Popover>

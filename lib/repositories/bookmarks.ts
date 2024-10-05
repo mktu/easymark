@@ -52,16 +52,16 @@ export const updateBookmark = async (supabase: SupabaseClient<Database>, {
     categoryId
 }: {
     url: string,
-    userId: string | null,
+    userId: string,
     note?: string | null,
     categoryId?: number | null
 }) => {
-    const { error: bookmarkerror } = await supabase.from('bookmarks').update({ url, note, user_id: userId, category_id: categoryId || null }).eq('url', url).eq('user_id', userId);
+    const { error: bookmarkerror, data } = await supabase.from('bookmarks').update({ url, note, user_id: userId, category_id: categoryId || null }).eq('url', url).eq('user_id', userId).select('id');
     if (bookmarkerror) {
         console.error(bookmarkerror)
         return { error: 'cannnot update bookmark' }
     }
-    return { error: null }
+    return { error: null, bookmarkId: data![0].id }
 }
 
 export const deleteBookmark = async (supabase: SupabaseClient<Database>, {

@@ -2,7 +2,7 @@ import CopyableItem from "@/components/domain/CopyableItem"
 import OgpImage from "@/components/domain/OgpImage"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
-import { RefreshCwIcon } from "lucide-react"
+import { InfoIcon, RefreshCwIcon } from "lucide-react"
 import { FC } from "react"
 import { Input } from "@/components/ui/input"
 
@@ -30,8 +30,9 @@ const OgpSection: FC<Props> = ({ url, title, description, image, onUpdateOgp }) 
                 <label htmlFor="description">Description</label>
                 <Textarea id='description' name='description' value={description || ''} disabled />
                 <div className='mt-4'>
-                    <p>
-                        情報が正しく取得されていない場合、以下のボタンで更新してください。
+                    <p className='text-sm'>
+                        <InfoIcon className='size-4 inline mr-1' />
+                        情報が正しく取得されていない場合、以下ボタンで更新してください。
                     </p>
                     <div className='flex'>
                         <Button className='ml-auto w-fit' variant='ghost' type='button' onClick={onUpdateOgp}>

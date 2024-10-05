@@ -5,6 +5,7 @@ import { createClientForServer } from "@/lib/supabase/supabaseServer"
 import { revalidatePath } from "next/cache"
 import { updateBookmark } from "@/lib/repositories/bookmarks"
 import { upsertOgp } from "@/lib/repositories/ogps"
+import { associateTags } from "@/lib/repositories/tags"
 
 const schema = {
     url: z.string().regex(
@@ -17,7 +18,8 @@ const schema = {
     description: z.string().optional().nullable(),
     imageUrl: z.string().optional().nullable(),
     category: z.number().optional().nullable(),
-    note: z.string().optional().nullable()
+    note: z.string().optional().nullable(),
+    tags: z.array(z.number()).optional().nullable()
 }
 
 export const handleUpdateBookmark = async (data: {
@@ -26,7 +28,8 @@ export const handleUpdateBookmark = async (data: {
     description: string | null,
     imageUrl: string | null,
     category?: number | null,
-    note: string | null
+    note: string | null,
+    tags?: number[] | null
 }) => {
     const validated = z.object(schema).safeParse(data)
     if (!validated.success) {
@@ -38,13 +41,19 @@ export const handleUpdateBookmark = async (data: {
     if (!authData?.user) {
         return { error: 'not authenticated' }
     }
-    const { error: bookmarkerror } = await updateBookmark(supabase, { url, note, userId: authData.user.id, categoryId: category })
+    const { error: bookmarkerror, bookmarkId } = await updateBookmark(supabase, { url, note, userId: authData.user.id, categoryId: category })
     if (bookmarkerror) {
         return { error: bookmarkerror }
     }
     const { error: ogpError } = await upsertOgp(supabase, { url, title, description, imageUrl })
     if (ogpError) {
         return { error: ogpError }
+    }
+    if (data.tags && data.tags?.length > 0 && bookmarkId) {
+        const { error: tagError } = await associateTags(supabase, data.tags.map(tagId => ({ tagId, bookmarkId })))
+        if (tagError) {
+            return { error: tagError }
+        }
     }
     revalidatePath('/')
     return {

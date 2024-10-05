@@ -1,39 +1,44 @@
 'use client'
 import { toast } from "sonner";
-import { FC, useState } from "react"
+import { FC } from "react"
 import { BookmarkType } from "@/lib/repositories/bookmarks"
 import { useBookmarkUpdate } from "../../hooks/useBookmarkUpdate"
-import { handleUpdateBookmark, HandleUpdateBookmarkReturnType } from "../../_actions/handleUpdateBookmark"
-import { handleDeleteBookmark } from "../../_actions/handleDeleteBookmark"
 import { CategoryType } from "@/lib/repositories/categories";
 import OgpSection from "./OgpSection";
 import EditSection from "./EditSection";
+import { TagUsageType } from "@/lib/repositories/tags";
 
 type Props = {
     bookmark: BookmarkType,
     categories: CategoryType[],
+    tagUsage: TagUsageType[],
     selectedCategoryId?: number
 }
 
 const BookmarkContent: FC<Props> = ({
     bookmark,
     categories,
+    tagUsage,
     selectedCategoryId
 }) => {
-    const { ogp, setNote, note, refetch, category, setCategory } = useBookmarkUpdate(bookmark, selectedCategoryId)
-    const [updateResult, setUpdateResult] = useState<HandleUpdateBookmarkReturnType>()
+    const {
+        ogp,
+        setNote,
+        note,
+        refetch,
+        category,
+        setCategory,
+        handleSubmit,
+        updateResult,
+        handleDelete,
+        handleClearTag,
+        handleSelectTag,
+        registeredTags,
+        unregisteredTags
+    } = useBookmarkUpdate(tagUsage, bookmark, selectedCategoryId)
     return (
-        <form className='flex size-full items-start justify-center gap-4 py-2' action={async (form) => {
-            const result = await handleUpdateBookmark({
-                url: bookmark.url,
-                title: ogp?.title || bookmark.ogpTitle,
-                description: ogp?.description || bookmark.ogpDescription,
-                imageUrl: ogp?.image?.url || bookmark.ogpImage,
-                category,
-                note
-            })
-            setUpdateResult(result)
-            if (!('success' in result)) {
+        <form className='flex size-full items-start justify-center gap-4 py-2' action={async () => {
+            if (await handleSubmit()) {
                 return
             }
             toast('Bookmark updated')
@@ -53,12 +58,12 @@ const BookmarkContent: FC<Props> = ({
                 setCategory={setCategory}
                 categories={categories}
                 result={updateResult}
+                registeredTags={registeredTags}
+                unregisteredTags={unregisteredTags}
+                onSelectTag={handleSelectTag}
+                onClearTag={handleClearTag}
                 onDelete={async () => {
-                    const { error } = await handleDeleteBookmark({ bookmarkId: bookmark.bookmarkId })
-                    if (error) {
-                        console.error(error)
-                        //setErrors({ error })
-                    } else {
+                    if (await handleDelete()) {
                         toast('Bookmark deleted')
                     }
                 }} />

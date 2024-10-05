@@ -3,6 +3,7 @@ import { createClientForServer } from "@/lib/supabase/supabaseServer"
 import { redirect } from "next/navigation"
 import BookmarkContent from "./BookmarkContent"
 import { fetchCategories } from "@/lib/repositories/categories"
+import { fetchTagUsageByBookmarkId } from "@/lib/repositories/tags"
 
 export default async function Bookmark({ params, searchParams }: {
     params: { id: string },
@@ -16,5 +17,9 @@ export default async function Bookmark({ params, searchParams }: {
     }
     const bookmark = await fetchBookmark(supabase, userData.user.id, Number(params.id))
     const categories = await fetchCategories(supabase, userData.user.id)
-    return <BookmarkContent bookmark={bookmark} categories={categories} selectedCategoryId={selectedCategoryId} />
+    const tagUsage = await fetchTagUsageByBookmarkId(supabase, userData.user.id, bookmark.bookmarkId)
+    if ('error' in tagUsage) {
+        throw new Error(tagUsage.error)
+    }
+    return <BookmarkContent tagUsage={tagUsage} bookmark={bookmark} categories={categories} selectedCategoryId={selectedCategoryId} />
 }

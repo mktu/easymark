@@ -276,6 +276,13 @@ export type Database = {
             foreignKeyName: "fk_tag"
             columns: ["tag_id"]
             isOneToOne: false
+            referencedRelation: "tag_usage"
+            referencedColumns: ["tag_id"]
+          },
+          {
+            foreignKeyName: "fk_tag"
+            columns: ["tag_id"]
+            isOneToOne: false
             referencedRelation: "tags"
             referencedColumns: ["id"]
           },
@@ -341,6 +348,8 @@ export type Database = {
           bookmark_id: number | null
           category_id: number | null
           created_at: string | null
+          is_valid: boolean | null
+          last_checked: string | null
           note: string | null
           ogp_description: string | null
           ogp_image: string | null
@@ -400,6 +409,23 @@ export type Database = {
           },
           {
             foreignKeyName: "categories_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      tag_usage: {
+        Row: {
+          bookmark_count: number | null
+          tag_id: number | null
+          tag_name: string | null
+          user_id: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fk_user"
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "users"

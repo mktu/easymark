@@ -1,5 +1,5 @@
 'use client'
-import { FC, useState } from "react"
+import { FC } from "react"
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogTitle } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -11,13 +11,12 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { PopoverClose } from "@radix-ui/react-popover"
 import { BookmarkType } from "@/lib/repositories/bookmarks"
 import { useBookmarkUpdate } from "../../../hooks/useBookmarkUpdate"
-import { AddBookmarkState } from "../../../_actions/handleAddBookmark"
-import { handleUpdateBookmark, HandleUpdateBookmarkReturnType } from "../../../_actions/handleUpdateBookmark"
 import ErrorIndicator from "../../../_components/ErrorIndicator/ErrorIndicator"
-import { handleDeleteBookmark } from "../../../_actions/handleDeleteBookmark"
 import { useRouter } from 'next/navigation';
 import { CategoryType } from "@/lib/repositories/categories"
 import CategorySelector from "@/components/domain/CategorySelector"
+import TagsSetter from "@/components/domain/TagSetter/TagSetter"
+import { TagUsageType } from "@/lib/repositories/tags"
 
 
 const ImageWitdth = 460
@@ -26,12 +25,16 @@ const ImageHeight = Math.floor(ImageWitdth / 1.91)
 type Props = {
     bookmark: BookmarkType,
     categories: CategoryType[],
+    tagUsage: TagUsageType[],
     selectedCategoryId?: number
 }
 
-const BookmarkDialogContent: FC<Props> = ({ bookmark, categories, selectedCategoryId }) => {
-    const { ogp, setNote, note, refetch, category, setCategory } = useBookmarkUpdate(bookmark, selectedCategoryId)
-    const [updateResult, setUpdateResult] = useState<HandleUpdateBookmarkReturnType>()
+const BookmarkDialogContent: FC<Props> = ({ tagUsage, bookmark, categories, selectedCategoryId }) => {
+    const { ogp, setNote, note, refetch, category, setCategory,
+        registeredTags,
+        unregisteredTags, handleSubmit, handleDelete,
+        handleClearTag, handleSelectTag,
+        updateResult, error } = useBookmarkUpdate(tagUsage, bookmark, selectedCategoryId)
     const router = useRouter();
     if (!bookmark) return null
     return (
@@ -47,17 +50,9 @@ const BookmarkDialogContent: FC<Props> = ({ bookmark, categories, selectedCatego
             <DialogContent className='flex h-full flex-col overflow-auto'>
                 <DialogTitle>Update Bookmark</DialogTitle>
                 <DialogDescription>Edit your bookmark information.</DialogDescription>
+                {error && <ErrorIndicator error={error} />}
                 <form className='flex flex-col gap-1' action={async () => {
-                    const result = await handleUpdateBookmark({
-                        url: bookmark.url,
-                        title: ogp?.title || bookmark.ogpTitle,
-                        description: ogp?.description || bookmark.ogpDescription,
-                        imageUrl: ogp?.image?.url || bookmark.ogpImage,
-                        note,
-                        category
-                    })
-                    setUpdateResult(result)
-                    if (!('success' in result) || result.success !== true) {
+                    if (!await handleSubmit()) {
                         return
                     }
                     router.back()
@@ -77,10 +72,15 @@ const BookmarkDialogContent: FC<Props> = ({ bookmark, categories, selectedCatego
                         </Button>
                     </div>
                     <label htmlFor="category">Category</label>
-                    <CategorySelector id='category' categories={categories} selectedCategory={category} selectCategory={(c) => {
-                        setCategory(c)
-                    }} />
+                    <CategorySelector id='category' categories={categories} selectedCategory={category} selectCategory={setCategory} />
                     <ErrorIndicator error={updateResult?.validatedErrors?.category} />
+                    <label htmlFor="tags">Tags</label>
+                    <TagsSetter
+                        id='tags'
+                        registeredTags={registeredTags}
+                        unregisteredTags={unregisteredTags}
+                        onClearTag={handleClearTag}
+                        onSelectTag={handleSelectTag} />
                     <label htmlFor="note">Note</label>
                     <Textarea id='note' name='note' value={note} onChange={(e) => { setNote(e.target.value) }} />
                     <ErrorIndicator error={updateResult?.validatedErrors?.note} />
@@ -98,11 +98,7 @@ const BookmarkDialogContent: FC<Props> = ({ bookmark, categories, selectedCatego
                                         <Button type='button' variant='ghost' >Cancel</Button>
                                     </PopoverClose>
                                     <Button type='button' variant='destructive' onClick={async () => {
-                                        const { error } = await handleDeleteBookmark({ bookmarkId: bookmark.bookmarkId })
-                                        if (error) {
-                                            console.error(error)
-                                            //setErrors({ error })
-                                        } else {
+                                        if (await handleDelete()) {
                                             router.back()
                                         }
                                     }}>Delete</Button>
