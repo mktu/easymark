@@ -7,6 +7,7 @@ import { Suspense } from "react"
 import { getSortOption } from "./_utils/parseSortOption"
 import BookmarkSkelton from "./_components/BookmarkSkelton"
 import { parseNumber } from "@/lib/urlParser"
+import { headers } from "next/headers"
 
 
 export default async function Bookmark({ searchParams }: {
@@ -22,11 +23,13 @@ export default async function Bookmark({ searchParams }: {
     const sortOption = getSortOption(searchParams)
     const category = parseNumber(searchParams, 'category', null);
     const categories = await fetchCategories(supabase, userData.user.id);
-
+    const headersList = headers()
+    // todo: check if tehref is a better way to refresh the BookmarkListContainer
+    const referer = headersList.get('referer') || ''
     return <Bookmarks
         categories={categories}
         bookmarklist={
-            <Suspense key={filter + sortOption + category} fallback={<BookmarkSkelton />}>
+            <Suspense key={filter + sortOption + category + referer} fallback={<BookmarkSkelton />}>
                 <BookmarkListContainer
                     filter={filter}
                     category={category}
