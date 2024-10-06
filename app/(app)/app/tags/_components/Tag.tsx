@@ -1,24 +1,28 @@
 'use client'
 import { Button } from "@/components/ui/button"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { TagType } from "@/lib/repositories/tags"
+import { TagUsageType } from "@/lib/repositories/tags"
 import { PopoverClose } from "@radix-ui/react-popover"
-import { XIcon } from "lucide-react"
+import { BookIcon, XCircleIcon } from "lucide-react"
 import { FC } from "react"
 import { handleDeleteTag } from "../_actions/handleDeleteTag"
 
 type Props = {
-    tag: TagType,
+    tag: TagUsageType,
 }
 
 const Tag: FC<Props> = ({ tag }) => {
     const { name } = tag
     return (
-        <div className="flex w-fit items-center gap-2 rounded bg-gray-100 p-2">
-            <div>{name}</div>
+        <div className="flex w-fit items-center gap-2 rounded bg-gray-100 p-2 shadow">
+            <div className="truncate">{name}</div>
+            <div className='flex items-center gap-1'>
+                <BookIcon className='size-4' />
+                <span className='text-sm'>{tag.count}</span>
+            </div>
             <Popover>
                 <PopoverTrigger>
-                    <XIcon className="size-4" />
+                    <XCircleIcon className="size-5" />
                 </PopoverTrigger>
                 <PopoverContent align="start">
                     <div>Are you sure you want to delete this Tag?</div>

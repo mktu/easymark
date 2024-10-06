@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
 const schema = {
-    name: z.string(),
+    name: z.string().max(10, { message: 'tag name is too long' }),
 }
 
 export const handleAddTag = async (data: {
@@ -34,6 +34,8 @@ export const handleAddTag = async (data: {
     }
     revalidatePath('/app')
     return {
-        error: null
+        success: true
     }
 }
+
+export type HandleAddTagReturnType = Awaited<ReturnType<typeof handleAddTag>>

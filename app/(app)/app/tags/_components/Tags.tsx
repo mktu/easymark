@@ -1,10 +1,9 @@
-import { TagType } from "@/lib/repositories/tags"
+import { TagUsageType } from "@/lib/repositories/tags"
 import AdddTagForm from "./AddTagForm"
 import Tag from "./Tag"
-import { handleDeleteTag } from "../_actions/handleDeleteTag"
 
 type Props = {
-    tags: TagType[]
+    tags: TagUsageType[]
 }
 
 const Tags = ({ tags }: Props) => {
@@ -19,7 +18,7 @@ const Tags = ({ tags }: Props) => {
                 <section>
                     <h3 className='mb-2 font-semibold'>Registed Tags</h3>
                     {tags.length === 0 && <p>No Tags</p>}
-                    <ul className="flex items-center gap-2">
+                    <ul className="flex w-full flex-wrap items-center gap-2">
                         {tags.map(tag => (
                             <Tag key={tag.tagId} tag={tag} />
                         ))}

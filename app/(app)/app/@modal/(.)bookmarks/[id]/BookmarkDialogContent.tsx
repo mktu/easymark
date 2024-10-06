@@ -32,7 +32,7 @@ type Props = {
 const BookmarkDialogContent: FC<Props> = ({ tagUsage, bookmark, categories, selectedCategoryId }) => {
     const { ogp, setNote, note, refetch, category, setCategory,
         registeredTags,
-        unregisteredTags, handleSubmit, handleDelete,
+        handleSubmit, handleDelete,
         handleClearTag, handleSelectTag,
         updateResult, error } = useBookmarkUpdate(tagUsage, bookmark, selectedCategoryId)
     const router = useRouter();
@@ -78,7 +78,6 @@ const BookmarkDialogContent: FC<Props> = ({ tagUsage, bookmark, categories, sele
                     <TagsSetter
                         id='tags'
                         registeredTags={registeredTags}
-                        unregisteredTags={unregisteredTags}
                         onClearTag={handleClearTag}
                         onSelectTag={handleSelectTag} />
                     <label htmlFor="note">Note</label>

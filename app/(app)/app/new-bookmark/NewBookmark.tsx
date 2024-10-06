@@ -1,8 +1,7 @@
 'use client'
-import { FC, useState } from "react"
+import { FC } from "react"
 import { useRouter } from "next/navigation"
 import { useBookmarkInput } from "../hooks/useBookmarkInput"
-import { handleAddBookmark, AddBookmarkState, HandleAddBookmarkReturnType } from "../_actions/handleAddBookmark"
 import { CategoryType } from "@/lib/repositories/categories"
 import OgpSection from "./OgpSection"
 import EditSection from "./EditSection"
@@ -16,20 +15,25 @@ const NewBookmark: FC<Props> = ({
     categories,
     selectedCategoryId
 }) => {
-    const { ogp, setBookmark, bookmark, validBookmark, note, setNote, category, setCategory } = useBookmarkInput(selectedCategoryId)
-    const [addBookmarkResult, setAddBookmarkResult] = useState<HandleAddBookmarkReturnType>()
+    const {
+        ogp,
+        setBookmark,
+        bookmark,
+        validBookmark,
+        note,
+        setNote,
+        category,
+        setCategory,
+        handleClearTag,
+        handleSelectTag,
+        registeredTags,
+        addBookmarkResult,
+        handleSubmit
+    } = useBookmarkInput(selectedCategoryId)
     const router = useRouter();
     return (
         <form className='flex size-full items-start justify-center gap-4 py-2' action={async () => {
-            const result = await handleAddBookmark({
-                url: bookmark,
-                title: ogp?.title,
-                description: ogp?.description,
-                imageUrl: ogp?.image?.url,
-                note
-            })
-            setAddBookmarkResult(result)
-            if (!('success' in result)) {
+            if (!await handleSubmit()) {
                 return
             }
             router.back()
@@ -50,6 +54,9 @@ const NewBookmark: FC<Props> = ({
                 setCategory={setCategory}
                 categories={categories}
                 validBookmark={!!validBookmark}
+                registeredTags={registeredTags}
+                onClearTag={handleClearTag}
+                onSelectTag={handleSelectTag}
             />
         </form>
     )

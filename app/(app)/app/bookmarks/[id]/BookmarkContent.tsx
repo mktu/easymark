@@ -34,7 +34,6 @@ const BookmarkContent: FC<Props> = ({
         handleClearTag,
         handleSelectTag,
         registeredTags,
-        unregisteredTags
     } = useBookmarkUpdate(tagUsage, bookmark, selectedCategoryId)
     return (
         <form className='flex size-full items-start justify-center gap-4 py-2' action={async () => {
@@ -59,7 +58,6 @@ const BookmarkContent: FC<Props> = ({
                 categories={categories}
                 result={updateResult}
                 registeredTags={registeredTags}
-                unregisteredTags={unregisteredTags}
                 onSelectTag={handleSelectTag}
                 onClearTag={handleClearTag}
                 onDelete={async () => {

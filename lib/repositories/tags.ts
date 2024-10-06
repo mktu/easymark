@@ -42,16 +42,6 @@ export const isExistTag = async (supabase: SupabaseClient<Database>, { userId, n
     return { isExist: tags.length > 0 }
 }
 
-export const addTag = async (supabase: SupabaseClient<Database>, { userId, name }: { userId: string, name: string }) => {
-
-    const { error: tagError } = await supabase.from('tags').insert({ user_id: userId, name })
-    if (tagError) {
-        console.error(tagError)
-        return { error: 'cannot add tag' }
-    }
-    return { error: null }
-}
-
 export const associateTags = async (supabase: SupabaseClient<Database>, data: { tagId: number, bookmarkId: number }[]) => {
     const { error: tagError } = await supabase.from('tag_mappings').insert(data.map(v => ({ tag_id: v.tagId, bookmark_id: v.bookmarkId })))
     if (tagError) {
@@ -68,6 +58,15 @@ export const addTags = async (supabase: SupabaseClient<Database>, tags: { userId
         return { error: 'cannot add tags' }
     }
     return { error: null, tags: convertTags(data) }
+}
+
+export const addTag = async (supabase: SupabaseClient<Database>, { userId, name }: { userId: string, name: string }) => {
+    const { error: tagError, data } = await supabase.from('tags').insert({ user_id: userId, name }).select()
+    if (tagError) {
+        console.error(tagError)
+        return { error: 'cannot add tag' }
+    }
+    return { error: null, tag: convertTags(data)[0] }
 }
 
 export const searchTags = async (supabase: SupabaseClient<Database>, { userId, name }: { userId: string, name: string }) => {

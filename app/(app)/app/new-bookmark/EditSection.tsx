@@ -1,11 +1,13 @@
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
-import { PlusCircleIcon, RefreshCwIcon } from "lucide-react"
+import { PlusCircleIcon } from "lucide-react"
 import { FC } from "react"
 import CategorySelector from "@/components/domain/CategorySelector"
 import { CategoryType } from "@/lib/repositories/categories"
-import { AddBookmarkState, HandleAddBookmarkReturnType } from "../_actions/handleAddBookmark"
+import { HandleAddBookmarkReturnType } from "../_actions/handleAddBookmark"
 import ErrorIndicator from "../_components/ErrorIndicator/ErrorIndicator"
+import { TagUsageType } from "@/lib/repositories/tags"
+import TagsSetter from "@/components/domain/TagSetter/TagSetter"
 
 type Props = {
     note?: string,
@@ -14,7 +16,10 @@ type Props = {
     category?: number | null,
     setCategory: (category: number | null) => void,
     validBookmark: boolean,
-    result?: HandleAddBookmarkReturnType | null
+    result?: HandleAddBookmarkReturnType | null,
+    registeredTags: TagUsageType[],
+    onSelectTag: (tag: TagUsageType) => void
+    onClearTag: (tag: TagUsageType) => void
 }
 
 const EditSection: FC<Props> = ({
@@ -24,7 +29,10 @@ const EditSection: FC<Props> = ({
     setCategory,
     categories,
     validBookmark,
-    result
+    result,
+    registeredTags,
+    onSelectTag,
+    onClearTag
 }) => {
     return (
         <section className='flex size-full min-w-[470px] max-w-[500px] flex-col gap-2'>
@@ -35,6 +43,12 @@ const EditSection: FC<Props> = ({
             <CategorySelector id='category' categories={categories} selectedCategory={category} selectCategory={(c) => {
                 setCategory(c)
             }} />
+            <label htmlFor="tags">Tags</label>
+            <TagsSetter
+                id='tags'
+                registeredTags={registeredTags}
+                onClearTag={onClearTag}
+                onSelectTag={onSelectTag} />
             <ErrorIndicator error={result?.validatedErrors?.category} />
             <div className='mt-4 flex items-center'>
                 <Button type='submit' disabled={!validBookmark}>

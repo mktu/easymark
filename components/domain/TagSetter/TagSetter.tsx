@@ -2,40 +2,42 @@
 import {
     TagUsageType
 } from "@/lib/repositories/tags"
-import { TagIcon } from "lucide-react"
+import { InfoIcon, TagIcon } from "lucide-react"
 import { useSearchTagUsage } from "@/hooks/useSearchTagUsage"
 import DeletableTag from "./DeletableTag"
 import AddableTag from "./AddableTag"
-import { useMemo } from "react"
+import { Button } from "@/components/ui/button"
+import ErrorIndicator from "@/app/(app)/app/_components/ErrorIndicator/ErrorIndicator"
 
 type Props = {
     id?: string
     registeredTags: TagUsageType[],
-    unregisteredTags: TagUsageType[],
-    onSelectTag: (tag: TagUsageType, registered: boolean) => void,
-    onClearTag: (tag: TagUsageType, registered: boolean) => void,
+    onSelectTag: (tag: TagUsageType) => void,
+    onClearTag: (tag: TagUsageType) => void,
 }
 
 const TagsSetter = ({ id,
     registeredTags,
-    unregisteredTags,
     onClearTag,
     onSelectTag
 }: Props) => {
-    const { tags: searchedTags, searchTag, setSearchTag } = useSearchTagUsage()
-    const searchedTagsWithoutRegistered = useMemo(() => searchedTags.filter(tag => !registeredTags.find(t => t.name === tag.name)), [searchedTags, registeredTags])
+    const {
+        selectableTags,
+        searchTag,
+        setSearchTag,
+        addTagTarget,
+        error,
+        handleEnter,
+        handleAddTag,
+        handleCancelAddTag } = useSearchTagUsage(onSelectTag, registeredTags)
     return (
         <div className='relative'>
-            <div className='flex-wrap gap-2 w-full px-3 py-2 rounded border-input flex items-center border bg-background ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2'>
+            <div className='flex w-full flex-wrap items-center gap-2 rounded border border-input bg-background px-3 py-2 ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2'>
                 {registeredTags.length > 0 && registeredTags.map(tag => (
                     <DeletableTag registered key={tag.tagId} tag={tag} onClearTag={() => {
-                        onClearTag(tag, true)
+                        onClearTag(tag)
                     }} />))}
-                {unregisteredTags.length > 0 && unregisteredTags.map(tag => (
-                    <DeletableTag registered={false} key={tag.tagId} tag={tag} onClearTag={() => {
-                        onClearTag(tag, false)
-                    }} />))}
-                <div className='flex items-center flex-1 gap-2 py-1'>
+                <div className='flex flex-1 items-center gap-2 py-1'>
                     <TagIcon className='size-4 text-muted-foreground' />
                     <input
                         placeholder="Input Tag Name"
@@ -46,34 +48,37 @@ const TagsSetter = ({ id,
                             if (e.key === 'Enter') {
                                 e.preventDefault()
                                 e.stopPropagation()
-                                if (searchTag) {
-                                    const target = registeredTags.find(tag => tag.name === searchTag)
-                                    if (target) {
-                                        onSelectTag(target, true)
-                                        return
-                                    }
-                                    onSelectTag({
-                                        tagId: -1,
-                                        userId: '',
-                                        name: searchTag,
-                                        count: 0,
-                                    }, false)
-                                    setSearchTag('')
-                                }
+                                handleEnter()
                             }
                         }}
-                        type="text" className='bg-background text-sm placeholder:text-muted-foreground 
-                    focus-visible:bg-background
-                    focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50
-                    flex-1 min-w-[150px]
+                        type="text" className='min-w-[150px] flex-1 bg-background 
+                    text-sm
+                    placeholder:text-muted-foreground focus-visible:bg-background focus-visible:outline-none
+                    disabled:cursor-not-allowed disabled:opacity-50
                     ' />
                 </div>
             </div>
-            {searchedTagsWithoutRegistered.length > 0 && (
-                <div className='flex items-center p-3 w-full gap-2 flex-wrap'>
-                    {searchedTagsWithoutRegistered.map(tag => (
+            {error && <ErrorIndicator className='my-2' error={error} />}
+            {addTagTarget && (
+                <div className='mt-4 flex flex-col gap-2 rounded bg-blue-50 p-2 shadow'>
+                    <div className='flex w-full items-center justify-end gap-2'>
+                        <InfoIcon className='size-5 text-muted-foreground' />
+                        <span>Not Registered.</span>
+                        <span>Register</span>
+                        <span className='rounded bg-white p-2 shadow'>{addTagTarget}</span>
+                        <span>?</span>
+                    </div>
+                    <div className='flex w-full items-center justify-end gap-2'>
+                        <Button onClick={handleAddTag} type='button' variant='outline' size={'sm'}>Register</Button>
+                        <Button onClick={handleCancelAddTag} type='button' variant='ghost' size={'sm'}>Cancel</Button>
+                    </div>
+                </div>
+            )}
+            {selectableTags.length > 0 && (
+                <div className='flex w-full flex-wrap items-center gap-2 p-3'>
+                    {selectableTags.map(tag => (
                         <AddableTag key={tag.tagId} tag={tag} onAddTag={() => {
-                            onSelectTag(tag, true)
+                            onSelectTag(tag)
                             setSearchTag('')
                         }} />
                     ))}

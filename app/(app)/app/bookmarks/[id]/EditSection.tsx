@@ -3,7 +3,6 @@ import { Textarea } from "@/components/ui/textarea"
 import { RefreshCwIcon, TrashIcon } from "lucide-react"
 import { FC } from "react"
 import ErrorIndicator from "../../_components/ErrorIndicator/ErrorIndicator"
-import { AddBookmarkState } from "../../_actions/handleAddBookmark"
 import CategorySelector from "@/components/domain/CategorySelector"
 import { CategoryType } from "@/lib/repositories/categories"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
@@ -20,9 +19,8 @@ type Props = {
     setCategory: (category: number | null) => void,
     result?: HandleUpdateBookmarkReturnType | null,
     registeredTags: TagUsageType[],
-    unregisteredTags: TagUsageType[],
-    onSelectTag: (tag: TagUsageType, registered: boolean) => void
-    onClearTag: (tag: TagUsageType, registered: boolean) => void
+    onSelectTag: (tag: TagUsageType) => void
+    onClearTag: (tag: TagUsageType) => void
     onDelete: () => void
 }
 
@@ -35,7 +33,6 @@ const EditSection: FC<Props> = ({
     result,
     onDelete,
     registeredTags,
-    unregisteredTags,
     onSelectTag,
     onClearTag
 }) => {
@@ -53,7 +50,6 @@ const EditSection: FC<Props> = ({
             <TagSetter
                 id='tags'
                 registeredTags={registeredTags}
-                unregisteredTags={unregisteredTags}
                 onSelectTag={onSelectTag}
                 onClearTag={onClearTag} />
             <div className='mt-4 flex items-center'>
@@ -80,8 +76,6 @@ const EditSection: FC<Props> = ({
                     Update
                 </Button>
             </div>
-
-
         </section>
     )
 }
