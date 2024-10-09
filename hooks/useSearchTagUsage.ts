@@ -1,4 +1,5 @@
-import { TagType, TagUsageType } from "@/lib/repositories/tags";
+import { TagUsageType } from "@/lib/repositories/tag_usage";
+import { TagType } from "@/lib/repositories/tags";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDebounce } from "use-debounce";
 
@@ -11,7 +12,7 @@ export const useSearchTagUsage = (
     const [debouncedSearch] = useDebounce(searchTag, 500);
     const [error, setError] = useState<string | null>(null);
     const fetchTags = useCallback(async (search: string) => {
-        const result = await fetch(`/api/tags?search=${search}&limit=10`);
+        const result = await fetch(`/api/tag_usage?search=${search}&limit=10`);
         const { tags } = await result.json() as { tags: TagUsageType[] };
         return tags;
     }, []);

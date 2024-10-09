@@ -1,0 +1,15 @@
+import { FC } from "react"
+
+type Props = {
+    tag: { name: string, id: number }
+}
+
+const TagItem: FC<Props> = ({ tag }) => {
+    return (
+        <div className="flex items-center justify-center text-sm px-2 py-0.5 bg-gray-200 rounded shadow">
+            {tag.name}
+        </div>
+    )
+}
+
+export default TagItem

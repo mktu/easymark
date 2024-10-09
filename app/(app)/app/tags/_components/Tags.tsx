@@ -1,4 +1,4 @@
-import { TagUsageType } from "@/lib/repositories/tags"
+import { TagUsageType } from "@/lib/repositories/tag_usage"
 import AdddTagForm from "./AddTagForm"
 import Tag from "./Tag"
 

@@ -1,13 +1,11 @@
 'use client'
-import {
-    TagUsageType
-} from "@/lib/repositories/tags"
 import { InfoIcon, TagIcon } from "lucide-react"
 import { useSearchTagUsage } from "@/hooks/useSearchTagUsage"
 import DeletableTag from "./DeletableTag"
 import AddableTag from "./AddableTag"
 import { Button } from "@/components/ui/button"
 import ErrorIndicator from "@/app/(app)/app/_components/ErrorIndicator/ErrorIndicator"
+import { TagUsageType } from "@/lib/repositories/tag_usage"
 
 type Props = {
     id?: string

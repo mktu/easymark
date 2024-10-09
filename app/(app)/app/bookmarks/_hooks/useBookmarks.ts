@@ -1,3 +1,4 @@
+import { BookmarkTagsType } from "@/lib/repositories/bookmark_tags";
 import { BookmarkType } from "@/lib/repositories/bookmarks";
 import { BookmarkSortOption } from "@/lib/types";
 import { useCallback, useDeferredValue, useEffect, useState } from "react";
@@ -14,6 +15,7 @@ export const useBookmarks = (filter?: string, sortOption?: BookmarkSortOption, c
     const deferredFilter = useDeferredValue(filter);
     const [bookmarks, setBookmarks] = useState<BookmarkType[]>(initialBookmarks || []);
     const [hasMore, setHasMore] = useState(Boolean(initialHasMore));
+    const [bookmarkTags, setBookmarkTags] = useState<BookmarkTagsType>({});
 
     const fetchBookmarks = useCallback(async () => {
         if (page === 0) {
@@ -36,6 +38,19 @@ export const useBookmarks = (filter?: string, sortOption?: BookmarkSortOption, c
     }, [fetchBookmarks]);
 
     useEffect(() => {
+        const fetcher = async () => {
+            const result = await fetch(`/api/bookmarks/tags`)
+            const json = await result.json() as { bookmarks: BookmarkTagsType } | { error: string }
+            if ('error' in json) {
+                console.error(json.error)
+                return
+            }
+            setBookmarkTags(json.bookmarks)
+        }
+        fetcher()
+    }, []);
+
+    useEffect(() => {
         if (inView && hasMore) {
             setPage(prev => prev + 1);
         }
@@ -45,6 +60,7 @@ export const useBookmarks = (filter?: string, sortOption?: BookmarkSortOption, c
         bookmarks,
         hasMore,
         bookmarkLoaderRef,
+        bookmarkTags
     }
 }
 

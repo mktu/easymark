@@ -6,12 +6,12 @@ export async function GET(_: Request, { params }: { params: { bookmarkId: string
     const supabase = createClientForServer();
     const { data: authData } = await supabase.auth.getUser();
     if (!authData?.user) {
-        return { error: 'not authenticated' }
+        return NextResponse.json({ error: 'not authenticated' }, { status: 401 })
     }
     const { error: bookmarkerror, data } = await supabase.from('bookmarks_with_ogp').select().eq('bookmark_id', bookmarkId).eq('user_id', authData.user.id);
     if (bookmarkerror) {
         console.error(bookmarkerror)
-        return { error: 'cannnot add bookmark' }
+        return NextResponse.json({ error: 'cannnot add bookmark' }, { status: 500 })
     }
     return NextResponse.json({
         bookmark: data

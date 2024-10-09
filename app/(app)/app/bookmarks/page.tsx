@@ -24,12 +24,10 @@ export default async function Bookmark({ searchParams }: {
     const category = parseNumber(searchParams, 'category', null);
     const categories = await fetchCategories(supabase, userData.user.id);
     const headersList = headers()
-    // todo: check if tehref is a better way to refresh the BookmarkListContainer
-    const referer = headersList.get('referer') || ''
     return <Bookmarks
         categories={categories}
         bookmarklist={
-            <Suspense key={filter + sortOption + category + referer} fallback={<BookmarkSkelton />}>
+            <Suspense key={filter + sortOption + category} fallback={<BookmarkSkelton />}>
                 <BookmarkListContainer
                     filter={filter}
                     category={category}

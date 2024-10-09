@@ -3,7 +3,7 @@ import { createClientForServer } from "@/lib/supabase/supabaseServer"
 import { redirect } from "next/navigation"
 import BookmarkContent from "./BookmarkContent"
 import { fetchCategories } from "@/lib/repositories/categories"
-import { fetchTagUsageByBookmarkId } from "@/lib/repositories/tags"
+import { fetchTagUsageByBookmarkId } from "@/lib/repositories/tag_usage"
 
 export default async function Bookmark({ params, searchParams }: {
     params: { id: string },

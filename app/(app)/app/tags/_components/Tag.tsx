@@ -1,11 +1,11 @@
 'use client'
 import { Button } from "@/components/ui/button"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { TagUsageType } from "@/lib/repositories/tags"
 import { PopoverClose } from "@radix-ui/react-popover"
 import { BookIcon, XCircleIcon } from "lucide-react"
 import { FC } from "react"
 import { handleDeleteTag } from "../_actions/handleDeleteTag"
+import { TagUsageType } from "@/lib/repositories/tag_usage"
 
 type Props = {
     tag: TagUsageType,

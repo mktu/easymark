@@ -5,7 +5,7 @@ import { createClientForServer } from "@/lib/supabase/supabaseServer"
 import { revalidatePath } from "next/cache"
 import { updateBookmark } from "@/lib/repositories/bookmarks"
 import { upsertOgp } from "@/lib/repositories/ogps"
-import { associateTags } from "@/lib/repositories/tags"
+import { associateTags, removeTags } from "@/lib/repositories/tag_mappings"
 
 const schema = {
     url: z.string().regex(
@@ -50,9 +50,13 @@ export const handleUpdateBookmark = async (data: {
         return { error: ogpError }
     }
     if (data.tags && data.tags?.length > 0 && bookmarkId) {
-        const { error: tagError } = await associateTags(supabase, data.tags.map(tagId => ({ tagId, bookmarkId })))
-        if (tagError) {
-            return { error: tagError }
+        const removeResult = await removeTags(supabase, { bookmarkId })
+        if (removeResult.error) {
+            return { error: removeResult.error }
+        }
+        const associateResult = await associateTags(supabase, data.tags.map(tagId => ({ tagId, bookmarkId })))
+        if (associateResult.error) {
+            return { error: associateResult.error }
         }
     }
     revalidatePath('/')

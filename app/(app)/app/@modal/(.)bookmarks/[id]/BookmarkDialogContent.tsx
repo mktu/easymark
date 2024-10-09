@@ -16,7 +16,7 @@ import { useRouter } from 'next/navigation';
 import { CategoryType } from "@/lib/repositories/categories"
 import CategorySelector from "@/components/domain/CategorySelector"
 import TagsSetter from "@/components/domain/TagSetter/TagSetter"
-import { TagUsageType } from "@/lib/repositories/tags"
+import { TagUsageType } from "@/lib/repositories/tag_usage"
 
 
 const ImageWitdth = 460
@@ -55,7 +55,12 @@ const BookmarkDialogContent: FC<Props> = ({ tagUsage, bookmark, categories, sele
                     if (!await handleSubmit()) {
                         return
                     }
-                    router.back()
+                    // use hard navigation to refresh state
+                    location.href = `/app/bookmarks`
+
+                    // This cannot be used!
+                    // Even if the push API is used, the dialog's open state remains unchanged.
+                    //router.push(`/app/bookmarks`)
                 }}>
                     <OgpImage url={bookmark.url} image={ogp?.image?.url || bookmark?.ogpImage} alt={ogp?.title || bookmark?.ogpTitle || bookmark?.url} width={ImageWitdth} height={ImageHeight} />
                     <label htmlFor="url">URL</label>

@@ -9,7 +9,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { PopoverClose } from "@radix-ui/react-popover"
 import { HandleUpdateBookmarkReturnType } from "../../_actions/handleUpdateBookmark"
 import { TagSetter } from "@/components/domain/TagSetter"
-import { TagUsageType } from "@/lib/repositories/tags"
+import { TagUsageType } from "@/lib/repositories/tag_usage"
 
 type Props = {
     note?: string,

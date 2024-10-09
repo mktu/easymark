@@ -6,7 +6,7 @@ import { useBookmarkUpdate } from "../../hooks/useBookmarkUpdate"
 import { CategoryType } from "@/lib/repositories/categories";
 import OgpSection from "./OgpSection";
 import EditSection from "./EditSection";
-import { TagUsageType } from "@/lib/repositories/tags";
+import { TagUsageType } from "@/lib/repositories/tag_usage";
 
 type Props = {
     bookmark: BookmarkType,

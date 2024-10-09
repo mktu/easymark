@@ -16,10 +16,9 @@ export async function GET(request: Request) {
     const supabase = createClientForServer();
     const { data: authData } = await supabase.auth.getUser();
     if (!authData?.user) {
-        return { error: 'not authenticated' }
+        return NextResponse.json({ error: 'not authenticated' }, { status: 401 })
     }
     const { bookmarks, count } = await fetchBookmarksByPage(supabase, authData.user.id, page, limit, filter, sortOption)
-    console.log(count, end)
     return NextResponse.json({
         bookmarks: bookmarks,
         hasMore: count ? count > end : false

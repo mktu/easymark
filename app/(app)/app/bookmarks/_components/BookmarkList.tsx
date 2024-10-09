@@ -25,12 +25,13 @@ const BookmarkList: FC<Props> = ({
     initialBookmarks,
     initialHasMore
 }) => {
-    const { bookmarks, hasMore, bookmarkLoaderRef } = useBookmarks(filter, sortOption, category, initialBookmarks, initialHasMore)
+    const { bookmarks, hasMore, bookmarkLoaderRef, bookmarkTags } = useBookmarks(filter, sortOption, category, initialBookmarks, initialHasMore)
     return (
         <>
             {bookmarks.map((bookmark) => (
                 <li key={bookmark.bookmarkId}>
                     <BookmarkListItem
+                        tags={bookmarkTags[bookmark.bookmarkId]}
                         bookmark={bookmark}
                         category={categories.find((category) => category.categoryId === bookmark.categoryId)} />
                 </li>

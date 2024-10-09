@@ -6,8 +6,8 @@ import CategorySelector from "@/components/domain/CategorySelector"
 import { CategoryType } from "@/lib/repositories/categories"
 import { HandleAddBookmarkReturnType } from "../_actions/handleAddBookmark"
 import ErrorIndicator from "../_components/ErrorIndicator/ErrorIndicator"
-import { TagUsageType } from "@/lib/repositories/tags"
 import TagsSetter from "@/components/domain/TagSetter/TagSetter"
+import { TagUsageType } from "@/lib/repositories/tag_usage"
 
 type Props = {
     note?: string,

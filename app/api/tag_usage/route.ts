@@ -1,4 +1,4 @@
-import { fetchTagUsage, searchTagUsage } from "@/lib/repositories/tags";
+import { fetchTagUsage, searchTagUsage } from "@/lib/repositories/tag_usage";
 import { createClientForServer } from "@/lib/supabase/supabaseServer";
 import { NextResponse } from "next/server";
 
@@ -14,7 +14,7 @@ export async function GET(request: Request) {
     if (!search) {
         const result = await fetchTagUsage(supabase, authData.user.id, 10)
         if ('error' in result) {
-            return { error: result.error }
+            return NextResponse.json({ error: result.error }, { status: 500 })
         }
         return NextResponse.json({
             tags: result,
@@ -26,7 +26,7 @@ export async function GET(request: Request) {
         limit
     })
     if ('error' in result) {
-        return { error: result.error }
+        return NextResponse.json({ error: result.error }, { status: 500 })
     }
     return NextResponse.json({
         tags: result,

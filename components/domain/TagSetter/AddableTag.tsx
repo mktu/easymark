@@ -1,7 +1,7 @@
 'use client'
 import { Button } from "@/components/ui/button"
-import { TagUsageType } from "@/lib/repositories/tags"
-import { PlusCircle, PlusIcon } from "lucide-react"
+import { TagUsageType } from "@/lib/repositories/tag_usage"
+import { PlusCircle } from "lucide-react"
 import { FC } from "react"
 
 type Props = {
