@@ -5,7 +5,6 @@ import { Database } from "../supabase/schema"
 const convertTagUsage = (data: Database['public']['Views']['bookmarks_with_tags']['Row'][]) => {
     return data.reduce((acc, v) => {
         const tags = v.tags as { id: number | null, name: string | null }[]
-        console.log(tags)
         acc[v.id!] = tags.filter(tag => !!tag.id).map(tag => {
             return {
                 id: tag.id!,

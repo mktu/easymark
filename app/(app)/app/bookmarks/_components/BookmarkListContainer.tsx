@@ -8,6 +8,7 @@ type Props = {
     category?: number | null,
     sortOption?: BookmarkSortOption,
     categories: CategoryType[],
+    tags: number[] | null
 }
 
 
@@ -15,9 +16,10 @@ const BookmarkListContainer = async ({
     filter,
     category,
     sortOption,
+    tags,
     ...props
 }: Props) => {
-    const ret = await handleFetchBookmarks(0, 10, filter, sortOption, category)
+    const ret = await handleFetchBookmarks(0, 10, tags, filter, sortOption, category)
     return <BookmarkList {...{ ...props, filter, sortOption, category, initialBookmarks: ret.bookmarks, initialHasMore: ret.hasMore }} />
 }
 

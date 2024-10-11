@@ -6,8 +6,7 @@ import BookmarkListContainer from "./_components/BookmarkListContainer"
 import { Suspense } from "react"
 import { getSortOption } from "./_utils/parseSortOption"
 import BookmarkSkelton from "./_components/BookmarkSkelton"
-import { parseNumber } from "@/lib/urlParser"
-import { headers } from "next/headers"
+import { parseNumber, parseNumberArray } from "@/lib/urlParser"
 
 
 export default async function Bookmark({ searchParams }: {
@@ -22,13 +21,14 @@ export default async function Bookmark({ searchParams }: {
     const filter = searchParams.filter as string | ''
     const sortOption = getSortOption(searchParams)
     const category = parseNumber(searchParams, 'category', null);
+    const tags = parseNumberArray(searchParams, 'tags', []);
     const categories = await fetchCategories(supabase, userData.user.id);
-    const headersList = headers()
     return <Bookmarks
         categories={categories}
         bookmarklist={
-            <Suspense key={filter + sortOption + category} fallback={<BookmarkSkelton />}>
+            <Suspense key={filter + sortOption + category + tags?.join(',')} fallback={<BookmarkSkelton />}>
                 <BookmarkListContainer
+                    tags={tags}
                     filter={filter}
                     category={category}
                     sortOption={sortOption}

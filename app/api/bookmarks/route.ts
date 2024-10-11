@@ -1,6 +1,7 @@
 import { getSortOption } from "@/app/(app)/app/bookmarks/_utils/parseSortOption";
 import { fetchBookmarksByPage } from "@/lib/repositories/bookmarks";
 import { createClientForServer } from "@/lib/supabase/supabaseServer";
+import { parseNumberArray } from "@/lib/urlParser";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
@@ -8,6 +9,7 @@ export async function GET(request: Request) {
     const page = Number(searchParams.get('page') as string)
     const limit = Number(searchParams.get('limit') as string)
     const filter = searchParams.get('filter') as string
+    const tags = parseNumberArray(searchParams, 'tags', [])
     const sortOption = getSortOption(searchParams)
 
     const start = page * limit;
@@ -18,7 +20,7 @@ export async function GET(request: Request) {
     if (!authData?.user) {
         return NextResponse.json({ error: 'not authenticated' }, { status: 401 })
     }
-    const { bookmarks, count } = await fetchBookmarksByPage(supabase, authData.user.id, page, limit, filter, sortOption)
+    const { bookmarks, count } = await fetchBookmarksByPage(supabase, authData.user.id, page, limit, tags, filter, sortOption)
     return NextResponse.json({
         bookmarks: bookmarks,
         hasMore: count ? count > end : false
