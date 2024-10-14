@@ -2,7 +2,7 @@ import { fetchBookmark } from "@/lib/repositories/bookmarks"
 import { createClientForServer } from "@/lib/supabase/supabaseServer"
 import { redirect } from "next/navigation"
 import BookmarkContent from "./BookmarkContent"
-import { fetchCategories } from "@/lib/repositories/categories"
+import { getCategories } from "@/lib/repositories/categories"
 import { fetchTagUsageByBookmarkId } from "@/lib/repositories/tag_usage"
 
 export default async function Bookmark({ params, searchParams }: {
@@ -16,7 +16,7 @@ export default async function Bookmark({ params, searchParams }: {
         redirect('/signin')
     }
     const bookmark = await fetchBookmark(supabase, userData.user.id, Number(params.id))
-    const categories = await fetchCategories(supabase, userData.user.id)
+    const categories = await getCategories(supabase, userData.user.id)
     const tagUsage = await fetchTagUsageByBookmarkId(supabase, userData.user.id, bookmark.bookmarkId)
     if ('error' in tagUsage) {
         throw new Error(tagUsage.error)

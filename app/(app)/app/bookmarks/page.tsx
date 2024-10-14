@@ -1,12 +1,13 @@
 import { createClientForServer } from "@/lib/supabase/supabaseServer"
 import { redirect } from "next/navigation"
-import { fetchCategories } from "@/lib/repositories/categories"
+import { getCategories } from "@/lib/repositories/categories"
 import Bookmarks from "./_components/Bookmarks"
 import BookmarkListContainer from "./_components/BookmarkListContainer"
 import { Suspense } from "react"
 import { getSortOption } from "./_utils/parseSortOption"
 import BookmarkSkelton from "./_components/BookmarkSkelton"
 import { parseNumber, parseNumberArray } from "@/lib/urlParser"
+import { getTagUsage, getTagUsageByTags } from "@/lib/repositories/tag_usage"
 
 
 export default async function Bookmark({ searchParams }: {
@@ -22,9 +23,15 @@ export default async function Bookmark({ searchParams }: {
     const sortOption = getSortOption(searchParams)
     const category = parseNumber(searchParams, 'category', null);
     const tags = parseNumberArray(searchParams, 'tags', []);
-    const categories = await fetchCategories(supabase, userData.user.id);
+    const categories = await getCategories(supabase, userData.user.id);
+    const tagUsages = tags ? await getTagUsageByTags(supabase, userData.user.id, tags) : [];
+    if ('error' in tagUsages) {
+        throw new Error(tagUsages.error)
+    }
+
     return <Bookmarks
         categories={categories}
+        tags={tagUsages}
         bookmarklist={
             <Suspense key={filter + sortOption + category + tags?.join(',')} fallback={<BookmarkSkelton />}>
                 <BookmarkListContainer
@@ -35,6 +42,5 @@ export default async function Bookmark({ searchParams }: {
                     categories={categories}
                 />
             </Suspense>
-
         } />
 }

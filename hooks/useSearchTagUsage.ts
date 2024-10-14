@@ -6,6 +6,7 @@ import { useDebounce } from "use-debounce";
 export const useSearchTagUsage = (
     onSelectTag: (tag: TagUsageType, registered: boolean) => void,
     registeredTags: TagUsageType[]) => {
+    const [loading, setLoading] = useState(true)
     const [searchTag, setSearchTag] = useState('');
     const [addTagTarget, setAddTagTarget] = useState<string | null>(null);
     const [tags, setTags] = useState<TagUsageType[]>([]);
@@ -18,7 +19,10 @@ export const useSearchTagUsage = (
     }, []);
 
     useEffect(() => {
-        fetchTags(debouncedSearch).then(setTags)
+        fetchTags(debouncedSearch).then(tags => {
+            setTags(tags)
+            setLoading(false)
+        })
     }, [fetchTags, debouncedSearch]);
 
     const handleEnter = useCallback(async () => {
@@ -75,6 +79,7 @@ export const useSearchTagUsage = (
         selectableTags,
         handleEnter,
         handleAddTag,
-        handleCancelAddTag
+        handleCancelAddTag,
+        loading
     }
 }

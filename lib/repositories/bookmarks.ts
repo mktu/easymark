@@ -98,7 +98,7 @@ export const fetchBookmarksByPage = async (
     filter?: string,
     sortOption?: BookmarkSortOption,
     category?: number | null) => {
-    const { data } = tags && tags.length > 0 ? await supabase.from('tag_mappings').select('bookmark_id').in('tag_id', tags || []) : { data: [] }
+    const { data: tagData } = tags && tags.length > 0 ? await supabase.from('tag_mappings').select('bookmark_id').in('tag_id', tags || []) : { data: [] }
     const query = supabase.from('bookmarks_with_ogp').select('*').eq('user_id', userId);
     if (filter) {
         query.ilike('ogp_title', `%${filter}%`)
@@ -106,8 +106,8 @@ export const fetchBookmarksByPage = async (
     if (category) {
         query.eq('category_id', category)
     }
-    if (data && data.length > 0) {
-        query.in('bookmark_id', data.map(v => v.bookmark_id))
+    if (tagData && tagData.length > 0) {
+        query.in('bookmark_id', tagData.map(v => v.bookmark_id))
     }
     query.range(page * limit, (page * limit) + limit - 1);
     if (sortOption === 'date') {

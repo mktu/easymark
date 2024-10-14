@@ -21,6 +21,7 @@ type Props = {
     registeredTags: TagUsageType[],
     onSelectTag: (tag: TagUsageType) => void
     onClearTag: (tag: TagUsageType) => void
+    onClearAllTags: () => void
     onDelete: () => void
 }
 
@@ -34,7 +35,8 @@ const EditSection: FC<Props> = ({
     onDelete,
     registeredTags,
     onSelectTag,
-    onClearTag
+    onClearTag,
+    onClearAllTags
 }) => {
     return (
         <section className='flex size-full max-w-[500px] flex-col gap-2 pr-2'>
@@ -51,7 +53,9 @@ const EditSection: FC<Props> = ({
                 id='tags'
                 registeredTags={registeredTags}
                 onSelectTag={onSelectTag}
-                onClearTag={onClearTag} />
+                onClearTag={onClearTag}
+                onClearAll={onClearAllTags}
+            />
             <div className='mt-4 flex items-center'>
                 <div className="mr-auto">
                     <Popover>

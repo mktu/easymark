@@ -34,6 +34,7 @@ const BookmarkContent: FC<Props> = ({
         handleClearTag,
         handleSelectTag,
         registeredTags,
+        handleClearAllTags
     } = useBookmarkUpdate(tagUsage, bookmark, selectedCategoryId)
     return (
         <form className='flex size-full items-start justify-center gap-4 py-2' action={async () => {
@@ -60,6 +61,7 @@ const BookmarkContent: FC<Props> = ({
                 registeredTags={registeredTags}
                 onSelectTag={handleSelectTag}
                 onClearTag={handleClearTag}
+                onClearAllTags={handleClearAllTags}
                 onDelete={async () => {
                     if (await handleDelete()) {
                         toast('Bookmark deleted')

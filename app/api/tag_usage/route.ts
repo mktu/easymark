@@ -1,4 +1,4 @@
-import { fetchTagUsage, searchTagUsage } from "@/lib/repositories/tag_usage";
+import { getTagUsage, searchTagUsage } from "@/lib/repositories/tag_usage";
 import { createClientForServer } from "@/lib/supabase/supabaseServer";
 import { NextResponse } from "next/server";
 
@@ -12,7 +12,7 @@ export async function GET(request: Request) {
         return { error: 'not authenticated' }
     }
     if (!search) {
-        const result = await fetchTagUsage(supabase, authData.user.id, 10)
+        const result = await getTagUsage(supabase, authData.user.id, 10)
         if ('error' in result) {
             return NextResponse.json({ error: result.error }, { status: 500 })
         }

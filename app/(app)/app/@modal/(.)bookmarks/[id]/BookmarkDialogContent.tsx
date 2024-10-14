@@ -27,13 +27,15 @@ type Props = {
     categories: CategoryType[],
     tagUsage: TagUsageType[],
     selectedCategoryId?: number
+    from?: string | null
 }
 
-const BookmarkDialogContent: FC<Props> = ({ tagUsage, bookmark, categories, selectedCategoryId }) => {
+const BookmarkDialogContent: FC<Props> = ({ tagUsage, bookmark, categories, selectedCategoryId, from }) => {
     const { ogp, setNote, note, refetch, category, setCategory,
         registeredTags,
         handleSubmit, handleDelete,
         handleClearTag, handleSelectTag,
+        handleClearAllTags,
         updateResult, error } = useBookmarkUpdate(tagUsage, bookmark, selectedCategoryId)
     const router = useRouter();
     if (!bookmark) return null
@@ -56,7 +58,7 @@ const BookmarkDialogContent: FC<Props> = ({ tagUsage, bookmark, categories, sele
                         return
                     }
                     // use hard navigation to refresh state
-                    location.href = `/app/bookmarks`
+                    location.href = from || `/app/bookmarks`
 
                     // This cannot be used!
                     // Even if the push API is used, the dialog's open state remains unchanged.
@@ -84,7 +86,9 @@ const BookmarkDialogContent: FC<Props> = ({ tagUsage, bookmark, categories, sele
                         id='tags'
                         registeredTags={registeredTags}
                         onClearTag={handleClearTag}
-                        onSelectTag={handleSelectTag} />
+                        onSelectTag={handleSelectTag}
+                        onClearAll={handleClearAllTags}
+                    />
                     <label htmlFor="note">Note</label>
                     <Textarea id='note' name='note' value={note} onChange={(e) => { setNote(e.target.value) }} />
                     <ErrorIndicator error={updateResult?.validatedErrors?.note} />

@@ -20,6 +20,7 @@ type Props = {
     registeredTags: TagUsageType[],
     onSelectTag: (tag: TagUsageType) => void
     onClearTag: (tag: TagUsageType) => void
+    onClearAllTags: () => void
 }
 
 const EditSection: FC<Props> = ({
@@ -32,7 +33,8 @@ const EditSection: FC<Props> = ({
     result,
     registeredTags,
     onSelectTag,
-    onClearTag
+    onClearTag,
+    onClearAllTags
 }) => {
     return (
         <section className='flex size-full min-w-[470px] max-w-[500px] flex-col gap-2'>
@@ -48,7 +50,9 @@ const EditSection: FC<Props> = ({
                 id='tags'
                 registeredTags={registeredTags}
                 onClearTag={onClearTag}
-                onSelectTag={onSelectTag} />
+                onSelectTag={onSelectTag}
+                onClearAll={onClearAllTags}
+            />
             <ErrorIndicator error={result?.validatedErrors?.category} />
             <div className='mt-4 flex items-center'>
                 <Button type='submit' disabled={!validBookmark}>

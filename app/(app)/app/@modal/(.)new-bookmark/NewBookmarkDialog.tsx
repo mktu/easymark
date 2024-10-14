@@ -17,12 +17,14 @@ const ImageHeight = Math.floor(ImageWitdth / 1.91)
 
 type Props = {
     categories: CategoryType[],
-    selectedCategoryId?: number
+    selectedCategoryId?: number,
+    from?: string | null
 }
 
 const NewBookmarkDialog: FC<Props> = ({
     categories,
-    selectedCategoryId
+    selectedCategoryId,
+    from
 }) => {
     const {
         ogp,
@@ -37,7 +39,8 @@ const NewBookmarkDialog: FC<Props> = ({
         addBookmarkResult,
         registeredTags,
         handleClearTag,
-        handleSelectTag
+        handleSelectTag,
+        handleClearAllTags
     } = useBookmarkInput(selectedCategoryId)
     const router = useRouter();
     return (
@@ -58,7 +61,7 @@ const NewBookmarkDialog: FC<Props> = ({
                     if (!await handleSubmit()) {
                         return
                     }
-                    router.back()
+                    location.href = from || `/app/bookmarks`
                 }}>
                     <div className='flex flex-1 flex-col gap-1 overflow-y-auto px-3'>
                         <label htmlFor="url">URL</label>
@@ -77,7 +80,9 @@ const NewBookmarkDialog: FC<Props> = ({
                             id='tags'
                             registeredTags={registeredTags}
                             onClearTag={handleClearTag}
-                            onSelectTag={handleSelectTag} />
+                            onSelectTag={handleSelectTag}
+                            onClearAll={handleClearAllTags}
+                        />
                         <h3 className='my-4 font-semibold'>OGP Information</h3>
                         {ogp ? (
                             <>

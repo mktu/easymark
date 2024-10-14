@@ -47,6 +47,10 @@ export const useBookmarkUpdate = (initialTags: TagUsageType[], bookmark?: Bookma
         setRegisteredTags(before => [...before, tag])
     }, [setRegisteredTags])
 
+    const handleClearAllTags = useCallback(() => {
+        setRegisteredTags([])
+    }, [setRegisteredTags])
+
 
     return {
         refetch,
@@ -61,6 +65,7 @@ export const useBookmarkUpdate = (initialTags: TagUsageType[], bookmark?: Bookma
         registeredTags,
         handleDelete,
         handleClearTag,
-        handleSelectTag
+        handleSelectTag,
+        handleClearAllTags
     }
 }

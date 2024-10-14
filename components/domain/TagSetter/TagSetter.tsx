@@ -6,18 +6,79 @@ import AddableTag from "./AddableTag"
 import { Button } from "@/components/ui/button"
 import ErrorIndicator from "@/app/(app)/app/_components/ErrorIndicator/ErrorIndicator"
 import { TagUsageType } from "@/lib/repositories/tag_usage"
+import { useMemo } from "react"
+import { cn } from "@/lib/utils"
+import { cva } from "class-variance-authority"
+import DeleteAll from "./DeleteAll"
+import { Skeleton } from "@/components/ui/skeleton"
+import TagSkeltons from "./TagSkeltons"
+
+const inputVariants = cva(
+    'flex flex-1 items-center gap-2 py-1',
+    {
+        variants: {
+            size: {
+                md: "",
+                full: 'w-full'
+            },
+        },
+        defaultVariants: {
+            size: "full",
+        },
+    }
+)
+const inputWrapperVariants = cva(
+    'flex flex-wrap items-center gap-2 rounded border border-input bg-background px-3 py-2 ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2',
+    {
+        variants: {
+            size: {
+                md: "",
+                full: 'w-full'
+            },
+        },
+        defaultVariants: {
+            size: "full",
+        },
+    }
+)
+
+const inputInternalVariants = cva(
+    'bg-background text-sm placeholder:text-muted-foreground focus-visible:bg-background focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
+    {
+        variants: {
+            size: {
+                md: "w-full flex-1",
+                full: 'min-w-[150px] flex-1',
+            },
+        },
+        defaultVariants: {
+            size: "full",
+        },
+    }
+)
+
+type Variants = {
+    size: 'md' | 'full',
+}
 
 type Props = {
-    id?: string
+    id?: string,
+    className?: string,
+    variants?: Variants,
     registeredTags: TagUsageType[],
     onSelectTag: (tag: TagUsageType) => void,
     onClearTag: (tag: TagUsageType) => void,
+    onClearAll: () => void,
 }
 
-const TagsSetter = ({ id,
+const TagsSetter = ({
+    id,
+    className,
+    variants = { size: 'full' },
     registeredTags,
     onClearTag,
-    onSelectTag
+    onSelectTag,
+    onClearAll
 }: Props) => {
     const {
         selectableTags,
@@ -25,35 +86,48 @@ const TagsSetter = ({ id,
         setSearchTag,
         addTagTarget,
         error,
+        loading,
         handleEnter,
         handleAddTag,
         handleCancelAddTag } = useSearchTagUsage(onSelectTag, registeredTags)
+    const selectableItems = useMemo(() => {
+        return selectableTags.length > 0 && (
+            <div className='flex w-full flex-wrap items-center gap-2 p-3'>
+                {selectableTags.map(tag => (
+                    <AddableTag key={tag.tagId} tag={tag} onAddTag={() => {
+                        onSelectTag(tag)
+                        setSearchTag('')
+                    }} />
+                ))}
+            </div>
+        )
+    }, [selectableTags, onSelectTag, setSearchTag])
     return (
-        <div className='relative'>
-            <div className='flex w-full flex-wrap items-center gap-2 rounded border border-input bg-background px-3 py-2 ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2'>
-                {registeredTags.length > 0 && registeredTags.map(tag => (
-                    <DeletableTag registered key={tag.tagId} tag={tag} onClearTag={() => {
-                        onClearTag(tag)
-                    }} />))}
-                <div className='flex flex-1 items-center gap-2 py-1'>
-                    <TagIcon className='size-4 text-muted-foreground' />
-                    <input
-                        placeholder="Input Tag Name"
-                        id={id}
-                        onChange={(e) => setSearchTag(e.target.value)}
-                        value={searchTag}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter') {
-                                e.preventDefault()
-                                e.stopPropagation()
-                                handleEnter()
-                            }
-                        }}
-                        type="text" className='min-w-[150px] flex-1 bg-background 
-                    text-sm
-                    placeholder:text-muted-foreground focus-visible:bg-background focus-visible:outline-none
-                    disabled:cursor-not-allowed disabled:opacity-50
-                    ' />
+        <div className={cn('w-full', className)}>
+            <div className='flex items-center gap-4 w-full'>
+                <div className={cn(inputWrapperVariants({ size: variants?.size }))}>
+                    {registeredTags.length > 0 && registeredTags.map(tag => (
+                        <DeletableTag registered key={tag.tagId} tag={tag} onClearTag={() => {
+                            onClearTag(tag)
+                        }} />))}
+                    {registeredTags.length > 0 && <DeleteAll onClearAll={onClearAll} />
+                    }
+                    <div className={cn(inputVariants({ size: variants?.size }))}>
+                        <TagIcon className='size-4 text-muted-foreground' />
+                        <input
+                            placeholder="Input Tag Name"
+                            id={id}
+                            onChange={(e) => setSearchTag(e.target.value)}
+                            value={searchTag}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter') {
+                                    e.preventDefault()
+                                    e.stopPropagation()
+                                    handleEnter()
+                                }
+                            }}
+                            type="text" className={cn(inputInternalVariants({ size: variants?.size }))} />
+                    </div>
                 </div>
             </div>
             {error && <ErrorIndicator className='my-2' error={error} />}
@@ -72,16 +146,11 @@ const TagsSetter = ({ id,
                     </div>
                 </div>
             )}
-            {selectableTags.length > 0 && (
-                <div className='flex w-full flex-wrap items-center gap-2 p-3'>
-                    {selectableTags.map(tag => (
-                        <AddableTag key={tag.tagId} tag={tag} onAddTag={() => {
-                            onSelectTag(tag)
-                            setSearchTag('')
-                        }} />
-                    ))}
-                </div>
-            )}
+            <div className='p-2 w-fit'>
+                <p className='text-sm text-muted-foreground'>Suggestion</p>
+                {loading ? <TagSkeltons /> :
+                    selectableTags.length === 0 ? <p className='text-sm text-muted-foreground p-4'>No suggestion</p> : selectableItems}
+            </div>
         </div>
     )
 }

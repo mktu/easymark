@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { User2Icon, UserCircle2Icon } from "lucide-react";
+import { UserCircle2Icon } from "lucide-react";
 import Link from "next/link";
 import { FC } from "react";
 

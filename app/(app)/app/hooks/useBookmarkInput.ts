@@ -37,6 +37,10 @@ export const useBookmarkInput = (initialCategoryId?: number) => {
         setRegisteredTags(before => [...before, tag])
     }, [setRegisteredTags])
 
+    const handleClearAllTags = useCallback(() => {
+        setRegisteredTags([])
+    }, [setRegisteredTags])
+
 
     return {
         validBookmark,
@@ -51,6 +55,7 @@ export const useBookmarkInput = (initialCategoryId?: number) => {
         addBookmarkResult,
         handleClearTag,
         handleSelectTag,
-        registeredTags
+        registeredTags,
+        handleClearAllTags
     }
 }

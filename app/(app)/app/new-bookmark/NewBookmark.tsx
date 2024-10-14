@@ -8,6 +8,7 @@ import EditSection from "./EditSection"
 
 type Props = {
     categories: CategoryType[],
+    from?: string | null
     selectedCategoryId?: number
 }
 
@@ -28,7 +29,8 @@ const NewBookmark: FC<Props> = ({
         handleSelectTag,
         registeredTags,
         addBookmarkResult,
-        handleSubmit
+        handleSubmit,
+        handleClearAllTags
     } = useBookmarkInput(selectedCategoryId)
     const router = useRouter();
     return (
@@ -57,6 +59,7 @@ const NewBookmark: FC<Props> = ({
                 registeredTags={registeredTags}
                 onClearTag={handleClearTag}
                 onSelectTag={handleSelectTag}
+                onClearAllTags={handleClearAllTags}
             />
         </form>
     )

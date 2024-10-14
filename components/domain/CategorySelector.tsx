@@ -2,9 +2,11 @@ import { CategoryType } from "@/lib/repositories/categories"
 import { FC } from "react"
 import { Select, SelectContent, SelectItem, SelectTrigger } from "../ui/select"
 import CategoryBox from "./CategoryBox"
+import { cn } from "@/lib/utils"
 
 type Props = {
     id?: string,
+    className?: string,
     categories: CategoryType[],
     selectedCategory?: number | null,
     selectCategory: (category: number | null) => void
@@ -12,6 +14,7 @@ type Props = {
 
 const CategorySelector: FC<Props> = ({
     id,
+    className,
     categories,
     selectedCategory,
     selectCategory
@@ -22,7 +25,7 @@ const CategorySelector: FC<Props> = ({
             selectCategory(value === emptyCategory.categoryId ? null : Number(value))
         }}>
             <SelectTrigger id={id}>
-                <div className='flex items-center gap-2'>
+                <div className={cn('flex items-center gap-2', className)}>
                     <CategoryBox size='sm' color={categories.find(
                         (c) => c.categoryId === selectedCategory)?.color} />
                     <div className='w-full truncate'>{categories.find((c) => c.categoryId === selectedCategory)?.name || emptyCategory.name}</div>
