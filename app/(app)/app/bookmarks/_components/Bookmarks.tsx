@@ -24,7 +24,7 @@ const Bookmarks: FC<Props> = ({ bookmarklist, categories, tags }) => {
         <section className='flex size-full flex-col items-start justify-start gap-2 p-4'>
             <h3 className='flex items-center gap-2 font-semibold'>
                 <BookIcon className='size-5' />Bookmarks</h3>
-            <nav className="flex w-full gap-2 p-2 flex-col">
+            <nav className="flex w-full flex-col gap-2 p-2">
                 <div className='flex items-center gap-4'>
                     <InputWithIcon placeholder="Search Bookmarks"
                         leftIcon={<SearchIcon className='size-4 text-muted-foreground' />}
@@ -40,12 +40,12 @@ const Bookmarks: FC<Props> = ({ bookmarklist, categories, tags }) => {
                 </div>
                 <Accordion type="single" collapsible className="w-full" defaultValue="item-1">
                     <AccordionItem value="item-1" className="border-none">
-                        <AccordionTrigger className="group font-normal justify-start w-[120px] flex items-center gap-2 text-muted-foreground">
+                        <AccordionTrigger className="group flex w-[120px] items-center justify-start gap-2 font-normal text-muted-foreground">
                             <PlusCircle className='size-4 stroke-muted-foreground' />
                             <p className="group-hover:underline">Filters: </p>
                             {tags.length > 0 ? <span>{tags.length} tags</span> : <span>-</span>}
                             <span>/</span>
-                            {category ? <span>"{categories.find(v => v.categoryId === category)?.name}" category</span> : <span>-</span>}
+                            {category ? <span>&quot;{categories.find(v => v.categoryId === category)?.name}&quot; category</span> : <span>-</span>}
                         </AccordionTrigger>
                         <AccordionContent className="ml-4 flex flex-col gap-2 p-1">
                             <div className='flex items-start gap-2'>

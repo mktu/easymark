@@ -7,7 +7,7 @@ import Profile from './Profile';
 
 const Header: React.FC = () => {
     return (
-        <header className='flex w-full gap-1 shadow py-1'>
+        <header className='flex w-full gap-1 py-1 shadow'>
             <div className="">
                 logo
             </div>

@@ -6,7 +6,7 @@ type Props = {
 
 const TagItem: FC<Props> = ({ tag }) => {
     return (
-        <div className="flex items-center justify-center text-sm px-2 py-0.5 bg-gray-200 rounded shadow">
+        <div className="flex items-center justify-center rounded bg-gray-200 px-2 py-0.5 text-sm shadow">
             {tag.name}
         </div>
     )

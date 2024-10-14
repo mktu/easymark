@@ -31,7 +31,7 @@ const OgpSection: FC<Props> = ({ url, title, description, image, onUpdateOgp }) 
                 <Textarea id='description' name='description' value={description || ''} disabled />
                 <div className='mt-4'>
                     <p className='text-sm'>
-                        <InfoIcon className='size-4 inline mr-1' />
+                        <InfoIcon className='mr-1 inline size-4' />
                         情報が正しく取得されていない場合、以下ボタンで更新してください。
                     </p>
                     <div className='flex'>

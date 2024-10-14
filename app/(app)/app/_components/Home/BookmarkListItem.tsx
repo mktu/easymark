@@ -30,7 +30,7 @@ const BookmarkListItem: FC<Props> = ({
                 <div className='flex size-full flex-col'>
                     <div className="underline">{ogpTitle || url}</div>
                     <p className='line-clamp-2 text-sm'>{ogpDescription}</p>
-                    <div className="mt-auto text-sm flex items-end gap-2">
+                    <div className="mt-auto flex items-end gap-2 text-sm">
                         <span className="mr-2"><BrowserTime timestamp={createdAt} /></span>
                         {tags && tags.map(tag => (
                             <TagItem key={tag.id} tag={tag} />

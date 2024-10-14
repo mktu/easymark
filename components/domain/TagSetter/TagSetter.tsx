@@ -104,7 +104,7 @@ const TagsSetter = ({
     }, [selectableTags, onSelectTag, setSearchTag])
     return (
         <div className={cn('w-full', className)}>
-            <div className='flex items-center gap-4 w-full'>
+            <div className='flex w-full items-center gap-4'>
                 <div className={cn(inputWrapperVariants({ size: variants?.size }))}>
                     {registeredTags.length > 0 && registeredTags.map(tag => (
                         <DeletableTag registered key={tag.tagId} tag={tag} onClearTag={() => {
@@ -146,10 +146,10 @@ const TagsSetter = ({
                     </div>
                 </div>
             )}
-            <div className='p-2 w-fit'>
+            <div className='w-fit p-2'>
                 <p className='text-sm text-muted-foreground'>Suggestion</p>
                 {loading ? <TagSkeltons /> :
-                    selectableTags.length === 0 ? <p className='text-sm text-muted-foreground p-4'>No suggestion</p> : selectableItems}
+                    selectableTags.length === 0 ? <p className='p-4 text-sm text-muted-foreground'>No suggestion</p> : selectableItems}
             </div>
         </div>
     )
