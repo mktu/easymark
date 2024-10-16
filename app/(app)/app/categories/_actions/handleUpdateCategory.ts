@@ -37,3 +37,6 @@ export const handleUpdateCategory = async (data: {
         error: null
     }
 }
+
+
+export type HandleUpdateCategoryType = Awaited<ReturnType<typeof handleUpdateCategory>>

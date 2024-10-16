@@ -6,6 +6,7 @@ import { TagIcon } from "lucide-react"
 import { useState } from "react"
 import { handleAddTag, HandleAddTagReturnType } from "../_actions/handleAddTag"
 import ErrorIndicator from "../../_components/ErrorIndicator/ErrorIndicator"
+import { Input } from "@/components/ui/input"
 
 const AdddTagForm = () => {
     const [tagName, setTagName] = useState<string>('')
@@ -23,9 +24,9 @@ const AdddTagForm = () => {
         }
         } className='flex flex-col gap-2'>
             <div className='flex w-full items-center gap-2'>
-                <InputWithIcon value={tagName} onChange={(e) => {
+                <Input placeholder="Input tag name" value={tagName} onChange={(e) => {
                     setTagName(e.target.value)
-                }} leftIcon={<TagIcon className='size-5' />} />
+                }} />
                 <Button type='submit' disabled={!tagName}>Add</Button>
             </div>
             <ErrorIndicator error={updateResult?.validatedErrors?.name} />
