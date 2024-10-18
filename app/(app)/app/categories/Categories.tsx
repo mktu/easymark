@@ -11,7 +11,7 @@ const Categories = ({ categories }: Props) => {
     return (
         <div className='flex size-full flex-col items-start justify-start gap-6 p-4'>
             <section className='flex flex-col gap-2'>
-                <h2 className='flex items-center gap-2 font-semibold text-lg'>
+                <h2 className='flex items-center gap-2 text-lg font-semibold'>
                     <LayoutGridIcon className="size-5" />
                     <span>Categories</span>
                 </h2>
@@ -25,7 +25,7 @@ const Categories = ({ categories }: Props) => {
                 <AdddCategoryForm />
             </section>
             <section>
-                <h3 className='mb-2 font-semibold flex items-center gap-2'>
+                <h3 className='mb-2 flex items-center gap-2 font-semibold'>
                     <PinIcon className='size-4' />
                     Your Categories
                 </h3>

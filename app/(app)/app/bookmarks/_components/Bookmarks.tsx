@@ -22,7 +22,7 @@ const Bookmarks: FC<Props> = ({ bookmarklist, categories, tags }) => {
     const { onDeleteTag, onSelectTag, onClearTags } = useTags()
     return (
         <section className='flex size-full flex-col items-start justify-start gap-2 p-4'>
-            <h2 className='flex items-center gap-2 font-semibold text-lg'>
+            <h2 className='flex items-center gap-2 text-lg font-semibold'>
                 <BookIcon className='size-5' />Bookmarks</h2>
             <nav className="flex w-full flex-col gap-2 p-2">
                 <div className='flex items-center gap-4'>

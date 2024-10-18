@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 
 const Sidebar: FC = () => {
     return (
-        <div className="flex flex-col items-start p-2">
+        <div className="flex w-full flex-col items-start p-2">
             <Button asChild className="mb-2">
                 <Link href="/app" className="flex items-center gap-2">
                     <HomeIcon className="size-6" />

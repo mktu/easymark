@@ -3,6 +3,7 @@ import { redirectIfNotRegistered } from "../../(profile)/_loaders/assertkRegistr
 import Header from "./_components/Header/Header";
 import Provider from "./_components/Provider";
 import { Sidebar } from "./_components/Sidebar";
+import { SidebarLayout } from "./_components/Layout";
 
 
 const Layout = async ({
@@ -15,16 +16,19 @@ const Layout = async ({
     await redirectIfNotRegistered()
     return (
         <Provider>
-            <div className="relative flex h-screen w-screen">
-                <Sidebar />
-                <div className="flex size-full flex-col overflow-hidden">
-                    <Header />
-                    <main className="size-full flex-1 overflow-auto">
-                        {children}
-                        {modal}
-                    </main>
-                </div>
-            </div>
+            <SidebarLayout
+                sidebar={<Sidebar />}
+                header={<Header />}
+                content={
+                    <>
+                        <main className="size-full flex-1 overflow-auto">
+                            {children}
+
+                        </main>
+                    </>
+                }
+            />
+            {modal}
         </Provider>
     )
 }

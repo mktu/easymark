@@ -81,7 +81,7 @@ const CategoryDialogContent: FC<Props> = ({ category }) => {
                         </div>
                     </div>
                     <ErrorIndicator error={updateResult?.validatedErrors?.name} />
-                    <div className='flex items-center gap-2 mt-4'>
+                    <div className='mt-4 flex items-center gap-2'>
                         <Popover>
                             <PopoverTrigger asChild>
                                 <Button type='button' variant='destructive' className='mr-auto'>

@@ -11,7 +11,7 @@ const Tags = ({ tags }: Props) => {
     return (
         <div className='flex size-full flex-col items-start justify-start gap-6 p-4'>
             <section className='flex flex-col gap-2'>
-                <h2 className='flex items-center gap-2 font-semibold text-lg'>
+                <h2 className='flex items-center gap-2 text-lg font-semibold'>
                     <TagIcon className="size-5" />
                     Tags
                 </h2>
@@ -21,7 +21,7 @@ const Tags = ({ tags }: Props) => {
                 <AdddTagForm />
             </section>
             <section className='flex flex-col items-start gap-2'>
-                <h3 className='flex items-center gap-2 font-semibold text-lg'>
+                <h3 className='flex items-center gap-2 text-lg font-semibold'>
                     <PinIcon className='size-4' />
                     Registed Tags
                 </h3>
