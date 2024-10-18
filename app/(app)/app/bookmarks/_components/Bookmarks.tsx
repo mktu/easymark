@@ -42,10 +42,7 @@ const Bookmarks: FC<Props> = ({ bookmarklist, categories, tags }) => {
                     <AccordionItem value="item-1" className="border-none">
                         <AccordionTrigger className="group flex w-[120px] items-center justify-start gap-2 font-normal text-muted-foreground">
                             <PlusCircle className='size-4 stroke-muted-foreground' />
-                            <p className="group-hover:underline">Filters: </p>
-                            {tags.length > 0 ? <span>{tags.length} tags</span> : <span>-</span>}
-                            <span>/</span>
-                            {category ? <span>&quot;{categories.find(v => v.categoryId === category)?.name}&quot; category</span> : <span>-</span>}
+                            <p className="group-hover:underline">Filters</p>
                         </AccordionTrigger>
                         <AccordionContent className="ml-4 flex flex-col gap-2 p-1">
                             <div className='flex items-start gap-2'>
