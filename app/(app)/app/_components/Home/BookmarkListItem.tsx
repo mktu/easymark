@@ -3,11 +3,11 @@ import Link from "next/link"
 import { FC } from "react"
 import { BookmarkType } from "@/lib/repositories/bookmarks"
 import OgpImage from "@/components/domain/OgpImage"
-import OpenLinkButton from "./OpenLinkButton"
 import { CategoryType } from "@/lib/repositories/categories"
 import CategoryBox from "@/components/domain/CategoryBox"
 import { BookmarkTagsType } from "@/lib/repositories/bookmark_tags"
-import TagItem from "./TagItem"
+import TagItem from "@/components/domain/TagItem"
+import OpenLinkButton from "@/components/domain/OpenLinkButton"
 
 type Props = {
     bookmark: BookmarkType,

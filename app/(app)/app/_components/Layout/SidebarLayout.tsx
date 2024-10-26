@@ -50,9 +50,9 @@ const SidebarLayout: React.FC<Props> = ({ sidebar, content, header }) => {
                     }
                 </Button>
             </div>
-            <div className="size-full flex-1 overflow-hidden bg-slate-50">
+            <div className="flex size-full flex-1 flex-col overflow-hidden bg-slate-50">
                 {header}
-                <div className="mx-auto mt-2 flex size-full max-w-screen-lg flex-1 flex-col overflow-auto  bg-white px-4 shadow">
+                <div className="mx-auto mt-2 size-full max-w-screen-lg flex-1 overflow-auto bg-white px-4 shadow">
                     {content}
                 </div>
             </div>

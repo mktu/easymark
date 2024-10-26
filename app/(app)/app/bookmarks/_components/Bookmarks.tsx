@@ -1,15 +1,17 @@
 'use client'
 import { FC, ReactNode } from "react"
-import { BookIcon, PlusCircle, SearchIcon } from "lucide-react"
-import SortSelector from "./SortSelector"
+import { BookIcon, FilterIcon, SearchIcon, XIcon } from "lucide-react"
 import { InputWithIcon } from "@/components/domain/InputWithIcon"
 import { useBookmarkInput } from "../_hooks/useBookmarkInput"
-import CategorySelector from "@/components/domain/CategorySelector"
 import { CategoryType } from "@/lib/repositories/categories"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import { useTags } from "../_hooks/useTags"
-import { TagSetter } from "@/components/domain/TagSetter"
 import { TagUsageType } from "@/lib/repositories/tag_usage"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { PopoverClose } from "@radix-ui/react-popover"
+import { Button } from "@/components/ui/button"
+import FilterContent from "./FilterContent"
+import { useBookmarkFilter } from "../_hooks/useBookmarkFilter"
+import { cn } from "@/lib/utils"
 
 type Props = {
     bookmarklist: ReactNode,
@@ -18,13 +20,13 @@ type Props = {
 }
 
 const Bookmarks: FC<Props> = ({ bookmarklist, categories, tags }) => {
-    const { filter, onFilter, sortOption, onSort, category, onChangeCategory } = useBookmarkInput()
-    const { onDeleteTag, onSelectTag, onClearTags } = useTags()
+    const { filter, onFilter } = useBookmarkInput()
+    const { hasFilter, removeAllFilters } = useBookmarkFilter()
     return (
         <section className='flex size-full flex-col items-start justify-start gap-2 p-4'>
             <h2 className='flex items-center gap-2 text-lg font-semibold'>
                 <BookIcon className='size-5' />Bookmarks</h2>
-            <nav className="flex w-full flex-col gap-2 p-2">
+            <div className="flex w-full flex-col gap-2 p-2">
                 <div className='flex items-center gap-4'>
                     <InputWithIcon placeholder="Search Bookmarks"
                         leftIcon={<SearchIcon className='size-4 text-muted-foreground' />}
@@ -33,35 +35,45 @@ const Bookmarks: FC<Props> = ({ bookmarklist, categories, tags }) => {
                         onChange={(e) => {
                             onFilter(e.target.value)
                         }} />
-                    <div className='flex items-center gap-2'>
-                        <label className='whitespace-nowrap text-muted-foreground'>Sort by</label>
-                        <SortSelector {...{ setSortOption: onSort, sortOption }} />
-                    </div>
+                    <Popover>
+                        <PopoverTrigger className="group flex items-center gap-2 text-muted-foreground">
+                            <FilterIcon className={cn('size-6 stroke-muted-foreground', hasFilter && 'fill-muted-foreground')} />
+                            <p className="group-hover:underline">Filters</p>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-[520px]">
+                            <FilterContent
+                                categories={categories}
+                                tags={tags}
+                            />
+                            <div className='flex gap-1'>
+                                <PopoverClose asChild>
+                                    <Button type='button' variant='outline' onClick={removeAllFilters}>
+                                        <XIcon className='mr-1 size-4' />
+                                        Remove All
+                                    </Button>
+                                </PopoverClose>
+                                <PopoverClose asChild className="ml-auto">
+                                    <Button type='button' variant='ghost' >Close</Button>
+                                </PopoverClose>
+                            </div>
+                        </PopoverContent>
+                    </Popover>
                 </div>
-                <Accordion type="single" collapsible className="w-full" defaultValue="item-1">
+                <Accordion type="single" collapsible className="w-full md:hidden" defaultValue="item-1">
                     <AccordionItem value="item-1" className="border-none">
                         <AccordionTrigger className="group flex w-[120px] items-center justify-start gap-2 font-normal text-muted-foreground">
-                            <PlusCircle className='size-4 stroke-muted-foreground' />
                             <p className="group-hover:underline">Filters</p>
                         </AccordionTrigger>
                         <AccordionContent className="ml-4 flex flex-col gap-2 p-1">
-                            <div className='flex items-start gap-2'>
-                                <label htmlFor="category" className="whitespace-nowrap text-muted-foreground">Category</label>
-                                <div className="w-fit">
-                                    <CategorySelector id='category' className="w-[280px]" categories={categories} selectedCategory={category} selectCategory={onChangeCategory} />
-                                </div>
-                            </div>
-                            <div className='flex items-start gap-2'>
-                                <label htmlFor="tags" className="whitespace-nowrap text-muted-foreground">Tags</label>
-                                <TagSetter variants={{ size: 'md' }} id={'tags'} registeredTags={tags} onSelectTag={onSelectTag} onClearTag={onDeleteTag} onClearAll={onClearTags} />
-                            </div>
+                            <FilterContent
+                                categories={categories}
+                                tags={tags}
+                            />
                         </AccordionContent>
                     </AccordionItem>
                 </Accordion>
-            </nav>
-            <ul className="w-full p-2">
-                {bookmarklist}
-            </ul>
+            </div>
+            {bookmarklist}
         </section>
     )
 }

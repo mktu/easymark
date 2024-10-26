@@ -17,6 +17,7 @@ import { CategoryType } from "@/lib/repositories/categories"
 import CategorySelector from "@/components/domain/CategorySelector"
 import TagsSetter from "@/components/domain/TagSetter/TagSetter"
 import { TagUsageType } from "@/lib/repositories/tag_usage"
+import { useSignalContext } from "@/contexts/signal"
 
 
 const ImageWitdth = 460
@@ -38,6 +39,7 @@ const BookmarkDialogContent: FC<Props> = ({ tagUsage, bookmark, categories, sele
         handleClearAllTags,
         updateResult, error } = useBookmarkUpdate(tagUsage, bookmark, selectedCategoryId)
     const router = useRouter();
+    const { fireBookmarkFetchSignal } = useSignalContext();
     if (!bookmark) return null
     return (
         <Dialog
@@ -57,12 +59,8 @@ const BookmarkDialogContent: FC<Props> = ({ tagUsage, bookmark, categories, sele
                     if (!await handleSubmit()) {
                         return
                     }
-                    // use hard navigation to refresh state
-                    location.href = from || `/app/bookmarks`
-
-                    // This cannot be used!
-                    // Even if the push API is used, the dialog's open state remains unchanged.
-                    //router.push(`/app/bookmarks`)
+                    fireBookmarkFetchSignal([bookmark.bookmarkId])
+                    router.back()
                 }}>
                     <OgpImage url={bookmark.url} image={ogp?.image?.url || bookmark?.ogpImage} alt={ogp?.title || bookmark?.ogpTitle || bookmark?.url} width={ImageWitdth} height={ImageHeight} />
                     <label htmlFor="url">URL</label>

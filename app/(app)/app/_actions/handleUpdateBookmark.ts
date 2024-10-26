@@ -49,14 +49,16 @@ export const handleUpdateBookmark = async (data: {
     if (ogpError) {
         return { error: ogpError }
     }
-    if (data.tags && data.tags?.length > 0 && bookmarkId) {
+    if (data.tags && bookmarkId) {
         const removeResult = await removeTags(supabase, { bookmarkId })
         if (removeResult.error) {
             return { error: removeResult.error }
         }
-        const associateResult = await associateTags(supabase, data.tags.map(tagId => ({ tagId, bookmarkId })))
-        if (associateResult.error) {
-            return { error: associateResult.error }
+        if (data.tags?.length > 0) {
+            const associateResult = await associateTags(supabase, data.tags.map(tagId => ({ tagId, bookmarkId })))
+            if (associateResult.error) {
+                return { error: associateResult.error }
+            }
         }
     }
     revalidatePath('/')

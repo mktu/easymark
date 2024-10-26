@@ -1,3 +1,4 @@
+import { fetchBookmarkById } from "@/lib/repositories/bookmarks";
 import { createClientForServer } from "@/lib/supabase/supabaseServer";
 import { NextResponse } from "next/server";
 
@@ -8,12 +9,8 @@ export async function GET(_: Request, { params }: { params: { bookmarkId: string
     if (!authData?.user) {
         return NextResponse.json({ error: 'not authenticated' }, { status: 401 })
     }
-    const { error: bookmarkerror, data } = await supabase.from('bookmarks_with_ogp').select().eq('bookmark_id', bookmarkId).eq('user_id', authData.user.id);
-    if (bookmarkerror) {
-        console.error(bookmarkerror)
-        return NextResponse.json({ error: 'cannnot add bookmark' }, { status: 500 })
-    }
+    const bookmark = await fetchBookmarkById(supabase, authData.user.id, Number(bookmarkId));
     return NextResponse.json({
-        bookmark: data
+        bookmark
     })
 }

@@ -1,5 +1,5 @@
 'use server'
-import { fetchBookmarksByPage } from "@/lib/repositories/bookmarks";
+import { fetchBookmarksByIds, fetchBookmarksByPage } from "@/lib/repositories/bookmarks";
 import { createClientForServer } from "@/lib/supabase/supabaseServer";
 import { BookmarkSortOption } from "@/lib/types";
 
@@ -17,5 +17,17 @@ export const handleFetchBookmarks = async (page: number, limit: number, tags: nu
     return {
         bookmarks: bookmarks,
         hasMore: count ? count > end : false
+    }
+}
+
+export const handleFetchBookmarksByIds = async (ids: number[]) => {
+    const supabase = createClientForServer();
+    const { data: authData } = await supabase.auth.getUser();
+    if (!authData?.user) {
+        return { error: 'not authenticated' }
+    }
+    const bookmarks = await fetchBookmarksByIds(supabase, authData.user.id, ids)
+    return {
+        bookmarks
     }
 }

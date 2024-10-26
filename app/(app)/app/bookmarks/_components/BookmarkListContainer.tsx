@@ -20,7 +20,7 @@ const BookmarkListContainer = async ({
     ...props
 }: Props) => {
     const ret = await handleFetchBookmarks(0, 10, tags, filter, sortOption, category)
-    return <BookmarkList {...{ ...props, filter, sortOption, category, initialBookmarks: ret.bookmarks, initialHasMore: ret.hasMore }} />
+    return <BookmarkList {...{ ...props, tags, filter, sortOption, category, initialBookmarks: ret.bookmarks, initialHasMore: ret.hasMore }} />
 }
 
 

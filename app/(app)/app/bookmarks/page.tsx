@@ -7,7 +7,8 @@ import { Suspense } from "react"
 import { getSortOption } from "./_utils/parseSortOption"
 import BookmarkSkelton from "./_components/BookmarkSkelton"
 import { parseNumber, parseNumberArray } from "@/lib/urlParser"
-import { getTagUsage, getTagUsageByTags } from "@/lib/repositories/tag_usage"
+import { getTagUsageByTags } from "@/lib/repositories/tag_usage"
+import { fetchLastUpdateTime } from "@/lib/repositories/rpc"
 
 
 export default async function Bookmark({ searchParams }: {
@@ -38,7 +39,6 @@ export default async function Bookmark({ searchParams }: {
                     tags={tags}
                     filter={filter}
                     category={category}
-                    sortOption={sortOption}
                     categories={categories}
                 />
             </Suspense>

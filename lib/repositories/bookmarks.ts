@@ -64,6 +64,23 @@ export const updateBookmark = async (supabase: SupabaseClient<Database>, {
     return { error: null, bookmarkId: data![0].id }
 }
 
+export const bulkUpdateCategory = async (supabase: SupabaseClient<Database>, {
+    userId,
+    bookmarkIds,
+    categoryId
+}: {
+    userId: string,
+    bookmarkIds: number[],
+    categoryId: number
+}) => {
+    const { error: bookmarkerror } = await supabase.from('bookmarks').update({ category_id: categoryId }).in('id', bookmarkIds).eq('user_id', userId);
+    if (bookmarkerror) {
+        console.error(bookmarkerror)
+        return { error: 'cannnot update bookmark' }
+    }
+    return { error: null }
+}
+
 export const deleteBookmark = async (supabase: SupabaseClient<Database>, {
     bookmarkId,
     userId
@@ -72,6 +89,19 @@ export const deleteBookmark = async (supabase: SupabaseClient<Database>, {
     userId: string
 }) => {
     const { error: bookmarkerror } = await supabase.from('bookmarks').delete().eq('id', bookmarkId).eq('user_id', userId);
+    if (bookmarkerror) {
+        console.error(bookmarkerror)
+        return { error: 'cannnot delete bookmark' }
+    }
+    return { error: null }
+}
+
+export const deleteBookmarks = async (supabase: SupabaseClient<Database>, {
+    bookmarkIds
+}: {
+    bookmarkIds: number[]
+}) => {
+    const { error: bookmarkerror } = await supabase.from('bookmarks').delete().in('id', bookmarkIds);
     if (bookmarkerror) {
         console.error(bookmarkerror)
         return { error: 'cannnot delete bookmark' }
@@ -134,6 +164,24 @@ export const fetchBookmark = async (supabase: SupabaseClient<Database>, userId: 
         throw Error('cannot fetch bookmarks')
     }
     return convertBookmark(bookmarksBase[0])
+}
+
+export const fetchBookmarkById = async (supabase: SupabaseClient<Database>, userId: string, bookmarkId: number) => {
+    const { data: bookmarksBase, error: bookmarkError } = await supabase.from('bookmarks_with_ogp').select('*').eq('user_id', userId).eq('bookmark_id', bookmarkId)
+    if (bookmarkError) {
+        console.error(bookmarkError)
+        throw Error('cannot fetch bookmarks')
+    }
+    return convertBookmark(bookmarksBase[0])
+}
+
+export const fetchBookmarksByIds = async (supabase: SupabaseClient<Database>, userId: string, bookmarkIds: number[]) => {
+    const { data: bookmarksBase, error: bookmarkError } = await supabase.from('bookmarks_with_ogp').select('*').eq('user_id', userId).in('bookmark_id', bookmarkIds)
+    if (bookmarkError) {
+        console.error(bookmarkError)
+        throw Error('cannot fetch bookmarks')
+    }
+    return convertBookmarks(bookmarksBase)
 }
 
 export const fetchBookmarksByCategory = async (supabase: SupabaseClient<Database>, userId: string, categoryId: number) => {
