@@ -39,7 +39,7 @@ const BookmarkDialogContent: FC<Props> = ({ tagUsage, bookmark, categories, sele
         handleClearAllTags,
         updateResult, error } = useBookmarkUpdate(tagUsage, bookmark, selectedCategoryId)
     const router = useRouter();
-    const { fireBookmarkFetchSignal } = useSignalContext();
+    const { fireBookmarkFetchSignal, fireBookmarkTagSignal } = useSignalContext();
     if (!bookmark) return null
     return (
         <Dialog
@@ -60,6 +60,7 @@ const BookmarkDialogContent: FC<Props> = ({ tagUsage, bookmark, categories, sele
                         return
                     }
                     fireBookmarkFetchSignal([bookmark.bookmarkId])
+                    fireBookmarkTagSignal(true)
                     router.back()
                 }}>
                     <OgpImage url={bookmark.url} image={ogp?.image?.url || bookmark?.ogpImage} alt={ogp?.title || bookmark?.ogpTitle || bookmark?.url} width={ImageWitdth} height={ImageHeight} />

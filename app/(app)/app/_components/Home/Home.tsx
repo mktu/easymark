@@ -2,6 +2,9 @@ import { BookmarkType } from "@/lib/repositories/bookmarks";
 import { CategoryType } from "@/lib/repositories/categories";
 import { FC } from "react";
 import BookmarkListItem from "./BookmarkListItem";
+import { HomeIcon, StarsIcon } from "lucide-react";
+import HomePanel from "./HomePanel";
+import BookmarkList from "./BookmarkList";
 
 type Props = {
     user: {
@@ -18,21 +21,18 @@ const Home: FC<Props> = ({
     categories
 }) => {
     return (
-        <div className="flex h-full flex-col items-center justify-between p-4">
-            <h1> Hello {user.username} !</h1>
+        <div className="flex size-full flex-col items-start justify-start gap-4 p-4">
+            <h2 className='mb-4 flex items-center gap-2 text-lg font-semibold'>
+                <HomeIcon className='size-5' />
+                <span>{user.username}&apos;s Home</span>
+            </h2>
             <div className='flex flex-col items-center gap-1'>
-                <section>
-                    <h2>Your Recent Registered Bookmarks</h2>
-                    <ul>
-                        {bookmarks.map((bookmark) => (
-                            <li key={bookmark.bookmarkId}>
-                                <BookmarkListItem
-                                    bookmark={bookmark}
-                                    category={categories.find((c) => c.categoryId === bookmark.categoryId)}
-                                />
-                            </li>))}
-                    </ul>
-                </section>
+                <HomePanel title={<>
+                    <StarsIcon className='size-5' />
+                    <span>Your Recent Registered Bookmarks</span>
+                </>}>
+                    <BookmarkList bookmarks={bookmarks} categories={categories} />
+                </HomePanel>
                 <section>
                     <h2>Frequently used categories</h2>
                     <ul>

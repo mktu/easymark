@@ -24,7 +24,9 @@ const BookmarkListItem: FC<Props> = ({
 }) => {
     const { bookmarkId, ogpImage, ogpTitle, url, createdAt, ogpDescription } = bookmark
     return (
-        <Link href={`/app/bookmarks/${bookmarkId}`} className='flex w-full gap-2 rounded border p-2'>
+        <Link href={`/app/bookmarks/${bookmarkId}`}
+            style={{ borderLeftColor: category?.color || 'transparent' }}
+            className='relative flex w-full gap-2 border-l-4 p-2 shadow'>
             <OgpImage image={ogpImage} alt={ogpTitle || ''} width={ImageSize} height={ImageSize} />
             <div className='flex w-full items-start gap-2'>
                 <div className='flex size-full flex-col'>
@@ -38,7 +40,6 @@ const BookmarkListItem: FC<Props> = ({
                     </div>
                 </div>
                 <div className='ml-auto flex items-center'>
-                    <CategoryBox color={category?.color} size='sm' />
                     <OpenLinkButton url={url} />
                 </div>
             </div>

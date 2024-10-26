@@ -3,7 +3,7 @@ import { createClientForServer } from "@/lib/supabase/supabaseServer";
 import { redirect } from "next/navigation";
 import { Welcome } from "./_components/Welcome";
 import { Home } from "./_components/Home";
-import { fetchBookmarks } from "@/lib/repositories/bookmarks";
+import { fetchBookmarksByPage } from "@/lib/repositories/bookmarks";
 import { getCategories } from "@/lib/repositories/categories";
 import { fetchUser } from "@/lib/repositories/profile";
 
@@ -16,14 +16,10 @@ export default async function App() {
         redirect('/signin')
     }
     const user = await fetchUser(supabase, userData.user.id)
-    const bookmarks = await fetchBookmarks(supabase, userData.user.id)
+    const { bookmarks } = await fetchBookmarksByPage(supabase, userData.user.id, 0, 5, [], '', 'date')
     const categories = await getCategories(supabase, userData.user.id)
-    return (
-        <div className="flex flex-col items-center justify-between p-24">
-            {bookmarks && bookmarks.length > 0 ? (
-                <Home bookmarks={bookmarks} categories={categories} user={user} />) : (
-                <Welcome user={user} />
-            )}
-        </div>
+    return bookmarks && bookmarks.length > 0 ? (
+        <Home bookmarks={bookmarks} categories={categories} user={user} />) : (
+        <Welcome user={user} />
     );
 }

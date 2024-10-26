@@ -110,15 +110,6 @@ export const deleteBookmarks = async (supabase: SupabaseClient<Database>, {
 }
 
 
-export const fetchBookmarks = async (supabase: SupabaseClient<Database>, userId: string) => {
-    const { data: bookmarksBase, error: bookmarkError } = await supabase.from('bookmarks_with_ogp').select('*').eq('user_id', userId).order('created_at', { ascending: false }).limit(5)
-    if (bookmarkError) {
-        console.error(bookmarkError)
-        throw Error('cannot fetch bookmarks')
-    }
-    return convertBookmarks(bookmarksBase)
-}
-
 export const fetchBookmarksByPage = async (
     supabase: SupabaseClient<Database>,
     userId: string,
