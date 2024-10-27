@@ -1,0 +1,15 @@
+{
+    "extends": [
+        "config:base",
+        ":timezone(Asia/Tokyo)",
+        ":automergePatch"
+    ],
+    "baseBranches": [
+        "develop"
+    ],
+    "schedule": [
+        "after 9am on friday",
+        "before 12am on friday"
+    ],
+    "dependencyDashboard": true
+}
