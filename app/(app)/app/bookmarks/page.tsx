@@ -40,6 +40,7 @@ export default async function Bookmark({ searchParams }: {
                     filter={filter}
                     category={category}
                     categories={categories}
+                    sortOption={sortOption}
                 />
             </Suspense>
         } />

@@ -11,10 +11,10 @@ const HomePanel: FC<Props> = ({
     children
 }) => {
     return (
-        <section className='flex flex-col gap-2'>
+        <section className='flex w-full flex-col items-start gap-2'>
             <Accordion type="single" collapsible defaultValue="item-1">
                 <AccordionItem value="item-1" className="border-none">
-                    <AccordionTrigger className="group flex items-center justify-start gap-2 font-normal">
+                    <AccordionTrigger className="group flex w-full items-center justify-start gap-2 font-normal">
                         <h2 className='flex items-center gap-2'>{title}</h2>
                     </AccordionTrigger>
                     <AccordionContent>

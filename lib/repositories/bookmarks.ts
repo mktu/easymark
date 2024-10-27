@@ -45,6 +45,19 @@ export const addBookmark = async (supabase: SupabaseClient<Database>, {
     return { error: null }
 }
 
+export const visitBookmark = async (supabase: SupabaseClient<Database>, {
+    bookmarkId
+}: {
+    bookmarkId: number
+}) => {
+    const { error } = await supabase.rpc('update_bookmark_access', { input_bookmark_id: bookmarkId });
+    if (error) {
+        console.error(error)
+        return { error: 'cannnot update bookmark' }
+    }
+    return { error: null }
+}
+
 export const updateBookmark = async (supabase: SupabaseClient<Database>, {
     url,
     userId,
@@ -138,7 +151,7 @@ export const fetchBookmarksByPage = async (
         query.order('ogp_title', { ascending: true })
     }
     else if (sortOption === 'frequency') {
-        query.order('last_checked', { ascending: false })
+        query.order('access_count', { ascending: false })
     }
     const { data: bookmarksBase, error: bookmarkError } = await query;
     if (bookmarkError) {

@@ -16,10 +16,11 @@ export default async function App() {
         redirect('/signin')
     }
     const user = await fetchUser(supabase, userData.user.id)
-    const { bookmarks } = await fetchBookmarksByPage(supabase, userData.user.id, 0, 5, [], '', 'date')
+    const { bookmarks: recentBookmarks } = await fetchBookmarksByPage(supabase, userData.user.id, 0, 5, [], '', 'date')
+    const { bookmarks: frequentBookmarks } = await fetchBookmarksByPage(supabase, userData.user.id, 0, 5, [], '', 'frequency')
     const categories = await getCategories(supabase, userData.user.id)
-    return bookmarks && bookmarks.length > 0 ? (
-        <Home bookmarks={bookmarks} categories={categories} user={user} />) : (
+    return recentBookmarks && recentBookmarks.length > 0 ? (
+        <Home recentBookmarks={recentBookmarks} frequentBookmarks={frequentBookmarks} categories={categories} user={user} />) : (
         <Welcome user={user} />
     );
 }

@@ -5,13 +5,13 @@ import { FC } from "react"
 import { BookmarkType } from "@/lib/repositories/bookmarks"
 import OgpImage from "@/components/domain/OgpImage"
 import { CategoryType } from "@/lib/repositories/categories"
-import CategoryBox from "@/components/domain/CategoryBox"
 import { BookmarkTagsType } from "@/lib/repositories/bookmark_tags"
 import { Button } from "@/components/ui/button"
 import { Trash2 } from "lucide-react"
 import { Checkbox } from "@/components/ui/checkbox"
 import TagItem from "@/components/domain/TagItem"
 import OpenLinkButton from "@/components/domain/OpenLinkButton"
+import { handleVisitBookmark } from "../../_actions/handleVisitBookmark"
 
 type Props = {
     bookmark: BookmarkType,
@@ -57,7 +57,9 @@ const BookmarkListItem: FC<Props> = ({
                     </div>
                     <div className="ml-auto flex h-full flex-col items-end">
                         <div className='flex items-center'>
-                            <OpenLinkButton url={url} />
+                            <OpenLinkButton url={url} onClick={() => {
+                                handleVisitBookmark(bookmarkId)
+                            }} />
                         </div>
                         <Button onClick={onDelete} variant='ghost' size='icon' className="mt-auto">
                             <Trash2 className='size-5' />

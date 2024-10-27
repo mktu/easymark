@@ -149,7 +149,7 @@ const TagsSetter = ({
             <div className='w-fit p-2'>
                 <p className='text-sm text-muted-foreground'>Suggestion</p>
                 {loading ? <TagSkeltons /> :
-                    selectableTags.length === 0 ? <p className='p-4 text-sm text-muted-foreground'>No suggestion</p> : selectableItems}
+                    selectableTags.length === 0 ? <p className='p-4 text-sm text-muted-foreground'>No Tag Registered</p> : selectableItems}
             </div>
         </div>
     )

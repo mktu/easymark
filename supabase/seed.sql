@@ -151,8 +151,8 @@ INSERT INTO "public"."users" ("id", "username", "profile_image_url", "created_at
 -- Data for Name: bookmarks; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO "public"."bookmarks" ("id", "user_id", "url", "category_id", "note", "last_checked", "is_valid", "created_at", "updated_at") VALUES
-	(1, 'f6600289-3c83-453b-a8d2-e4a6e7afe37e', 'https://github.com/fkhadra/react-toastify', NULL, '', NULL, true, '2024-08-18 00:07:52.951261', '2024-08-18 00:07:52.951261');
+INSERT INTO "public"."bookmarks" ("id", "user_id", "url", "category_id", "note", "is_valid", "created_at", "updated_at") VALUES
+	(1, 'f6600289-3c83-453b-a8d2-e4a6e7afe37e', 'https://github.com/fkhadra/react-toastify', NULL, '', true, '2024-08-18 00:07:52.951261', '2024-08-18 00:07:52.951261');
 
 
 --
