@@ -4,10 +4,9 @@ import { FC } from "react"
 import { BookmarkType } from "@/lib/repositories/bookmarks"
 import OgpImage from "@/components/domain/OgpImage"
 import { CategoryType } from "@/lib/repositories/categories"
-import CategoryBox from "@/components/domain/CategoryBox"
 import { BookmarkTagsType } from "@/lib/repositories/bookmark_tags"
 import TagItem from "@/components/domain/TagItem"
-import OpenLinkButton from "@/components/domain/OpenLinkButton"
+import BookmarkLink from "./BookmarkLink"
 
 type Props = {
     bookmark: BookmarkType,
@@ -40,7 +39,7 @@ const BookmarkListItem: FC<Props> = ({
                     </div>
                 </div>
                 <div className='ml-auto flex items-center'>
-                    <OpenLinkButton url={url} />
+                    <BookmarkLink url={url} bookmarkId={bookmarkId} />
                 </div>
             </div>
         </Link>

@@ -9,6 +9,46 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      bookmark_accesses: {
+        Row: {
+          access_count: number | null
+          bookmark_id: number
+          last_accessed_at: string | null
+        }
+        Insert: {
+          access_count?: number | null
+          bookmark_id: number
+          last_accessed_at?: string | null
+        }
+        Update: {
+          access_count?: number | null
+          bookmark_id?: number
+          last_accessed_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bookmark_accesses_bookmark_id_fkey"
+            columns: ["bookmark_id"]
+            isOneToOne: true
+            referencedRelation: "bookmarks"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bookmark_accesses_bookmark_id_fkey"
+            columns: ["bookmark_id"]
+            isOneToOne: true
+            referencedRelation: "bookmarks_with_ogp"
+            referencedColumns: ["bookmark_id"]
+          },
+          {
+            foreignKeyName: "bookmark_accesses_bookmark_id_fkey"
+            columns: ["bookmark_id"]
+            isOneToOne: true
+            referencedRelation: "bookmarks_with_tags"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       bookmark_tags: {
         Row: {
           bookmark_id: number
@@ -52,7 +92,6 @@ export type Database = {
           created_at: string | null
           id: number
           is_valid: boolean | null
-          last_checked: string | null
           note: string | null
           updated_at: string | null
           url: string
@@ -63,7 +102,6 @@ export type Database = {
           created_at?: string | null
           id?: number
           is_valid?: boolean | null
-          last_checked?: string | null
           note?: string | null
           updated_at?: string | null
           url: string
@@ -74,7 +112,6 @@ export type Database = {
           created_at?: string | null
           id?: number
           is_valid?: boolean | null
-          last_checked?: string | null
           note?: string | null
           updated_at?: string | null
           url?: string
@@ -366,11 +403,12 @@ export type Database = {
     Views: {
       bookmarks_with_ogp: {
         Row: {
+          access_count: number | null
           bookmark_id: number | null
           category_id: number | null
           created_at: string | null
           is_valid: boolean | null
-          last_checked: string | null
+          last_accessed_at: string | null
           note: string | null
           ogp_description: string | null
           ogp_image: string | null
@@ -487,6 +525,12 @@ export type Database = {
           input_user_id: string
         }
         Returns: string
+      }
+      update_bookmark_access: {
+        Args: {
+          input_bookmark_id: number
+        }
+        Returns: undefined
       }
     }
     Enums: {

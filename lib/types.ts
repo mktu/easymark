@@ -6,7 +6,7 @@ export const BookmarkSortOptions: {
     }
 } = {
     date: {
-        label: 'Date',
+        label: 'Registered Date',
     },
     title: {
         label: 'Title',
