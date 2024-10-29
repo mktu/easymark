@@ -3,11 +3,12 @@ import { formatTimestamp } from "@/lib/client/dateConverter"
 import { FC } from "react"
 
 type Props = {
-    timestamp: string
+    timestamp: string,
+    dateOnly?: boolean
 }
 
-const BrowserTime: FC<Props> = ({ timestamp }) => (
-    <>{formatTimestamp(timestamp)}</>
+const BrowserTime: FC<Props> = ({ timestamp, dateOnly }) => (
+    <>{formatTimestamp(timestamp, dateOnly)}</>
 )
 
 export default BrowserTime

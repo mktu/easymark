@@ -18,9 +18,9 @@ const BookmarkList: FC<Props> = ({
     detailLink
 }) => {
     return (
-        <ul className="flex flex-col gap-1">
+        <ul className="flex flex-col gap-1 w-full">
             {bookmarks.map((bookmark) => (
-                <li key={bookmark.bookmarkId}>
+                <li key={bookmark.bookmarkId} className="w-full">
                     <BookmarkListItem
                         bookmark={bookmark}
                         category={categories.find((c) => c.categoryId === bookmark.categoryId)}

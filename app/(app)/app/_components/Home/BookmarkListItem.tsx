@@ -4,22 +4,18 @@ import { FC } from "react"
 import { BookmarkType } from "@/lib/repositories/bookmarks"
 import OgpImage from "@/components/domain/OgpImage"
 import { CategoryType } from "@/lib/repositories/categories"
-import { BookmarkTagsType } from "@/lib/repositories/bookmark_tags"
-import TagItem from "@/components/domain/TagItem"
 import BookmarkLink from "./BookmarkLink"
 
 type Props = {
     bookmark: BookmarkType,
-    tags?: BookmarkTagsType[0],
     category?: CategoryType,
 }
 
-const ImageSize = 92
+const ImageSize = 48
 
 const BookmarkListItem: FC<Props> = ({
     bookmark,
     category,
-    tags
 }) => {
     const { bookmarkId, ogpImage, ogpTitle, url, createdAt, ogpDescription } = bookmark
     return (
@@ -30,15 +26,12 @@ const BookmarkListItem: FC<Props> = ({
             <div className='flex w-full items-start gap-2'>
                 <div className='flex size-full flex-col'>
                     <div className="underline">{ogpTitle || url}</div>
-                    <p className='line-clamp-2 text-sm'>{ogpDescription}</p>
+                    <p className='line-clamp-2 text-xs mt-auto'>{ogpDescription}</p>
+                </div>
+                <div className='ml-auto flex items-center h-full'>
                     <div className="mt-auto flex items-end gap-2 text-sm">
                         <span className="mr-2"><BrowserTime timestamp={createdAt} /></span>
-                        {tags && tags.map(tag => (
-                            <TagItem key={tag.id} tag={tag} />
-                        ))}
                     </div>
-                </div>
-                <div className='ml-auto flex items-center'>
                     <BookmarkLink url={url} bookmarkId={bookmarkId} />
                 </div>
             </div>

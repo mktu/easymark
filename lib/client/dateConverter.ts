@@ -1,4 +1,4 @@
-export function formatTimestamp(timestamp: string) {
+export function formatTimestamp(timestamp: string, dateOnly?: boolean) {
     // タイムスタンプを Date オブジェクトに変換
     const date = new Date(timestamp);
 
@@ -11,6 +11,7 @@ export function formatTimestamp(timestamp: string) {
     const seconds = date.getSeconds().toString().padStart(2, '0');
 
     // フォーマットされた日付と時刻を結合
-    const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    const formattedDate = dateOnly ? `${year}-${month}-${day}` :
+        `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
     return formattedDate;
 }

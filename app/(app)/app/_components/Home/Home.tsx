@@ -27,7 +27,7 @@ const Home: FC<Props> = ({
                 <HomeIcon className='size-5' />
                 <span>{user.username}&apos;s Home</span>
             </h2>
-            <div className='flex flex-col items-center gap-1'>
+            <div className='flex flex-col items-center gap-1 w-full'>
                 <HomePanel title={<>
                     <StarsIcon className='size-5' />
                     <span>Your Recent Registered Bookmarks</span>
