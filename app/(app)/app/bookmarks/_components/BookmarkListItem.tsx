@@ -22,7 +22,7 @@ type Props = {
     onDelete?: () => void
 }
 
-const ImageSize = 92
+const ImageSize = 64
 
 const BookmarkListItem: FC<Props> = ({
     bookmark,
@@ -46,9 +46,9 @@ const BookmarkListItem: FC<Props> = ({
                 <OgpImage image={ogpImage} alt={ogpTitle || ''} width={ImageSize} height={ImageSize} />
                 <div className='flex w-full items-start gap-2'>
                     <div className='flex size-full flex-col'>
-                        <div className="underline">{ogpTitle || url}</div>
-                        <p className='line-clamp-2 text-sm'>{ogpDescription}</p>
-                        <div className="mt-auto flex w-full items-end gap-2 text-sm">
+                        <div className="underline text-sm">{ogpTitle || url}</div>
+                        <p className='line-clamp-2 text-xs'>{ogpDescription}</p>
+                        <div className="mt-auto flex w-full items-end gap-2 text-xs">
                             <span className="mr-2"><BrowserTime timestamp={createdAt} /></span>
                             {tags && tags.map(tag => (
                                 <TagItem key={tag.id} tag={tag} />
@@ -61,9 +61,6 @@ const BookmarkListItem: FC<Props> = ({
                                 handleVisitBookmark(bookmarkId)
                             }} />
                         </div>
-                        <Button onClick={onDelete} variant='ghost' size='icon' className="mt-auto">
-                            <Trash2 className='size-5' />
-                        </Button>
                     </div>
 
                 </div>

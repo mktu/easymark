@@ -1,6 +1,6 @@
-import AddBookmarkDialogProvider from "./AddBookmarkDialogProvider"
 import { Toaster } from 'sonner'
 import SignalProvider from "./SignalProvider"
+import BookmarkSearchDialogProvider from './BookmarkSearchDialogProvider'
 
 type Props = {
     children: React.ReactNode
@@ -8,12 +8,12 @@ type Props = {
 
 const Provider: React.FC<Props> = ({ children }) => {
     return (
-        <AddBookmarkDialogProvider>
-            <SignalProvider>
+        <SignalProvider>
+            <BookmarkSearchDialogProvider>
                 <Toaster />
                 {children}
-            </SignalProvider>
-        </AddBookmarkDialogProvider>
+            </BookmarkSearchDialogProvider>
+        </SignalProvider>
     )
 }
 

@@ -4,6 +4,7 @@ import Header from "./_components/Header/Header";
 import Provider from "./_components/Provider";
 import { Sidebar } from "./_components/Sidebar";
 import { SidebarLayout } from "./_components/Layout";
+import { SearchDialog } from "./bookmarks/_exports";
 
 
 const Layout = async ({
@@ -28,6 +29,7 @@ const Layout = async ({
                     </>
                 }
             />
+            <SearchDialog />
             {modal}
         </Provider>
     )
