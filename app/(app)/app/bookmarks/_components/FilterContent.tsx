@@ -1,7 +1,6 @@
 import { CategoryType } from "@/lib/repositories/categories"
 import { TagUsageType } from "@/lib/repositories/tag_usage"
 import { FC } from "react"
-import { useTags } from "../_hooks/useTags"
 import CategorySelector from "@/components/domain/CategorySelector"
 import { TagSetter } from "@/components/domain/TagSetter"
 import { useBookmarkFilter } from "../_hooks/useBookmarkFilter"
