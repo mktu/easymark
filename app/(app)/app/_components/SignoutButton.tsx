@@ -5,7 +5,7 @@ import React from 'react';
 
 const SignoutButton: React.FC = () => {
     return (
-        <Button className='w-fit' onClick={() => {
+        <Button variant={'outline'} className='w-full md:w-fit' onClick={() => {
             handleSignout()
         }}>Logout</Button>
     );
