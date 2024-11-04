@@ -8,7 +8,7 @@ import BookmarkListItem from "./BookmarkListItem";
 const BookmarkDialogContent: FC = () => {
     const { bookmarks, search, setSearch } = useBookmarkSearch()
     return (
-        <div className="flex flex-col gap-2 py-4 px-2 h-full overflow-y-hidden">
+        <div className="flex h-full flex-col gap-2 overflow-y-hidden px-2 py-4">
             <InputWithIcon
                 placeholder="Search Bookmarks"
                 value={search}
@@ -17,12 +17,12 @@ const BookmarkDialogContent: FC = () => {
                 onChange={(e) => {
                     setSearch(e.target.value)
                 }} />
-            <ul className="flex flex-col gap-2 mt-2 flex-1 overflow-y-auto">
+            <ul className="mt-2 flex flex-1 flex-col gap-2 overflow-y-auto">
                 {bookmarks.map((bookmark) => (
                     <BookmarkListItem key={bookmark.bookmarkId} bookmark={bookmark} />
                 ))}
                 {bookmarks.length === 0 && (
-                    <p className='text-lg text-muted-foreground w-full p-4'>Bookmark not found.</p>
+                    <p className='w-full p-4 text-lg text-muted-foreground'>Bookmark not found.</p>
                 )}
             </ul>
 

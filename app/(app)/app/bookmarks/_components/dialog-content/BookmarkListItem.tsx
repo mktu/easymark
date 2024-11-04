@@ -13,11 +13,11 @@ const ImageSize = 64
 
 const BookmarkListItem = ({ bookmark }: Props) => {
     return (
-        <li className="flex items-center gap-2 w-full">
+        <li className="flex w-full items-center gap-2">
             <OgpImage image={bookmark.ogpImage} alt={bookmark.ogpTitle || ''} width={ImageSize} height={ImageSize} />
             <Link href={`/app/bookmarks/${bookmark.bookmarkId}`} className='flex w-full items-start gap-2'>
                 <div className='flex size-full flex-col'>
-                    <div className="underline text-sm">{bookmark.ogpTitle || bookmark.url}</div>
+                    <div className="text-sm underline">{bookmark.ogpTitle || bookmark.url}</div>
                     <div className="mt-auto flex w-full items-end gap-2 text-xs">
                         <span className="mr-2"><BrowserTime timestamp={bookmark.createdAt} /></span>
                     </div>

@@ -25,7 +25,7 @@ export const useTagMappings = () => {
             fetchBookmarkTags()
             fireBookmarkTagSignal(false)
         }
-    }, [bookmarkTagSignal, fireBookmarkTagSignal])
+    }, [bookmarkTagSignal, fetchBookmarkTags, fireBookmarkTagSignal])
 
     return {
         bookmarkTags

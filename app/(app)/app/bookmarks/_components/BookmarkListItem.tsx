@@ -44,7 +44,7 @@ const BookmarkListItem: FC<Props> = ({
                 <OgpImage image={ogpImage} alt={ogpTitle || ''} width={ImageSize} height={ImageSize} />
                 <div className='flex w-full items-start gap-2'>
                     <div className='flex size-full flex-col'>
-                        <div className="underline text-sm">{ogpTitle || url}</div>
+                        <div className="text-sm underline">{ogpTitle || url}</div>
                         <p className='line-clamp-2 text-xs'>{ogpDescription}</p>
                         <div className="mt-auto flex w-full items-end gap-2 text-xs">
                             <span className="mr-2"><BrowserTime timestamp={createdAt} /></span>

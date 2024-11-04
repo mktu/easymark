@@ -32,7 +32,7 @@ const SidebarLayout: React.FC<Props> = ({ sidebar, content, header }) => {
             </div>
             <div className="flex size-full flex-1 flex-col overflow-hidden bg-slate-50">
                 {header}
-                <div className="mx-auto mt-2 size-full max-w-screen-lg flex-1 overflow-auto bg-white md:px-4 shadow">
+                <div className="mx-auto mt-2 size-full max-w-screen-lg flex-1 overflow-auto bg-white shadow md:px-4">
                     {content}
                 </div>
             </div>
