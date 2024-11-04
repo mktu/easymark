@@ -1,7 +1,7 @@
 // sidebar component
 
 import { FC } from "react";
-import SignoutButton from "../SignoutButton";
+import SignoutButton from "./SignoutButton";
 import Link from "next/link";
 import { BookIcon, HomeIcon, LayoutGridIcon, TagIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
