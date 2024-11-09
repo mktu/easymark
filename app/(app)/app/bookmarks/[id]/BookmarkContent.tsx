@@ -37,7 +37,7 @@ const BookmarkContent: FC<Props> = ({
         handleClearAllTags
     } = useBookmarkUpdate(tagUsage, bookmark, selectedCategoryId)
     return (
-        <form className='flex size-full items-start justify-center gap-4 py-2' action={async () => {
+        <form className='flex size-full flex-col items-start justify-start gap-2 p-4' action={async () => {
             if (await handleSubmit()) {
                 return
             }
@@ -50,7 +50,6 @@ const BookmarkContent: FC<Props> = ({
                 title={ogp?.title || bookmark.ogpTitle}
                 onUpdateOgp={refetch}
             />
-            <div className='h-full w-0 border border-input bg-input' />
             <EditSection
                 note={note}
                 setNote={setNote}

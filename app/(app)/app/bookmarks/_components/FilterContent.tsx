@@ -2,8 +2,8 @@ import { CategoryType } from "@/lib/repositories/categories"
 import { TagUsageType } from "@/lib/repositories/tag_usage"
 import { FC } from "react"
 import CategorySelector from "@/components/domain/CategorySelector"
-import { TagSetter } from "@/components/domain/TagSetter"
 import { useBookmarkFilter } from "../_hooks/useBookmarkFilter"
+import { TagSelectableInput } from "@/components/domain/TagSetter"
 
 type Props = {
     categories: CategoryType[],
@@ -25,7 +25,7 @@ const FilterContent: FC<Props> = ({
             </div>
             <div className='flex items-start gap-2'>
                 <label htmlFor="tags" className="whitespace-nowrap text-muted-foreground">Tags</label>
-                <TagSetter variants={{ size: 'md' }} id={'tags'} registeredTags={tags} onSelectTag={onSelectTag} onClearTag={onDeleteTag} onClearAll={onClearTags} />
+                <TagSelectableInput variants={{ size: 'md' }} id={'tags'} registeredTags={tags} onSelectTag={onSelectTag} onClearTag={onDeleteTag} onClearAll={onClearTags} />
             </div>
         </div>
     )

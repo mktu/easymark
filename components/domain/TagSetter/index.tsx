@@ -1,1 +1,1 @@
-export { default as TagSetter } from './TagSetter'
+export { default as TagSelectableInput } from './TagSelectableInput'

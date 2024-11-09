@@ -47,7 +47,7 @@ const BookmarkListItem: FC<Props> = ({
                         <div className="text-sm underline">{ogpTitle || url}</div>
                         <p className='line-clamp-2 text-xs'>{ogpDescription}</p>
                         <div className="mt-auto flex w-full items-end gap-2 text-xs">
-                            <span className="mr-2"><BrowserTime timestamp={createdAt} /></span>
+                            <span className="mr-2 truncate"><BrowserTime timestamp={createdAt} /></span>
                             {tags && tags.map(tag => (
                                 <TagItem onClick={(e) => {
                                     e.stopPropagation()

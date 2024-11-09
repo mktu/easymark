@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation"
 import CategorySelector from "@/components/domain/CategorySelector"
 import { CategoryType } from "@/lib/repositories/categories"
 import ErrorIndicator from "../../_components/ErrorIndicator/ErrorIndicator"
-import TagsSetter from "@/components/domain/TagSetter/TagSetter"
+import { TagSelectableInput } from "@/components/domain/TagSetter"
 
 const ImageWitdth = 460
 const ImageHeight = Math.floor(ImageWitdth / 1.91)
@@ -76,14 +76,14 @@ const NewBookmarkDialog: FC<Props> = ({
                         <CategorySelector id='category' categories={categories} selectedCategory={category} selectCategory={setCategory} />
                         <ErrorIndicator error={addBookmarkResult?.validatedErrors?.category} />
                         <label htmlFor="tags">Tags</label>
-                        <TagsSetter
+                        <TagSelectableInput
                             id='tags'
                             registeredTags={registeredTags}
                             onClearTag={handleClearTag}
                             onSelectTag={handleSelectTag}
                             onClearAll={handleClearAllTags}
                         />
-                        <h3 className='my-4 font-semibold'>OGP Information</h3>
+                        <h3 className='font-semibold'>OGP Information</h3>
                         {ogp ? (
                             <>
                                 <OgpImage image={ogp?.image?.url} alt={ogp?.title || bookmark} width={ImageWitdth} height={ImageHeight} />

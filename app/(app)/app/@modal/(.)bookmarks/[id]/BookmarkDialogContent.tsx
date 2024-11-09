@@ -15,9 +15,9 @@ import ErrorIndicator from "../../../_components/ErrorIndicator/ErrorIndicator"
 import { useRouter } from 'next/navigation';
 import { CategoryType } from "@/lib/repositories/categories"
 import CategorySelector from "@/components/domain/CategorySelector"
-import TagsSetter from "@/components/domain/TagSetter/TagSetter"
 import { TagUsageType } from "@/lib/repositories/tag_usage"
 import { useSignalContext } from "@/contexts/signal"
+import { TagSelectableInput } from "@/components/domain/TagSetter"
 
 
 const ImageWitdth = 460
@@ -81,7 +81,7 @@ const BookmarkDialogContent: FC<Props> = ({ tagUsage, bookmark, categories, sele
                     <CategorySelector id='category' categories={categories} selectedCategory={category} selectCategory={setCategory} />
                     <ErrorIndicator error={updateResult?.validatedErrors?.category} />
                     <label htmlFor="tags">Tags</label>
-                    <TagsSetter
+                    <TagSelectableInput
                         id='tags'
                         registeredTags={registeredTags}
                         onClearTag={handleClearTag}

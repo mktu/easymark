@@ -36,7 +36,7 @@ const Bookmarks: FC<Props> = ({ bookmarklist, categories, tags }) => {
                             onFilter(e.target.value)
                         }} />
                     <Popover>
-                        <PopoverTrigger className="group flex items-center gap-2 text-muted-foreground">
+                        <PopoverTrigger className="group hidden items-center gap-2 text-muted-foreground md:flex">
                             <FilterIcon className={cn('size-6 stroke-muted-foreground', hasFilter && 'fill-muted-foreground')} />
                             <p className="group-hover:underline">Filters</p>
                         </PopoverTrigger>
@@ -45,7 +45,7 @@ const Bookmarks: FC<Props> = ({ bookmarklist, categories, tags }) => {
                                 categories={categories}
                                 tags={tags}
                             />
-                            <div className='flex gap-1'>
+                            <div className='flex gap-1 mt-8'>
                                 <PopoverClose asChild>
                                     <Button type='button' variant='outline' onClick={removeAllFilters}>
                                         <XIcon className='mr-1 size-4' />
@@ -59,19 +59,12 @@ const Bookmarks: FC<Props> = ({ bookmarklist, categories, tags }) => {
                         </PopoverContent>
                     </Popover>
                 </div>
-                <Accordion type="single" collapsible className="w-full md:hidden" defaultValue="item-1">
-                    <AccordionItem value="item-1" className="border-none">
-                        <AccordionTrigger className="group flex w-[120px] items-center justify-start gap-2 font-normal text-muted-foreground">
-                            <p className="group-hover:underline">Filters</p>
-                        </AccordionTrigger>
-                        <AccordionContent className="ml-4 flex flex-col gap-2 p-1">
-                            <FilterContent
-                                categories={categories}
-                                tags={tags}
-                            />
-                        </AccordionContent>
-                    </AccordionItem>
-                </Accordion>
+                <div className="md:hidden">
+                    <FilterContent
+                        categories={categories}
+                        tags={tags}
+                    />
+                </div>
             </div>
             {bookmarklist}
         </section>

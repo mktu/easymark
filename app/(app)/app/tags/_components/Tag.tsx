@@ -14,7 +14,7 @@ type Props = {
 const Tag: FC<Props> = ({ tag }) => {
     const { name } = tag
     return (
-        <div className="flex w-fit items-center gap-2 rounded bg-gray-100 p-2 shadow">
+        <div className="flex w-fit items-center gap-2 rounded border border-input p-2 text-sm text-muted-foreground">
             <div className="truncate">{name}</div>
             <div className='flex items-center gap-1'>
                 <BookIcon className='size-4' />

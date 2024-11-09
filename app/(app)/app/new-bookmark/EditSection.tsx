@@ -6,8 +6,8 @@ import CategorySelector from "@/components/domain/CategorySelector"
 import { CategoryType } from "@/lib/repositories/categories"
 import { HandleAddBookmarkReturnType } from "../_actions/handleAddBookmark"
 import ErrorIndicator from "../_components/ErrorIndicator/ErrorIndicator"
-import TagsSetter from "@/components/domain/TagSetter/TagSetter"
 import { TagUsageType } from "@/lib/repositories/tag_usage"
+import { TagSelectableInput } from "@/components/domain/TagSetter"
 
 type Props = {
     note?: string,
@@ -46,7 +46,7 @@ const EditSection: FC<Props> = ({
                 setCategory(c)
             }} />
             <label htmlFor="tags">Tags</label>
-            <TagsSetter
+            <TagSelectableInput
                 id='tags'
                 registeredTags={registeredTags}
                 onClearTag={onClearTag}

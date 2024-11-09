@@ -1,10 +1,10 @@
-import { TagSetter } from "@/components/domain/TagSetter"
 import { Button } from "@/components/ui/button"
 import { TagUsageType } from "@/lib/repositories/tag_usage"
 import { useState } from "react"
 import { handleUpdateTags } from "../../_actions/handleUpdateTags"
 import { useSignalContext } from "@/contexts/signal"
 import { PopoverClose } from "@radix-ui/react-popover"
+import { TagSelectableInput } from "@/components/domain/TagSetter"
 
 type Props = {
     bookmarks: number[]
@@ -16,9 +16,9 @@ const UpdateTags = ({
     const [tags, setTags] = useState<TagUsageType[]>([])
     const { fireBookmarkTagSignal } = useSignalContext()
     return (
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 w-full">
             <label htmlFor="tags" className="whitespace-nowrap text-muted-foreground">Select Tags</label>
-            <TagSetter variants={{ size: 'md' }} id={'tags'} registeredTags={tags} onSelectTag={(tag) => {
+            <TagSelectableInput variants={{ size: 'md' }} id={'tags'} registeredTags={tags} onSelectTag={(tag) => {
                 setTags(before => [...before, tag])
             }} onClearTag={(tag) => {
                 setTags(before => before.filter(t => t.tagId !== tag.tagId))
