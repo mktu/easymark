@@ -16,7 +16,7 @@ const UpdateTags = ({
     const [tags, setTags] = useState<TagUsageType[]>([])
     const { fireBookmarkTagSignal } = useSignalContext()
     return (
-        <div className="flex flex-col gap-2 w-full">
+        <div className="flex w-full flex-col gap-2">
             <label htmlFor="tags" className="whitespace-nowrap text-muted-foreground">Select Tags</label>
             <TagSelectableInput variants={{ size: 'md' }} id={'tags'} registeredTags={tags} onSelectTag={(tag) => {
                 setTags(before => [...before, tag])

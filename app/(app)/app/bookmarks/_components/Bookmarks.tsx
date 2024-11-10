@@ -45,7 +45,7 @@ const Bookmarks: FC<Props> = ({ bookmarklist, categories, tags }) => {
                                 categories={categories}
                                 tags={tags}
                             />
-                            <div className='flex gap-1 mt-8'>
+                            <div className='mt-8 flex gap-1'>
                                 <PopoverClose asChild>
                                     <Button type='button' variant='outline' onClick={removeAllFilters}>
                                         <XIcon className='mr-1 size-4' />

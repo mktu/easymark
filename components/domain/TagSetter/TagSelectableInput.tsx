@@ -66,12 +66,12 @@ const TagSelectableInput = ({
             {error && <ErrorIndicator className='my-2' error={error} />}
             <div className='relative mt-1'>
                 {open ? (
-                    <CommandList className="absolute left-0 top-0 w-full rounded bg-background shadow-md z-10">
+                    <CommandList className="absolute left-0 top-0 z-10 w-full rounded bg-background shadow-md">
                         {selectableTags.length > 0 && (
                             <CommandGroup heading="Suggestions">
                                 <CommandItem className="hidden">-</CommandItem>
                                 {selectableTags.map(tag => (
-                                    <CommandItem className="text-base text-muted-foreground p-2" key={tag.tagId} onSelect={() => {
+                                    <CommandItem className="p-2 text-base text-muted-foreground" key={tag.tagId} onSelect={() => {
                                         onSelectTag(tag)
                                         onChange('')
                                     }}>
@@ -85,7 +85,7 @@ const TagSelectableInput = ({
                                 <CommandItem onSelect={() => {
                                     handleAddTag2(searchTag)
                                     onChange('')
-                                }} className="text-base text-muted-foreground p-2">create # {searchTag}</CommandItem>
+                                }} className="p-2 text-base text-muted-foreground">create # {searchTag}</CommandItem>
                             </CommandGroup>
                         )}
                     </CommandList>
