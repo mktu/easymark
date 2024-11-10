@@ -22,9 +22,9 @@ const AdddTagForm = () => {
                 setTagName('')
             }
         }
-        } className='flex flex-col gap-2'>
+        } className='flex w-full flex-col gap-2'>
             <div className='flex w-full items-center gap-2'>
-                <Input placeholder="Input tag name" value={tagName} onChange={(e) => {
+                <Input className="w-full" placeholder="Input tag name" value={tagName} onChange={(e) => {
                     setTagName(e.target.value)
                 }} />
                 <Button type='submit' disabled={!tagName}>Add</Button>

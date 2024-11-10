@@ -1,14 +1,14 @@
+'use client'
 import { Button } from "@/components/ui/button";
+import { useBookmarkSearchDialogContext } from "@/contexts/bookmark-search-dialog";
 import { SearchIcon } from "lucide-react";
-import Link from "next/link";
 import { FC } from "react";
 
 const Search: FC = () => {
+    const { openDialog } = useBookmarkSearchDialogContext()
     return (
-        <Button asChild className="" variant='ghost' size='icon'>
-            <Link href="/app/search" className="flex items-center gap-2">
-                <SearchIcon className="size-6" />
-            </Link>
+        <Button className="flex items-center gap-2" variant='ghost' size='icon' onClick={openDialog}>
+            <SearchIcon className="size-6" />
         </Button>
     );
 }

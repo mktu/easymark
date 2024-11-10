@@ -1,16 +1,16 @@
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
 import React from 'react';
 import AddBookmark from './AddBookmark';
 import Search from './Search';
 import Profile from './Profile';
+import { MenuDrawer } from '../MenuDrawer';
 
 const Header: React.FC = () => {
     return (
         <header className='flex w-full gap-1 bg-white py-1 shadow'>
-            <div className="">
+            <div className="hidden md:block">
                 logo
             </div>
+            <MenuDrawer />
             <div className='ml-auto' />
             <AddBookmark />
             <Search />

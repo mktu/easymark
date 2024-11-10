@@ -1,6 +1,7 @@
-import AddBookmarkDialogProvider from "./AddBookmarkDialogProvider"
 import { Toaster } from 'sonner'
 import SignalProvider from "./SignalProvider"
+import BookmarkSearchDialogProvider from './BookmarkSearchDialogProvider'
+import { SidebarProvider } from '@/components/ui/sidebar'
 
 type Props = {
     children: React.ReactNode
@@ -8,12 +9,14 @@ type Props = {
 
 const Provider: React.FC<Props> = ({ children }) => {
     return (
-        <AddBookmarkDialogProvider>
-            <SignalProvider>
-                <Toaster />
-                {children}
-            </SignalProvider>
-        </AddBookmarkDialogProvider>
+        <SignalProvider>
+            <BookmarkSearchDialogProvider>
+                <SidebarProvider>
+                    <Toaster />
+                    {children}
+                </SidebarProvider>
+            </BookmarkSearchDialogProvider>
+        </SignalProvider>
     )
 }
 

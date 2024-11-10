@@ -8,8 +8,8 @@ import { CategoryType } from "@/lib/repositories/categories"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { PopoverClose } from "@radix-ui/react-popover"
 import { HandleUpdateBookmarkReturnType } from "../../_actions/handleUpdateBookmark"
-import { TagSetter } from "@/components/domain/TagSetter"
 import { TagUsageType } from "@/lib/repositories/tag_usage"
+import { TagSelectableInput } from "@/components/domain/TagSetter"
 
 type Props = {
     note?: string,
@@ -49,7 +49,7 @@ const EditSection: FC<Props> = ({
             }} />
             <ErrorIndicator error={result?.validatedErrors?.category} />
             <label htmlFor='tags'>Tags</label>
-            <TagSetter
+            <TagSelectableInput
                 id='tags'
                 registeredTags={registeredTags}
                 onSelectTag={onSelectTag}

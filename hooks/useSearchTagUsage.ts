@@ -19,6 +19,10 @@ export const useSearchTagUsage = (
     }, []);
 
     useEffect(() => {
+        if (!debouncedSearch) {
+            setTags([])
+            return
+        }
         fetchTags(debouncedSearch).then(tags => {
             setTags(tags)
             setLoading(false)
@@ -41,6 +45,30 @@ export const useSearchTagUsage = (
             setSearchTag('')
         }
     }, [searchTag, fetchTags, registeredTags, onSelectTag])
+
+    const handleAddTag2 = useCallback(async (tagName: string) => {
+        if (!tagName) {
+            return
+        }
+        const result = await fetch(`/api/tags/new?tag=${tagName}`)
+        if (!result.ok) {
+            setError('cannot add tag')
+            return
+        }
+        const { tag, error } = await result.json() as { tag?: TagType, error?: string };
+        if (error) {
+            setError(error)
+            return
+        }
+        if (tag) {
+            onSelectTag({
+                tagId: tag.tagId,
+                name: tag.name,
+                count: 0,
+                userId: tag.userId
+            }, true)
+        }
+    }, [])
 
     const handleAddTag = useCallback(async () => {
         if (addTagTarget) {
@@ -69,7 +97,10 @@ export const useSearchTagUsage = (
         setAddTagTarget(null)
     }, [])
     const selectableTags = useMemo(() => tags.filter(tag => !registeredTags.find(t => t.name === tag.name)), [tags, registeredTags])
-
+    const onChange = useCallback((text: string) => {
+        setSearchTag(text)
+        setLoading(true)
+    }, [])
     return {
         searchTag,
         setSearchTag,
@@ -79,7 +110,9 @@ export const useSearchTagUsage = (
         selectableTags,
         handleEnter,
         handleAddTag,
+        handleAddTag2,
         handleCancelAddTag,
-        loading
+        loading,
+        onChange
     }
 }

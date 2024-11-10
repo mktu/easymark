@@ -34,7 +34,7 @@ const NewBookmark: FC<Props> = ({
     } = useBookmarkInput(selectedCategoryId)
     const router = useRouter();
     return (
-        <form className='flex size-full items-start justify-center gap-4 py-2' action={async () => {
+        <form className='flex size-full flex-col items-start justify-start gap-2 p-4' action={async () => {
             if (!await handleSubmit()) {
                 return
             }
@@ -46,9 +46,6 @@ const NewBookmark: FC<Props> = ({
                 setUrl={setBookmark}
                 result={addBookmarkResult}
             />
-
-            <div className='h-full w-0 border border-input bg-input' />
-
             <EditSection
                 note={note}
                 setNote={setNote}

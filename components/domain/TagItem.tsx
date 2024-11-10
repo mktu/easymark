@@ -1,14 +1,15 @@
-import { FC } from "react"
+import { FC, MouseEventHandler } from "react"
 
 type Props = {
-    tag: { name: string, id: number }
+    tag: { name: string, id: number },
+    onClick?: MouseEventHandler<HTMLButtonElement>
 }
 
-const TagItem: FC<Props> = ({ tag }) => {
+const TagItem: FC<Props> = ({ tag, onClick }) => {
     return (
-        <div className="flex items-center justify-center rounded bg-gray-200 px-2 py-0.5 text-sm shadow">
-            {tag.name}
-        </div>
+        <button onClick={onClick} className="flex items-center justify-center truncate rounded-lg border border-input px-2 py-0.5 text-sm text-muted-foreground shadow-sm">
+            # {tag.name}
+        </button>
     )
 }
 

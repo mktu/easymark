@@ -17,16 +17,16 @@ const Tags = ({ tags }: Props) => {
                 </h2>
                 <p>タグを作成することで、ブックマークの検索を効率的に行うことができます</p>
             </section>
-            <section className='flex flex-col items-start gap-2'>
+            <section className='flex w-full flex-col items-start gap-2'>
                 <AdddTagForm />
             </section>
-            <section className='flex flex-col items-start gap-2'>
+            <section className='flex w-full flex-col items-start gap-2'>
                 <h3 className='flex items-center gap-2 text-lg font-semibold'>
                     <PinIcon className='size-4' />
                     Registed Tags
                 </h3>
                 {tags.length === 0 && <p>No Tags</p>}
-                <ul className="flex w-full flex-wrap items-center gap-2 p-4">
+                <ul className="flex w-full flex-col flex-wrap items-center gap-2 p-4">
                     {tags.map(tag => (
                         <Tag key={tag.tagId} tag={tag} />
                     ))}

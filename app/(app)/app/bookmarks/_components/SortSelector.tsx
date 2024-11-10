@@ -18,7 +18,7 @@ const SortSelector: FC<Props> = ({
     return (
         <Select name='category' defaultValue={sortOption} onValueChange={setSortOption}>
             <SelectTrigger id={id} className="w-[150px]" >
-                <div className='flex items-center gap-2'>
+                <div className='flex items-center gap-2 truncate'>
                     <div>{BookmarkSortOptions[sortOption].label}</div>
                 </div>
             </SelectTrigger>
