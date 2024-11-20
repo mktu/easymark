@@ -45,7 +45,7 @@ const SearchBox: FC<Props> = ({
                         )}
                     </>
                 }
-                className="w-[400px] pl-4"
+                className="md:w-[400px] w-full pl-4"
                 value={searchText}
                 onChange={(e) => {
                     onChangeSearchText(e.target.value)

@@ -2,19 +2,14 @@
 import { FC, ReactNode } from "react"
 import { BookIcon } from "lucide-react"
 import { useBookmarkQuery } from "../_hooks/useBookmarkInput"
-import { CategoryType } from "@/lib/repositories/categories"
-import { TagUsageType } from "@/lib/repositories/tag_usage"
-import FilterContent from "./FilterContent"
 import SearchBox from "./search-box/SearchBox"
 
 type Props = {
     bookmarklist: ReactNode,
-    categories: CategoryType[],
-    tags: TagUsageType[],
     query: string
 }
 
-const Bookmarks: FC<Props> = ({ bookmarklist, categories, tags, query }) => {
+const Bookmarks: FC<Props> = ({ bookmarklist, query }) => {
     const {
         input,
         onUpdate,
@@ -43,12 +38,6 @@ const Bookmarks: FC<Props> = ({ bookmarklist, categories, tags, query }) => {
                         }}
                         onAddCommand={onAddCommand}
                         isSuggesting={isSuggesting}
-                    />
-                </div>
-                <div className="md:hidden">
-                    <FilterContent
-                        categories={categories}
-                        tags={tags}
                     />
                 </div>
             </div>
