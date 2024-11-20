@@ -1,6 +1,6 @@
 import { CategoryType } from "@/lib/repositories/categories"
 import { BookmarkSortOption } from "@/lib/types"
-import { handleFetchBookmarks } from "../_actions/handleFetchBookmarks"
+import { handleFetchBookmarks, handleSearchBookmarks } from "../_actions/handleFetchBookmarks"
 import BookmarkList from "./BookmarkList"
 
 type Props = {
@@ -8,7 +8,8 @@ type Props = {
     category?: number | null,
     sortOption?: BookmarkSortOption,
     categories: CategoryType[],
-    tags: number[] | null
+    tags: number[] | null,
+    query: string,
 }
 
 
@@ -17,9 +18,10 @@ const BookmarkListContainer = async ({
     category,
     sortOption,
     tags,
+    query,
     ...props
 }: Props) => {
-    const ret = await handleFetchBookmarks(0, 10, tags, filter, sortOption, category)
+    const ret = await handleSearchBookmarks(0, 10, query)
     return <BookmarkList {...{ ...props, tags, filter, sortOption, category, initialBookmarks: ret.bookmarks, initialHasMore: ret.hasMore }} />
 }
 

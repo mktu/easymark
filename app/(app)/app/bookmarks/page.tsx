@@ -7,8 +7,7 @@ import { Suspense } from "react"
 import { getSortOption } from "./_utils/parseSortOption"
 import BookmarkSkelton from "./_components/BookmarkSkelton"
 import { parseNumber, parseNumberArray } from "@/lib/urlParser"
-import { getTagUsageByTags } from "@/lib/repositories/tag_usage"
-import { fetchLastUpdateTime } from "@/lib/repositories/rpc"
+import { TagUsageType } from "@/lib/repositories/tag_usage"
 
 
 export default async function Bookmark({ searchParams }: {
@@ -20,27 +19,27 @@ export default async function Bookmark({ searchParams }: {
     if (error || !userData?.user) {
         redirect('/signin')
     }
-    const filter = searchParams.filter as string | ''
+    let filter = searchParams.filter as string | ''
     const sortOption = getSortOption(searchParams)
-    const category = parseNumber(searchParams, 'category', null);
-    const tags = parseNumberArray(searchParams, 'tags', []);
+    let category = parseNumber(searchParams, 'category', null);
+    let tags = parseNumberArray(searchParams, 'tags', []);
+    const tagUsages: TagUsageType[] = [];
+    const query = searchParams.query ? decodeURIComponent(searchParams.query as string) : '';
     const categories = await getCategories(supabase, userData.user.id);
-    const tagUsages = tags ? await getTagUsageByTags(supabase, userData.user.id, tags) : [];
-    if ('error' in tagUsages) {
-        throw new Error(tagUsages.error)
-    }
 
     return <Bookmarks
         categories={categories}
         tags={tagUsages}
+        query={query}
         bookmarklist={
-            <Suspense key={filter + sortOption + category + tags?.join(',')} fallback={<BookmarkSkelton />}>
+            <Suspense key={query} fallback={<BookmarkSkelton />}>
                 <BookmarkListContainer
                     tags={tags}
                     filter={filter}
                     category={category}
                     categories={categories}
                     sortOption={sortOption}
+                    query={query}
                 />
             </Suspense>
         } />

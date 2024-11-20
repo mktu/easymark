@@ -122,6 +122,46 @@ export const deleteBookmarks = async (supabase: SupabaseClient<Database>, {
     return { error: null }
 }
 
+const sortOptionMap = {
+    'title': 'ogp_title',
+    'date': 'created_at',
+    'frequency': 'access_count'
+}
+
+export const searchBookmarks = async (supabase: SupabaseClient<Database>, {
+    userId,
+    page,
+    limit,
+    tags,
+    filter,
+    sortOption,
+    category
+}: {
+    userId: string,
+    page: number,
+    limit: number,
+    tags?: string[] | null,
+    filter?: string[] | null,
+    sortOption?: BookmarkSortOption,
+    category?: string[] | null,
+}) => {
+    const filterString = filter ? filter.map(v => `%${v}%`) : null
+    const data = await supabase.rpc('search_bookmarks', {
+        input_user_id: userId,
+        input_offset: page,
+        input_limit: limit,
+        input_tags: tags || null,
+        input_title_keywords: filterString || null,
+        input_sort_option: sortOptionMap[sortOption || 'date'],
+        input_categories: category || null,
+        input_ascending: sortOption === 'title' ? true : false
+    })
+    if (data.error) {
+        console.error(data.error)
+        throw Error('cannot fetch bookmarks')
+    }
+    return { bookmarks: convertBookmarks(data.data), count: data.data.length }
+}
 
 export const fetchBookmarksByPage = async (
     supabase: SupabaseClient<Database>,

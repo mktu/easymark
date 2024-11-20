@@ -39,6 +39,15 @@ export const getTagUsageByTags = async (supabase: SupabaseClient<Database>, user
     return convertTagUsage(data)
 }
 
+export const getTagUsageByTagNames = async (supabase: SupabaseClient<Database>, userId: string, tagNames: string[]) => {
+    const { data: tags, error: tagError } = await supabase.from('tag_usage').select('*').eq('user_id', userId).in('tag_name', tagNames)
+    if (tagError) {
+        console.error(tagError)
+        return { error: 'cannot fetch tag' }
+    }
+    return convertTagUsage(tags)
+}
+
 
 export const fetchTagUsageByBookmarkId = async (supabase: SupabaseClient<Database>, userId: string, bookmarkId: number) => {
     const tagMappings = await supabase.from('tag_mappings').select('tag_id').eq('bookmark_id', bookmarkId)
