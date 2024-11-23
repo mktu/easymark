@@ -1,33 +1,9 @@
-import { useDebounce, useDebouncedCallback } from 'use-debounce';
+import { useDebounce } from 'use-debounce';
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { appendQuerySegment, CategoryOperator, extractCategoryQuery, extractLastQuerySegment, extractTagQuery, FreeWordOperator, parseSearchQuery, replaceLastQuerySegment, TagOperator } from '../_utils/parseSearchQuery';
+import { appendQuerySegment, appendQuerySegmentIfNotExists, CategoryOperator, extractCategoryQuery, extractLastQuerySegment, extractTagQuery, FreeWordOperator, parseSearchQuery, replaceLastQuerySegment, TagOperator } from '../_utils/parseSearchQuery';
 import { useTagQuery } from './useTagQuery';
 import { useCategoryQuery } from './useCategoryQuery';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-
-export const useBookmarkInput = () => {
-    const searchParams = useSearchParams();
-    const pathname = usePathname();
-    const filter = searchParams.get('filter')?.toString();
-
-    const { replace } = useRouter();
-
-    const onFilter = useDebouncedCallback(async (filter: string) => {
-        const params = new URLSearchParams(searchParams);
-        if (filter) {
-            params.set('filter', filter);
-        } else {
-            params.delete('filter');
-        }
-        replace(`${pathname}?${params.toString()}`);
-    }, 300);
-
-
-    return {
-        onFilter,
-        filter,
-    }
-}
 
 export const useBookmarkQuery = (query: string) => {
     const [input, setInput] = useState(query)
@@ -43,6 +19,7 @@ export const useBookmarkQuery = (query: string) => {
     const lastQuery = useMemo(() => extractLastQuerySegment(input), [input]);
     const { tags: selectableTags } = useTagQuery(lastQuery?.type === TagOperator, lastQuery?.value);
     const { categories: selectableCategories } = useCategoryQuery(lastQuery?.type === CategoryOperator, lastQuery?.value);
+    const tagParam = searchParams.get('tag')
 
     useEffect(() => {
         if (!urlUpdatable) {
@@ -55,7 +32,17 @@ export const useBookmarkQuery = (query: string) => {
             params.delete('query');
         }
         replace(`${pathname}?${params.toString()}`);
-    }, [debouncedInput, urlUpdatable]);
+    }, [debouncedInput, pathname, replace, searchParams, urlUpdatable]);
+
+    useEffect(() => {
+        if (tagParam) {
+            setInput(last => appendQuerySegmentIfNotExists(last, { type: TagOperator, value: tagParam }))
+            setIsSuggesting(false)
+            setUrlUpdatable(true)
+            const params = new URLSearchParams(searchParams);
+            params.delete('tag');
+        }
+    }, [searchParams, tagParam])
 
     const onUpdate = useCallback((text: string) => {
         setInput(text)
@@ -75,7 +62,7 @@ export const useBookmarkQuery = (query: string) => {
         setInput(last => appendQuerySegment(last, { type: command, value: '' }))
         setIsSuggesting(true)
         setUrlUpdatable(false)
-    }, [input]);
+    }, []);
 
 
     return {

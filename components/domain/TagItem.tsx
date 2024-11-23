@@ -1,7 +1,7 @@
 import { FC, MouseEventHandler } from "react"
 
 type Props = {
-    tag: { name: string, id: number },
+    tag: { name: string },
     onClick?: MouseEventHandler<HTMLButtonElement>
 }
 

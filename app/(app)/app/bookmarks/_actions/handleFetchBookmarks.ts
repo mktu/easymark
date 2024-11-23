@@ -1,5 +1,5 @@
 'use server'
-import { fetchBookmarksByIds, fetchBookmarksByPage, searchBookmarks } from "@/lib/repositories/bookmarks";
+import { fetchBookmarksByPage, getBookmarksByIds, searchBookmarks } from "@/lib/repositories/bookmarks";
 import { createClientForServer } from "@/lib/supabase/supabaseServer";
 import { BookmarkSortOption } from "@/lib/types";
 import { buildQueryData, parseSearchQuery } from "../_utils/parseSearchQuery";
@@ -21,7 +21,7 @@ export const handleFetchBookmarks = async (page: number, limit: number, tags: nu
     }
 }
 
-export const handleSearchBookmarks = async (page: number, limit: number, query?: string) => {
+export const handleSearchBookmarks = async (page: number, limit: number, query?: string, sort?: BookmarkSortOption) => {
     const supabase = createClientForServer();
     const { data: authData } = await supabase.auth.getUser();
     if (!authData?.user) {
@@ -39,7 +39,7 @@ export const handleSearchBookmarks = async (page: number, limit: number, query?:
             limit,
             tags: queryData['tag'],
             filter: queryData['freeWord'],
-            sortOption: 'date',
+            sortOption: sort,
             category: queryData['category'],
         })
         return {
@@ -53,7 +53,7 @@ export const handleSearchBookmarks = async (page: number, limit: number, query?:
         limit,
         tags: null,
         filter: null,
-        sortOption: 'date',
+        sortOption: sort,
         category: null,
     })
     return {
@@ -68,7 +68,7 @@ export const handleFetchBookmarksByIds = async (ids: number[]) => {
     if (!authData?.user) {
         return { error: 'not authenticated' }
     }
-    const bookmarks = await fetchBookmarksByIds(supabase, authData.user.id, ids)
+    const bookmarks = await getBookmarksByIds(supabase, authData.user.id, ids)
     return {
         bookmarks
     }

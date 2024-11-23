@@ -1,7 +1,7 @@
 'use client'
 import { FC, ReactNode } from "react"
 import { BookIcon } from "lucide-react"
-import { useBookmarkQuery } from "../_hooks/useBookmarkInput"
+import { useBookmarkQuery } from "../_hooks/useBookmarkQuery"
 import SearchBox from "./search-box/SearchBox"
 
 type Props = {

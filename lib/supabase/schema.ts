@@ -510,6 +510,28 @@ export type Database = {
       }
     }
     Functions: {
+      get_filtered_bookmarks_with_tags: {
+        Args: {
+          input_user_id: string
+          input_bookmark_ids: number[]
+        }
+        Returns: {
+          bookmark_id: number
+          user_id: string
+          url: string
+          category_id: number
+          note: string
+          ogp_title: string
+          ogp_description: string
+          ogp_image: string
+          created_at: string
+          updated_at: string
+          is_valid: boolean
+          last_accessed_at: string
+          access_count: number
+          tag_names: string
+        }[]
+      }
       get_frequently_used_categories: {
         Args: {
           user_id: string
@@ -551,6 +573,7 @@ export type Database = {
           is_valid: boolean
           access_count: number
           last_accessed_at: string
+          tag_list: string
         }[]
       }
       update_bookmark_access: {

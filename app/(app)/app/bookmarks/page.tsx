@@ -6,7 +6,7 @@ import BookmarkListContainer from "./_components/BookmarkListContainer"
 import { Suspense } from "react"
 import { getSortOption } from "./_utils/parseSortOption"
 import BookmarkSkelton from "./_components/BookmarkSkelton"
-import { parseNumber, parseNumberArray } from "@/lib/urlParser"
+import { convertTagToQuery } from "./_utils/convertToQuery"
 
 
 export default async function Bookmark({ searchParams }: {
@@ -18,21 +18,19 @@ export default async function Bookmark({ searchParams }: {
     if (error || !userData?.user) {
         redirect('/signin')
     }
-    let filter = searchParams.filter as string | ''
     const sortOption = getSortOption(searchParams)
-    let category = parseNumber(searchParams, 'category', null);
-    let tags = parseNumberArray(searchParams, 'tags', []);
     const query = searchParams.query ? decodeURIComponent(searchParams.query as string) : '';
     const categories = await getCategories(supabase, userData.user.id);
+    const tag = searchParams.tag;
+    if (tag) {
+        redirect('/app/bookmarks?query=' + encodeURIComponent(convertTagToQuery(tag)))
+    }
 
     return <Bookmarks
         query={query}
         bookmarklist={
-            <Suspense key={query} fallback={<BookmarkSkelton />}>
+            <Suspense key={query + sortOption} fallback={<BookmarkSkelton />}>
                 <BookmarkListContainer
-                    tags={tags}
-                    filter={filter}
-                    category={category}
                     categories={categories}
                     sortOption={sortOption}
                     query={query}

@@ -98,3 +98,16 @@ export const appendQuerySegment = (query: string, newSegment: QuerySegment): str
     segments.push(newSegmentString);  // Append the new segment
     return segments.join(', ');
 }
+
+export const appendQuerySegmentIfNotExists = (query: string, newSegment: QuerySegment): string => {
+    const segments = query.split(',').map(segment => segment.trim());
+    const existingSegment = segments.find(segment => segment.startsWith(`${newSegment.type}:`));
+    if (existingSegment) {
+        // check value is same
+        if (existingSegment === `${newSegment.type}:${newSegment.value}`) {
+            return query;
+        }
+        return query;
+    }
+    return appendQuerySegment(query, newSegment);
+}

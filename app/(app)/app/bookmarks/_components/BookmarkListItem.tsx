@@ -2,22 +2,20 @@
 import BrowserTime from "@/components/domain/BrowserTime"
 import Link from "next/link"
 import { FC } from "react"
-import { BookmarkType } from "@/lib/repositories/bookmarks"
+import { SearchBookmarkType } from "@/lib/repositories/bookmarks"
 import OgpImage from "@/components/domain/OgpImage"
 import { CategoryType } from "@/lib/repositories/categories"
-import { BookmarkTagsType } from "@/lib/repositories/bookmark_tags"
 import { Checkbox } from "@/components/ui/checkbox"
 import TagItem from "@/components/domain/TagItem"
 import OpenLinkButton from "@/components/domain/OpenLinkButton"
 import { handleVisitBookmark } from "../../_actions/handleVisitBookmark"
-import { useTags } from "../_hooks/useTags"
 
 type Props = {
-    bookmark: BookmarkType,
-    tags?: BookmarkTagsType[0],
+    bookmark: SearchBookmarkType,
     category?: CategoryType,
     onCheck?: (checked: boolean) => void
-    checked?: boolean
+    checked?: boolean,
+    onSelectTag: (tag: string) => void
 }
 
 const ImageSize = 64
@@ -25,12 +23,11 @@ const ImageSize = 64
 const BookmarkListItem: FC<Props> = ({
     bookmark,
     category,
-    tags,
     checked,
     onCheck,
+    onSelectTag
 }) => {
-    const { bookmarkId, ogpImage, ogpTitle, url, createdAt, ogpDescription } = bookmark
-    const { onSelectTag } = useTags()
+    const { bookmarkId, ogpImage, ogpTitle, url, createdAt, ogpDescription, tagNames } = bookmark
     return (
         <div className="flex items-center gap-2">
             <Checkbox className="border-muted-foreground bg-background" checked={checked}
@@ -48,12 +45,12 @@ const BookmarkListItem: FC<Props> = ({
                         <p className='line-clamp-2 text-xs'>{ogpDescription}</p>
                         <div className="mt-auto flex w-full items-end gap-2 text-xs">
                             <span className="mr-2 truncate"><BrowserTime timestamp={createdAt} /></span>
-                            {tags && tags.map(tag => (
+                            {tagNames && tagNames.map(tag => (
                                 <TagItem onClick={(e) => {
                                     e.stopPropagation()
                                     e.preventDefault()
-                                    onSelectTag && onSelectTag({ tagId: tag.id })
-                                }} key={tag.id} tag={tag} />
+                                    onSelectTag(tag)
+                                }} key={tag} tag={{ name: tag }} />
                             ))}
                         </div>
                     </div>

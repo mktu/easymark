@@ -1,23 +1,29 @@
 import { useSignalContext } from "@/contexts/signal";
-import { BookmarkType } from "@/lib/repositories/bookmarks";
+import { SearchBookmarkType } from "@/lib/repositories/bookmarks";
 import { BookmarkSortOption } from "@/lib/types";
-import { useCallback, useDeferredValue, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
-import { handleFetchBookmarks, handleFetchBookmarksByIds } from "../_actions/handleFetchBookmarks";
-import { useTagMappings } from "./useTagMappings";
+import { handleFetchBookmarksByIds, handleSearchBookmarks } from "../_actions/handleFetchBookmarks";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-export const useBookmarks = (tags: number[] | null, filter?: string, sortOption?: BookmarkSortOption, category?: number | null, initialBookmarks?: BookmarkType[], initialHasMore?: Boolean) => {
+export const useBookmarks = (
+    query?: string,
+    sortOption?: BookmarkSortOption,
+    initialBookmarks?: SearchBookmarkType[],
+    initialHasMore?: Boolean
+) => {
     const { ref: bookmarkLoaderRef, inView } = useInView({ initialInView: false });
     const [page, setPage] = useState(0);
-    const deferredFilter = useDeferredValue(filter);
-    const [bookmarks, setBookmarks] = useState<BookmarkType[]>(initialBookmarks || []);
+    const [bookmarks, setBookmarks] = useState<SearchBookmarkType[]>(initialBookmarks || []);
     const [hasMore, setHasMore] = useState(Boolean(initialHasMore));
     const [checked, setChecked] = useState<number[]>([]);
     const { fetchBookmarkSignal, fireBookmarkFetchSignal, bookmarkReloadSignal, fireBookmarkReloadSignal } = useSignalContext();
-    const { bookmarkTags } = useTagMappings();
+    const searchParams = useSearchParams();
+    const pathname = usePathname();
+    const { replace } = useRouter();
 
     const fetchBookmarks = useCallback(async (targetPage: number) => {
-        const result = await handleFetchBookmarks(targetPage, 10, tags, deferredFilter, sortOption, category)
+        const result = await handleSearchBookmarks(targetPage, 10, query, sortOption)
         if (result.error) {
             console.error(result.error)
             return
@@ -35,7 +41,13 @@ export const useBookmarks = (tags: number[] | null, filter?: string, sortOption?
             return [...renewed, ...newBookmarks];
         });
         return dataBookmarks;
-    }, [category, deferredFilter, sortOption, tags]);
+    }, [query, sortOption]);
+
+    const onSelectTag = useCallback((tagName: string) => {
+        const params = new URLSearchParams(searchParams);
+        params.set('tag', tagName);
+        replace(`${pathname}?${params.toString()}`);
+    }, [pathname, replace, searchParams])
 
     useEffect(() => {
         const fetcher = async () => {
@@ -47,7 +59,7 @@ export const useBookmarks = (tags: number[] | null, filter?: string, sortOption?
                         return prev.map(bookmark => {
                             const target = fetchedBookmarks.find(fetchedBookmark => fetchedBookmark.bookmarkId === bookmark.bookmarkId)
                             if (target) {
-                                return target
+                                return { ...target }
                             }
                             return bookmark
                         })
@@ -91,9 +103,9 @@ export const useBookmarks = (tags: number[] | null, filter?: string, sortOption?
         bookmarks,
         hasMore,
         bookmarkLoaderRef,
-        bookmarkTags,
         checked,
-        setChecked
+        setChecked,
+        onSelectTag
     }
 }
 

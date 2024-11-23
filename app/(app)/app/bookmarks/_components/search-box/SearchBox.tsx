@@ -37,7 +37,7 @@ const SearchBox: FC<Props> = ({
                     <>
                         <SearchCommandMenu onSelectCommand={onAddCommand} className={searchText && `rounded-r-none`} />
                         {searchText && (
-                            <Button className="border-l rounded-l-none" variant={'ghost'} size='icon' onClick={() => {
+                            <Button className="rounded-l-none border-l" variant={'ghost'} size='icon' onClick={() => {
                                 onChangeSearchText('')
                             }}>
                                 <XCircle className='size-4 text-muted-foreground' />
@@ -45,7 +45,7 @@ const SearchBox: FC<Props> = ({
                         )}
                     </>
                 }
-                className="md:w-[400px] w-full pl-4"
+                className="w-full pl-4 md:w-[400px]"
                 value={searchText}
                 onChange={(e) => {
                     onChangeSearchText(e.target.value)
