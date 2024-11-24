@@ -15,7 +15,7 @@ type Props = {
 const Tag: FC<Props> = ({ tag }) => {
     const { name } = tag
     return (
-        <div className="flex w-full items-center gap-2 text-muted-foreground">
+        <div className="flex w-full items-center gap-2">
             <div className="truncate p-2"># {name}</div>
             <Button variant='link' asChild className='ml-auto flex items-center gap-1 text-muted-foreground'>
                 <Link href={`/app/bookmarks?tag=${tag.name}`}>

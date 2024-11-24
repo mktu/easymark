@@ -19,7 +19,7 @@ const MenuDrawer: FC = () => {
                 setOpen(o)
             }}>
                 <SheetTrigger asChild>
-                    <Button variant='ghost' size='icon'>
+                    <Button className="md:hidden" variant='ghost' size='icon'>
                         <MenuIcon className='size-6' />
                     </Button>
                 </SheetTrigger>
