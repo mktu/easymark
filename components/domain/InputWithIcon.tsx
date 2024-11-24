@@ -12,7 +12,7 @@ const InputWithIcon = React.forwardRef<HTMLInputElement, InputProps>(
     ({ className, type, leftIcon, rightIcon, ...props }, ref) => {
         return (
             <div className={cn(
-                'flex items-center h-10 w-full rounded-md border border-input bg-background px-3 py-2 ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2',
+                'flex items-center h-10 w-full rounded-md border border-input bg-background py-2 ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2',
                 className
             )}>
                 {leftIcon}

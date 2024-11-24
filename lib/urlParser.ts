@@ -1,5 +1,4 @@
 import { ReadonlyURLSearchParams } from "next/navigation"
-import { isArray } from "util"
 
 export const parseNumber = (searchParam: { [key: string]: string | string[] | undefined } | URLSearchParams | ReadonlyURLSearchParams, key: string, defaultValue: number | null) => {
     if (searchParam instanceof ReadonlyURLSearchParams || searchParam instanceof URLSearchParams) {

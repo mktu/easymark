@@ -1,16 +1,24 @@
-import { useEffect, useState } from "react";
-import { handleFetchBookmarks } from "../_actions/handleFetchBookmarks";
-import { BookmarkType } from "@/lib/repositories/bookmarks";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { handleSearchBookmarks } from "../_actions/handleFetchBookmarks";
+import { SearchBookmarkType } from "@/lib/repositories/bookmarks";
 import { useDebounce } from "use-debounce";
+import { appendQuerySegment, CategoryOperator, extractLastQuerySegment, replaceLastQuerySegment, TagOperator } from "../_utils/parseSearchQuery";
+import { useTagQuery } from "./useTagQuery";
+import { useCategoryQuery } from "./useCategoryQuery";
 
 export const useBookmarkSearch = () => {
     const [search, setSearch] = useState<string>('');
-    const [bookmarks, setBookmarks] = useState<BookmarkType[]>([]);
+    const [bookmarks, setBookmarks] = useState<SearchBookmarkType[]>([]);
     const [debouncedSearch] = useDebounce(search, 500);
+
+    const [isSuggesting, setIsSuggesting] = useState(false)
+    const lastQuery = useMemo(() => extractLastQuerySegment(search), [search]);
+    const { tags: selectableTags } = useTagQuery(lastQuery?.type === TagOperator, lastQuery?.value);
+    const { categories: selectableCategories } = useCategoryQuery(lastQuery?.type === CategoryOperator, lastQuery?.value);
 
     useEffect(() => {
         const fetchBookmarks = async () => {
-            const result = await handleFetchBookmarks(0, 10, null, debouncedSearch)
+            const result = await handleSearchBookmarks(0, 10, debouncedSearch)
             if (result.error) {
                 console.error(result.error)
                 return
@@ -24,9 +32,31 @@ export const useBookmarkSearch = () => {
         fetchBookmarks()
     }, [debouncedSearch]);
 
+    const onUpdate = useCallback((text: string) => {
+        setSearch(text)
+        const lq = extractLastQuerySegment(text)
+        const isSuggesting = lq?.type === TagOperator || lq?.type === CategoryOperator
+        setIsSuggesting(isSuggesting)
+    }, []);
+
+    const onSelectSuggestion = useCallback(async (type: typeof TagOperator | typeof CategoryOperator, value: string) => {
+        setSearch(last => replaceLastQuerySegment(last, { type, value }));
+        setIsSuggesting(false)
+    }, []);
+
+    const onAddCommand = useCallback((command: string) => {
+        setSearch(last => appendQuerySegment(last, { type: command, value: '' }))
+        setIsSuggesting(true)
+    }, []);
+
     return {
         search,
-        setSearch,
-        bookmarks
+        bookmarks,
+        selectableCategories,
+        selectableTags,
+        isSuggesting,
+        onUpdate,
+        onSelectSuggestion,
+        onAddCommand,
     }
 }

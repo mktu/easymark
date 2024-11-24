@@ -16,7 +16,7 @@ const CategoryListItem = ({ category }: Props) => {
                     <Link href={`/app/categories/${category.categoryId}`}>{category.name}</Link>
                 </Button>
                 <Button variant='link' className='text-sm text-muted-foreground' asChild>
-                    <Link href={`/app/bookmarks?category=${category.categoryId}`}>{category.bookmarkCount}  bookmarks</Link>
+                    <Link href={`/app/bookmarks?category=${category.name}`}>{category.bookmarkCount}  bookmarks</Link>
                 </Button>
                 <Button variant='ghost' size='icon'>
                     <TrashIcon className='size-5' />

@@ -1,4 +1,4 @@
-import { fetchCategory } from "@/lib/repositories/categories"
+import { getCategory } from "@/lib/repositories/categories"
 import { createClientForServer } from "@/lib/supabase/supabaseServer"
 import { redirect } from "next/navigation"
 import CategoryDialogContent from "./CategoryDialogContent"
@@ -14,7 +14,7 @@ export default async function Page({ params }: { params: { id: number } }) {
         redirect('/categories')
     }
 
-    const category = await fetchCategory(supabase, userData.user.id, params.id)
+    const category = await getCategory(supabase, userData.user.id, params.id)
 
     return <CategoryDialogContent category={category} />
 }

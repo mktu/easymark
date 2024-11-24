@@ -1,5 +1,5 @@
 'use client'
-import { BookmarkType } from "@/lib/repositories/bookmarks";
+import { SearchBookmarkType } from "@/lib/repositories/bookmarks";
 import { FC } from "react";
 import { CategoryType } from "@/lib/repositories/categories";
 import LoadingIcon from "@/components/svg/Loading";
@@ -11,24 +11,27 @@ import { useBookmarkSort } from "../_hooks/useBookmarkSort";
 import BulkUpdate from "./bulk-update/BulkUpdate";
 
 type Props = {
-    filter?: string,
-    category?: number | null,
+    query?: string,
     categories: CategoryType[],
-    tags: number[] | null,
-    initialBookmarks?: BookmarkType[],
+    initialBookmarks?: SearchBookmarkType[],
     initialHasMore?: boolean
 }
 
 const BookmarkList: FC<Props> = ({
-    filter,
-    category,
+    query,
     categories,
-    tags,
     initialBookmarks,
     initialHasMore
 }) => {
     const { sortOption, onSort } = useBookmarkSort()
-    const { bookmarks, hasMore, bookmarkLoaderRef, bookmarkTags, checked, setChecked } = useBookmarks(tags, filter, sortOption, category, initialBookmarks, initialHasMore)
+    const {
+        bookmarks,
+        hasMore,
+        bookmarkLoaderRef,
+        checked,
+        setChecked,
+        onSelectTag
+    } = useBookmarks(query, sortOption, initialBookmarks, initialHasMore)
     return (
         <ul className="flex w-full flex-col gap-2 p-1">
             <li className='flex items-center gap-2 border-b border-input py-2 pr-2'>
@@ -52,7 +55,6 @@ const BookmarkList: FC<Props> = ({
             {bookmarks.map((bookmark) => (
                 <li key={bookmark.bookmarkId}>
                     <BookmarkListItem
-                        tags={bookmarkTags[bookmark.bookmarkId]}
                         bookmark={bookmark}
                         category={categories.find((category) => category.categoryId === bookmark.categoryId)}
                         checked={checked.includes(bookmark.bookmarkId)}
@@ -68,6 +70,7 @@ const BookmarkList: FC<Props> = ({
                             })
                         }
                         }
+                        onSelectTag={onSelectTag}
                     />
                 </li>
             ))}

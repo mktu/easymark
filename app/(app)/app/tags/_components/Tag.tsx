@@ -6,6 +6,7 @@ import { BookIcon, TrashIcon, XCircleIcon } from "lucide-react"
 import { FC } from "react"
 import { handleDeleteTag } from "../_actions/handleDeleteTag"
 import { TagUsageType } from "@/lib/repositories/tag_usage"
+import Link from "next/link"
 
 type Props = {
     tag: TagUsageType,
@@ -14,12 +15,13 @@ type Props = {
 const Tag: FC<Props> = ({ tag }) => {
     const { name } = tag
     return (
-        <div className="flex w-full items-center gap-2 text-muted-foreground">
+        <div className="flex w-full items-center gap-2">
             <div className="truncate p-2"># {name}</div>
-            <div className='ml-auto flex items-center gap-1'>
-                <BookIcon className='size-4' />
-                <span className='text-sm'>{tag.count}</span>
-            </div>
+            <Button variant='link' asChild className='ml-auto flex items-center gap-1 text-muted-foreground'>
+                <Link href={`/app/bookmarks?tag=${tag.name}`}>
+                    {tag.count} Bookmarks
+                </Link>
+            </Button>
             <Popover>
                 <PopoverTrigger>
                     <TrashIcon className="size-5" />

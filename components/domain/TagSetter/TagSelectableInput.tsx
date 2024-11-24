@@ -36,7 +36,7 @@ const TagSelectableInput = ({
         onChange,
         error,
         loading,
-        handleAddTag2,
+        onAddTag,
         handleEnter } = useSearchTagUsage(onSelectTag, registeredTags)
     const [open, setOpen] = useState(false)
     return (
@@ -83,7 +83,7 @@ const TagSelectableInput = ({
                         {!selectableTags.find(v => v.name === searchTag) && searchTag && !loading && (
                             <CommandGroup heading="Tag not found?">
                                 <CommandItem onSelect={() => {
-                                    handleAddTag2(searchTag)
+                                    onAddTag(searchTag)
                                     onChange('')
                                 }} className="p-2 text-base text-muted-foreground">create # {searchTag}</CommandItem>
                             </CommandGroup>

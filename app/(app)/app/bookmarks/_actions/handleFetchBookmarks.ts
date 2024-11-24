@@ -1,19 +1,44 @@
 'use server'
-import { fetchBookmarksByIds, fetchBookmarksByPage } from "@/lib/repositories/bookmarks";
+import { searchBookmarksByIds, searchBookmarks } from "@/lib/repositories/bookmarks";
 import { createClientForServer } from "@/lib/supabase/supabaseServer";
 import { BookmarkSortOption } from "@/lib/types";
+import { buildQueryData, parseSearchQuery } from "../_utils/parseSearchQuery";
 
-export const handleFetchBookmarks = async (page: number, limit: number, tags: number[] | null, filter?: string, sortOption?: BookmarkSortOption, category?: number | null) => {
-
-    const start = page * limit;
-    const end = start + limit - 1;
-
+export const handleSearchBookmarks = async (page: number, limit: number, query?: string, sort?: BookmarkSortOption) => {
     const supabase = createClientForServer();
     const { data: authData } = await supabase.auth.getUser();
     if (!authData?.user) {
         return { error: 'not authenticated' }
     }
-    const { bookmarks, count } = await fetchBookmarksByPage(supabase, authData.user.id, page, limit, tags, filter, sortOption, category)
+    const start = page * limit;
+    const end = start + limit - 1;
+    const parsed = query ? parseSearchQuery(query) : null
+    if (parsed) {
+        const queryData = buildQueryData(parsed)
+
+        const { bookmarks, count } = await searchBookmarks(supabase, {
+            userId: authData.user.id,
+            page,
+            limit,
+            tags: queryData['tag'],
+            filter: queryData['freeWord'],
+            sortOption: sort,
+            category: queryData['category'],
+        })
+        return {
+            bookmarks: bookmarks,
+            hasMore: count ? count > end : false
+        }
+    }
+    const { bookmarks, count } = await searchBookmarks(supabase, {
+        userId: authData.user.id,
+        page,
+        limit,
+        tags: null,
+        filter: null,
+        sortOption: sort,
+        category: null,
+    })
     return {
         bookmarks: bookmarks,
         hasMore: count ? count > end : false
@@ -26,7 +51,7 @@ export const handleFetchBookmarksByIds = async (ids: number[]) => {
     if (!authData?.user) {
         return { error: 'not authenticated' }
     }
-    const bookmarks = await fetchBookmarksByIds(supabase, authData.user.id, ids)
+    const bookmarks = await searchBookmarksByIds(supabase, authData.user.id, ids)
     return {
         bookmarks
     }
