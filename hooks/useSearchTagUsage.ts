@@ -1,3 +1,4 @@
+import { handleSearchTag } from "@/app/(app)/app/_actions/handleSearchTag";
 import { handleAddTag } from "@/app/(app)/app/tags/_actions/handleAddTag";
 import { TagUsageType } from "@/lib/repositories/tag_usage";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -13,9 +14,12 @@ export const useSearchTagUsage = (
     const [debouncedSearch] = useDebounce(searchTag, 500);
     const [error, setError] = useState<string | null>(null);
     const fetchTags = useCallback(async (search: string) => {
-        const result = await fetch(`/api/tag_usage?search=${search}&limit=10`);
-        const { tags } = await result.json() as { tags: TagUsageType[] };
-        return tags;
+        const result = await handleSearchTag(search)
+        if ('error' in result) {
+            setError(result.error)
+            return []
+        }
+        return result;
     }, []);
 
     useEffect(() => {
@@ -46,7 +50,7 @@ export const useSearchTagUsage = (
         }
     }, [searchTag, fetchTags, registeredTags, onSelectTag])
 
-    const handleAddTag2 = useCallback(async (tagName: string) => {
+    const onAddTag = useCallback(async (tagName: string) => {
         if (!tagName) {
             return
         }
@@ -82,7 +86,7 @@ export const useSearchTagUsage = (
         error,
         selectableTags,
         handleEnter,
-        handleAddTag2,
+        onAddTag,
         handleCancelAddTag,
         loading,
         onChange

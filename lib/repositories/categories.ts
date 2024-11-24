@@ -37,7 +37,7 @@ export const getCategories = async (supabase: SupabaseClient<Database>, userId: 
     return convertCategories(data)
 }
 
-export const fetchCategory = async (supabase: SupabaseClient<Database>, userId: string, categoryId: number) => {
+export const getCategory = async (supabase: SupabaseClient<Database>, userId: string, categoryId: number) => {
     const { data, error } = await supabase.from('categories').select('*').eq('user_id', userId).eq('id', categoryId).limit(1)
     if (error) {
         console.error(error)

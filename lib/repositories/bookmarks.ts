@@ -193,24 +193,6 @@ export const fetchBookmark = async (supabase: SupabaseClient<Database>, userId: 
     return convertBookmark(bookmarksBase[0])
 }
 
-export const fetchBookmarkById = async (supabase: SupabaseClient<Database>, userId: string, bookmarkId: number) => {
-    const { data: bookmarksBase, error: bookmarkError } = await supabase.from('bookmarks_with_ogp').select('*').eq('user_id', userId).eq('bookmark_id', bookmarkId)
-    if (bookmarkError) {
-        console.error(bookmarkError)
-        throw Error('cannot fetch bookmarks')
-    }
-    return convertBookmark(bookmarksBase[0])
-}
-
-export const fetchBookmarksByIds = async (supabase: SupabaseClient<Database>, userId: string, bookmarkIds: number[]) => {
-    const { data: bookmarksBase, error: bookmarkError } = await supabase.from('bookmarks_with_ogp').select('*').eq('user_id', userId).in('bookmark_id', bookmarkIds)
-    if (bookmarkError) {
-        console.error(bookmarkError)
-        throw Error('cannot fetch bookmarks')
-    }
-    return convertBookmarks(bookmarksBase)
-}
-
 export const getBookmarksByIds = async (supabase: SupabaseClient<Database>, userId: string, bookmarkIds: number[]) => {
     const { data: bookmarksBase, error: bookmarkError } = await supabase.rpc('get_filtered_bookmarks_with_tags', {
         input_user_id: userId,
@@ -223,7 +205,7 @@ export const getBookmarksByIds = async (supabase: SupabaseClient<Database>, user
     return convertSearchedBookmarks(bookmarksBase.map(v => ({ ...v, tag_list: v.tag_names })))
 }
 
-export const fetchBookmarksByCategory = async (supabase: SupabaseClient<Database>, userId: string, categoryId: number) => {
+export const getBookmarksByCategory = async (supabase: SupabaseClient<Database>, userId: string, categoryId: number) => {
     const { data: bookmarksBase, error: bookmarkError } = await supabase.from('bookmarks_with_ogp').select('*').eq('user_id', userId).eq('category_id', categoryId).order('created_at', { ascending: false })
     if (bookmarkError) {
         console.error(bookmarkError)
