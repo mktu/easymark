@@ -46,7 +46,7 @@ export const getCategory = async (supabase: SupabaseClient<Database>, userId: st
     return convertCategories(data)[0]
 }
 
-export const fetchCategoriesWithBookmarkCount = async (supabase: SupabaseClient<Database>, userId: string) => {
+export const getCategoriesWithBookmarkCount = async (supabase: SupabaseClient<Database>, userId: string) => {
     const { data: categories, error: categoriesError } = await supabase.from('categories_with_bookmark_count').select('*').eq('user_id', userId).order('created_at', { ascending: false })
     if (categoriesError) {
         console.error(categoriesError)

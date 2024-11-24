@@ -184,16 +184,7 @@ export const searchBookmarks = async (supabase: SupabaseClient<Database>, {
     return { bookmarks: convertSearchedBookmarks(data.data), count: data.data.length }
 }
 
-export const fetchBookmark = async (supabase: SupabaseClient<Database>, userId: string, bookmarkId: number) => {
-    const { data: bookmarksBase, error: bookmarkError } = await supabase.from('bookmarks_with_ogp').select('*').eq('user_id', userId).eq('bookmark_id', bookmarkId)
-    if (bookmarkError) {
-        console.error(bookmarkError)
-        throw Error('cannot fetch bookmarks')
-    }
-    return convertBookmark(bookmarksBase[0])
-}
-
-export const getBookmarksByIds = async (supabase: SupabaseClient<Database>, userId: string, bookmarkIds: number[]) => {
+export const searchBookmarksByIds = async (supabase: SupabaseClient<Database>, userId: string, bookmarkIds: number[]) => {
     const { data: bookmarksBase, error: bookmarkError } = await supabase.rpc('get_filtered_bookmarks_with_tags', {
         input_user_id: userId,
         input_bookmark_ids: bookmarkIds
@@ -203,6 +194,15 @@ export const getBookmarksByIds = async (supabase: SupabaseClient<Database>, user
         throw Error('cannot fetch bookmarks')
     }
     return convertSearchedBookmarks(bookmarksBase.map(v => ({ ...v, tag_list: v.tag_names })))
+}
+
+export const getBookmark = async (supabase: SupabaseClient<Database>, userId: string, bookmarkId: number) => {
+    const { data: bookmarksBase, error: bookmarkError } = await supabase.from('bookmarks_with_ogp').select('*').eq('user_id', userId).eq('bookmark_id', bookmarkId)
+    if (bookmarkError) {
+        console.error(bookmarkError)
+        throw Error('cannot fetch bookmarks')
+    }
+    return convertBookmark(bookmarksBase[0])
 }
 
 export const getBookmarksByCategory = async (supabase: SupabaseClient<Database>, userId: string, categoryId: number) => {
