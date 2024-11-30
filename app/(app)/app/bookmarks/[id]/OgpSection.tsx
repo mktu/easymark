@@ -18,7 +18,7 @@ const ImageHeight = Math.floor(ImageWitdth / 1.91)
 
 const OgpSection: FC<Props> = ({ url, title, description, image, onUpdateOgp }) => {
     return (
-        <section className='flex min-w-[470px] max-w-[700px] flex-1 flex-col gap-2'>
+        <section className='flex w-full flex-1 flex-col gap-2 md:min-w-[470px] md:max-w-[700px]'>
             <div className='flex justify-center gap-4'>
                 <OgpImage url={url} image={image} alt={title || url} width={ImageWitdth} height={ImageHeight} />
             </div>
@@ -41,7 +41,6 @@ const OgpSection: FC<Props> = ({ url, title, description, image, onUpdateOgp }) 
                         </Button>
                     </div>
                 </div>
-
             </div>
         </section>
     )

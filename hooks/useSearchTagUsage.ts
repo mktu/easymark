@@ -33,23 +33,6 @@ export const useSearchTagUsage = (
         })
     }, [fetchTags, debouncedSearch]);
 
-    const handleEnter = useCallback(async () => {
-        if (searchTag) {
-            const fetchedTags = await fetchTags(searchTag)
-            const target = fetchedTags.find(tag => tag.name === searchTag)
-            if (registeredTags.find(tag => tag.tagId === target?.tagId)) {
-                setError(`tag "${target?.name}" is already exists`)
-                return
-            }
-            if (target) {
-                onSelectTag(target, true)
-                return
-            }
-            setAddTagTarget(searchTag)
-            setSearchTag('')
-        }
-    }, [searchTag, fetchTags, registeredTags, onSelectTag])
-
     const onAddTag = useCallback(async (tagName: string) => {
         if (!tagName) {
             return
@@ -85,7 +68,6 @@ export const useSearchTagUsage = (
         addTagTarget,
         error,
         selectableTags,
-        handleEnter,
         onAddTag,
         handleCancelAddTag,
         loading,

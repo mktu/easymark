@@ -37,7 +37,7 @@ const EditSection: FC<Props> = ({
     onClearAllTags
 }) => {
     return (
-        <section className='flex size-full min-w-[470px] max-w-[500px] flex-col gap-2'>
+        <section className='flex size-full flex-col gap-2 md:min-w-[470px] md:max-w-[500px]'>
             <label htmlFor="note">Note</label>
             <Textarea id='note' name='note' value={note} onChange={(e) => { setNote(e.target.value) }} />
             <ErrorIndicator error={result?.validatedErrors?.note} />

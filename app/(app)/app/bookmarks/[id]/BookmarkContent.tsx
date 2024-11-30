@@ -66,7 +66,6 @@ const BookmarkContent: FC<Props> = ({
                         toast('Bookmark deleted')
                     }
                 }} />
-
         </form>
     )
 }

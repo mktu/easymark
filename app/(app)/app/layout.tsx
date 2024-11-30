@@ -24,7 +24,6 @@ const Layout = async ({
                     <>
                         <main className="size-full flex-1 overflow-auto">
                             {children}
-
                         </main>
                     </>
                 }

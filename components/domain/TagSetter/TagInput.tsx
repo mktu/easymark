@@ -59,7 +59,7 @@ type Props = {
     onClearTag: (tag: TagUsageType) => void,
     onClearAll: () => void,
     onSearchTag: (input: string) => void,
-    onEnter: () => void,
+    onEnter?: () => void,
     onFocus?: () => void,
     onBlur?: FocusEventHandler<HTMLInputElement>,
     onEscape: () => void,
@@ -101,9 +101,9 @@ const TagInput: FC<Props> = ({
                     onBlur={onBlur}
                     onKeyDown={(e) => {
                         if (e.key === 'Enter') {
-                            onEnter()
+                            onEnter && onEnter();
                         } else if (e.key === 'Escape') {
-                            onEscape()
+                            onEscape();
                         }
                     }}
                     type="text" className={cn(inputInternalVariants({ size: variants?.size }))} />

@@ -16,7 +16,9 @@ const AppSidebar: FC = () => {
     return (
         <Sidebar collapsible='icon'>
             <SidebarHeader>
-                <Home />
+                <SidebarMenu>
+                    <Home />
+                </SidebarMenu>
             </SidebarHeader>
             <SidebarContent>
                 <SidebarMenu>

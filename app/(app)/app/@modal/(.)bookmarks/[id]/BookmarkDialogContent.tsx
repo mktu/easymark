@@ -94,7 +94,7 @@ const BookmarkDialogContent: FC<Props> = ({ tagUsage, bookmark, categories, sele
                     <DialogFooter className='mt-2'>
                         <Popover>
                             <PopoverTrigger asChild>
-                                <Button type='button' variant='destructive' className='mr-auto'>
+                                <Button type='button' variant='destructive' className='mr-auto hidden md:block'>
                                     <TrashIcon className='mr-1 size-5' />
                                     DELETE</Button>
                             </PopoverTrigger>
@@ -112,7 +112,7 @@ const BookmarkDialogContent: FC<Props> = ({ tagUsage, bookmark, categories, sele
                                 </div>
                             </PopoverContent>
                         </Popover>
-                        <Button onClick={() => {
+                        <Button variant={'ghost'} onClick={() => {
                             router.back()
                         }} type="button">Cancel</Button>
                         <Button type='submit'>Update</Button>

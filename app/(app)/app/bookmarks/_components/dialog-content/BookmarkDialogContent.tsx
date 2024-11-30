@@ -32,7 +32,7 @@ const BookmarkDialogContent: FC = () => {
                 selectableTags={selectableTags}
                 isSuggesting={isSuggesting}
             />
-            <ul className="mt-2 flex flex-1 flex-col gap-2 overflow-y-auto">
+            <ul className="mt-2 flex h-full flex-1 flex-col gap-2 overflow-y-auto">
                 {bookmarks.map((bookmark) => (
                     <BookmarkListItem key={bookmark.bookmarkId}
                         onSelectTag={(tag) => {
