@@ -21,18 +21,22 @@ export const useBookmarkQuery = (query: string) => {
     const { categories: selectableCategories } = useCategoryQuery(lastQuery?.type === CategoryOperator, lastQuery?.value);
     const tagParam = searchParams.get('tag')
 
-    useEffect(() => {
-        if (!urlUpdatable) {
-            return;
-        }
+    const updateUrl = useCallback((query: string) => {
         const params = new URLSearchParams(searchParams);
-        if (debouncedInput) {
-            params.set('query', debouncedInput);
+        if (query) {
+            params.set('query', query);
         } else {
             params.delete('query');
         }
         replace(`${pathname}?${params.toString()}`);
-    }, [debouncedInput, pathname, replace, searchParams, urlUpdatable]);
+    }, [pathname, replace, searchParams]);
+
+    useEffect(() => {
+        if (!urlUpdatable) {
+            return;
+        }
+        updateUrl(debouncedInput)
+    }, [debouncedInput, updateUrl, urlUpdatable]);
 
     useEffect(() => {
         if (tagParam) {
@@ -53,10 +57,11 @@ export const useBookmarkQuery = (query: string) => {
     }, []);
 
     const onSelectSuggestion = useCallback(async (type: typeof TagOperator | typeof CategoryOperator, value: string) => {
-        setInput(last => replaceLastQuerySegment(last, { type, value }));
+        const newValue = replaceLastQuerySegment(input, { type, value })
+        setInput(newValue);
+        updateUrl(newValue);
         setIsSuggesting(false)
-        setUrlUpdatable(true)
-    }, []);
+    }, [input, updateUrl]);
 
     const onAddCommand = useCallback((command: string) => {
         setInput(last => appendQuerySegment(last, { type: command, value: '' }))
