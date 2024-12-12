@@ -6,9 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import OgpImage from "@/components/domain/OgpImage"
 import CopyableItem from "@/components/domain/CopyableItem"
-import { RotateCwIcon, TrashIcon } from "lucide-react"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { PopoverClose } from "@radix-ui/react-popover"
+import { MoreVertical, RotateCwIcon, TrashIcon } from "lucide-react"
 import { BookmarkType } from "@/lib/repositories/bookmarks"
 import { useBookmarkUpdate } from "../../../hooks/useBookmarkUpdate"
 import ErrorIndicator from "../../../_components/ErrorIndicator/ErrorIndicator"
@@ -18,6 +16,9 @@ import CategorySelector from "@/components/domain/CategorySelector"
 import { TagUsageType } from "@/lib/repositories/tag_usage"
 import { useSignalContext } from "@/contexts/signal"
 import { TagSelectableInput } from "@/components/domain/TagSetter"
+import { useViewportContext } from "@/contexts/viewport"
+import Delete from "./Delete"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 
 
 const ImageWitdth = 460
@@ -28,10 +29,10 @@ type Props = {
     categories: CategoryType[],
     tagUsage: TagUsageType[],
     selectedCategoryId?: number
-    from?: string | null
 }
 
-const BookmarkDialogContent: FC<Props> = ({ tagUsage, bookmark, categories, selectedCategoryId, from }) => {
+const BookmarkDialogContent: FC<Props> = ({ tagUsage, bookmark, categories, selectedCategoryId
+}) => {
     const { ogp, setNote, note, refetch, category, setCategory,
         registeredTags,
         handleSubmit, handleDelete,
@@ -39,7 +40,8 @@ const BookmarkDialogContent: FC<Props> = ({ tagUsage, bookmark, categories, sele
         handleClearAllTags,
         updateResult, error } = useBookmarkUpdate(tagUsage, bookmark, selectedCategoryId)
     const router = useRouter();
-    const { fireBookmarkFetchSignal, fireBookmarkTagSignal } = useSignalContext();
+    const { fireBookmarkFetchSignal, fireBookmarkTagSignal, fireBookmarkReloadSignal } = useSignalContext();
+    const { viewport } = useViewportContext()
     if (!bookmark) return null
     return (
         <Dialog
@@ -54,6 +56,26 @@ const BookmarkDialogContent: FC<Props> = ({ tagUsage, bookmark, categories, sele
             <DialogContent className='flex h-full flex-col overflow-auto'>
                 <DialogTitle>Update Bookmark</DialogTitle>
                 <DialogDescription>Edit your bookmark information.</DialogDescription>
+                <div className="absolute top-1 right-6">
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button variant='ghost' size='icon' className='flex items-center mr-2'>
+                                <MoreVertical className='size-4' />
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                            <DropdownMenuItem onSelect={async () => {
+                                if (await handleDelete()) {
+                                    fireBookmarkReloadSignal(true)
+                                    router.back()
+                                }
+                            }}>
+                                <TrashIcon className='size-4 mr-2' />
+                                <span>DELETE </span>
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                </div>
                 {error && <ErrorIndicator error={error} />}
                 <form className='flex flex-col gap-1' action={async () => {
                     if (!await handleSubmit()) {
@@ -92,30 +114,20 @@ const BookmarkDialogContent: FC<Props> = ({ tagUsage, bookmark, categories, sele
                     <Textarea id='note' name='note' value={note} onChange={(e) => { setNote(e.target.value) }} />
                     <ErrorIndicator error={updateResult?.validatedErrors?.note} />
                     <DialogFooter className='mt-2'>
-                        <Popover>
-                            <PopoverTrigger asChild>
-                                <Button type='button' variant='destructive' className='mr-auto'>
-                                    <TrashIcon className='mr-1 size-5' />
-                                    DELETE</Button>
-                            </PopoverTrigger>
-                            <PopoverContent>
-                                <div>Are you sure you want to delete this bookmark?</div>
-                                <div className='flex gap-1'>
-                                    <PopoverClose asChild>
-                                        <Button type='button' variant='ghost' >Cancel</Button>
-                                    </PopoverClose>
-                                    <Button type='button' variant='destructive' onClick={async () => {
-                                        if (await handleDelete()) {
-                                            router.back()
-                                        }
-                                    }}>Delete</Button>
-                                </div>
-                            </PopoverContent>
-                        </Popover>
-                        <Button onClick={() => {
+                        {viewport !== 'mobile' && (
+                            <div className="mr-auto">
+                                <Delete onDelete={async () => {
+                                    if (await handleDelete()) {
+                                        router.back()
+                                    }
+                                }} />
+                            </div>
+                        )}
+                        <Button variant={'ghost'} onClick={() => {
                             router.back()
                         }} type="button">Cancel</Button>
                         <Button type='submit'>Update</Button>
+
                     </DialogFooter>
                 </form>
             </DialogContent>

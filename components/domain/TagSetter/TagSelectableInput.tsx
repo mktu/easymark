@@ -36,8 +36,7 @@ const TagSelectableInput = ({
         onChange,
         error,
         loading,
-        onAddTag,
-        handleEnter } = useSearchTagUsage(onSelectTag, registeredTags)
+        onAddTag } = useSearchTagUsage(onSelectTag, registeredTags)
     const [open, setOpen] = useState(false)
     return (
         <Command loop shouldFilter={false} className="overflow-visible">
@@ -48,7 +47,6 @@ const TagSelectableInput = ({
                 selectedTags={registeredTags}
                 onClearTag={onClearTag}
                 onClearAll={onClearAll}
-                onEnter={handleEnter}
                 onSearchTag={(text) => {
                     onChange(text)
                     setOpen(!!text)

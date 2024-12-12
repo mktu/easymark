@@ -16,9 +16,9 @@ const BookmarkListItem = ({ bookmark, onSelectTag }: Props) => {
     return (
         <li className="flex w-full items-center gap-2">
             <OgpImage image={bookmark.ogpImage} alt={bookmark.ogpTitle || ''} width={ImageSize} height={ImageSize} />
-            <Link href={`/app/bookmarks/${bookmark.bookmarkId}`} className='flex w-full items-start gap-2'>
-                <div className='flex size-full flex-col'>
-                    <div className="truncate text-sm underline">{bookmark.ogpTitle || bookmark.url}</div>
+            <Link href={`/app/bookmarks/${bookmark.bookmarkId}`} className='flex w-full flex-1 items-start gap-2 overflow-x-hidden'>
+                <div className='flex w-full flex-col overflow-x-hidden'>
+                    <div className="w-full truncate text-sm underline">{bookmark.ogpTitle || bookmark.url}</div>
                     <div className='line-clamp-2 text-xs'>{bookmark.ogpDescription}</div>
                     <div className="mt-auto flex w-full items-end gap-2 text-xs">
                         <span className="mr-2"><BrowserTime timestamp={bookmark.createdAt} /></span>

@@ -100,7 +100,7 @@ const NewBookmarkDialog: FC<Props> = ({
                     <DialogFooter>
                         <Button onClick={() => {
                             router.back()
-                        }} type="button">Cancel</Button>
+                        }} variant='ghost' type="button">Cancel</Button>
                         <Button disabled={!validBookmark} type='submit'>Add</Button>
                     </DialogFooter>
                 </form>

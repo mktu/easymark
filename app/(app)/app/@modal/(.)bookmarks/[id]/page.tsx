@@ -4,7 +4,6 @@ import { redirect } from "next/navigation"
 import BookmarkDialogContent from "./BookmarkDialogContent"
 import { getCategories } from "@/lib/repositories/categories"
 import { getTagUsageByBookmarkId } from "@/lib/repositories/tag_usage"
-import { headers } from "next/headers"
 
 export default async function Bookmark({
     params,
@@ -22,10 +21,8 @@ export default async function Bookmark({
     const bookmark = await getBookmark(supabase, userData.user.id, Number(params.id))
     const categories = await getCategories(supabase, userData.user.id)
     const tagUsage = await getTagUsageByBookmarkId(supabase, userData.user.id, bookmark.bookmarkId)
-    const headersList = headers()
-    const referer = headersList.get('referer')
     if ('error' in tagUsage) {
         throw new Error(tagUsage.error)
     }
-    return <BookmarkDialogContent from={referer} tagUsage={tagUsage} bookmark={bookmark} categories={categories} selectedCategoryId={selectedCategoryId} />
+    return <BookmarkDialogContent tagUsage={tagUsage} bookmark={bookmark} categories={categories} selectedCategoryId={selectedCategoryId} />
 }

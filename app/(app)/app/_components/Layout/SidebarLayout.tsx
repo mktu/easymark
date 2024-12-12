@@ -26,7 +26,7 @@ const SidebarLayout: React.FC<Props> = ({ sidebar, content, header }) => {
     // const { setGutter, setRoot, moving } = useSplit({ onDragEnd, minWidth: MinWidth, maxWidth: MaxWidth })
 
     return (
-        <div className="relative flex h-screen w-screen">
+        <div className="relative flex w-screen md:h-screen">
             <div className={cn('h-full overflow-y-auto hidden md:block')} >
                 {sidebar}
             </div>

@@ -13,7 +13,7 @@ const SearchDialog: FC = () => {
             open={open}
             onOpenChange={closeDialog}
         >
-            <DialogContent className='flex h-[720px] max-w-xl flex-col overflow-auto'>
+            <DialogContent className='flex h-[720px] w-full flex-col overflow-auto md:max-w-xl'>
                 <DialogTitle>Search Bookmark</DialogTitle>
                 <DialogDescription>Search bookmarks by keyword, category, tags...</DialogDescription>
                 <BookmarkDialogContent />
