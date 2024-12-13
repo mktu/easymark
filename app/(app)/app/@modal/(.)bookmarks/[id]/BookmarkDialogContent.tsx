@@ -56,10 +56,10 @@ const BookmarkDialogContent: FC<Props> = ({ tagUsage, bookmark, categories, sele
             <DialogContent className='flex h-full flex-col overflow-auto'>
                 <DialogTitle>Update Bookmark</DialogTitle>
                 <DialogDescription>Edit your bookmark information.</DialogDescription>
-                <div className="absolute top-1 right-6">
+                <div className="absolute right-6 top-1">
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                            <Button variant='ghost' size='icon' className='flex items-center mr-2'>
+                            <Button variant='ghost' size='icon' className='mr-2 flex items-center'>
                                 <MoreVertical className='size-4' />
                             </Button>
                         </DropdownMenuTrigger>
@@ -70,7 +70,7 @@ const BookmarkDialogContent: FC<Props> = ({ tagUsage, bookmark, categories, sele
                                     router.back()
                                 }
                             }}>
-                                <TrashIcon className='size-4 mr-2' />
+                                <TrashIcon className='mr-2 size-4' />
                                 <span>DELETE </span>
                             </DropdownMenuItem>
                         </DropdownMenuContent>
