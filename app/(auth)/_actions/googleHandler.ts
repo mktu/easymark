@@ -1,7 +1,7 @@
 'use server'
 
 import { createClientForServer } from "@/lib/supabase/supabaseServer";
-import { headers } from "next/headers";
+import { getSiteUrl } from "@/lib/utils";
 import { redirect } from "next/navigation";
 
 export const handleGoogleSignin = async () => {
@@ -13,7 +13,7 @@ export const handleGoogleSignin = async () => {
                 access_type: 'offline',
                 prompt: 'consent',
             },
-            redirectTo: process.env.SUPABASE_AUTH_CALLBACK_URL,
+            redirectTo: `${getSiteUrl()}/auth/callback`,
         },
     })
     if (error) {
