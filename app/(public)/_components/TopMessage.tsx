@@ -13,7 +13,7 @@ const TopMessage: FC = () => {
                         <Link href="/signup">Signup</Link>
                     </Button>
                     <Button variant='outline' asChild>
-                        <Link href="/login">Login</Link>
+                        <Link href="/signin">Login</Link>
                     </Button>
                 </div>
             </div>
