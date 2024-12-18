@@ -7,10 +7,9 @@ export function cn(...inputs: ClassValue[]) {
 
 
 export const getSiteUrl = () => {
-  const domainName = process.env.VERCEL_URL
-  console.log(domainName)
-  if (domainName) {
-    return `https://${domainName}`
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
+  if (siteUrl) {
+    return siteUrl
   }
   return 'http://127.0.0.1:3000'
 }
