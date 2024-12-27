@@ -4,9 +4,9 @@ import { getCategories } from "@/lib/repositories/categories"
 import Bookmarks from "./_components/Bookmarks"
 import BookmarkListContainer from "./_components/BookmarkListContainer"
 import { Suspense } from "react"
-import { getSortOption } from "./_utils/parseSortOption"
+import { getSortOption } from "../../_logics/bookmarks/parseSortOption"
 import BookmarkSkelton from "./_components/BookmarkSkelton"
-import { convertCategoryToQuery, convertTagToQuery } from "./_utils/convertToQuery"
+import { convertCategoryToQuery, convertTagToQuery } from "../../_logics/bookmarks/convertToQuery"
 
 
 export default async function Bookmark({ searchParams }: {

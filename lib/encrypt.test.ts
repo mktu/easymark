@@ -16,4 +16,13 @@ describe('cryptoFunctions', () => {
 
         expect(decryptedEmpty).toBe(emptyText);
     });
+
+    it('encrypt again', () => {
+        const sampleText = '1547380813q85';
+        const encrypted = encrypt(sampleText);
+        const decrypted = decrypt(encrypted);
+        const reEncrypted = encrypt(decrypted);
+
+        expect(encrypted).toBe(reEncrypted);
+    });
 });

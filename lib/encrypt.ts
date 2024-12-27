@@ -1,4 +1,4 @@
-import crypto from 'crypto';
+import crypto, { createHash } from 'crypto';
 
 // 暗号化キー（環境変数から取得することを推奨）
 const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY || '833c5fd907525a32a7960dd975831362835c9721bc37caa466a7319b4769db85'; // 32 bytes for AES-256
@@ -20,4 +20,9 @@ export function decrypt(text: string): string {
     let decrypted = decipher.update(encryptedText, 'hex', 'utf8');
     decrypted += decipher.final('utf8');
     return decrypted;
+}
+
+// ハッシュ化（認証用）
+export function hashApiKey(apiKey: string): string {
+    return createHash('sha256').update(apiKey).digest('hex');
 }

@@ -3,7 +3,7 @@ import { FC } from "react";
 import { useBookmarkSearch } from "../../_hooks/useBookmarkSearch";
 import BookmarkListItem from "./BookmarkListItem";
 import SearchBox from "../search-box/SearchBox";
-import { CategoryOperator, TagOperator } from "../../_utils/parseSearchQuery";
+import { CategoryOperator, TagOperator } from "../../../../_logics/bookmarks/parseSearchQuery";
 
 const BookmarkDialogContent: FC = () => {
     const {

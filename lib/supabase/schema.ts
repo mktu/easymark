@@ -16,6 +16,8 @@ export type Database = {
           api_key_id: number
           created_at: string
           expires_at: string | null
+          hashed_key: string
+          label: string
           last_used_at: string | null
           updated_at: string
           user_id: string
@@ -26,6 +28,8 @@ export type Database = {
           api_key_id?: number
           created_at?: string
           expires_at?: string | null
+          hashed_key: string
+          label?: string
           last_used_at?: string | null
           updated_at?: string
           user_id: string
@@ -36,6 +40,8 @@ export type Database = {
           api_key_id?: number
           created_at?: string
           expires_at?: string | null
+          hashed_key?: string
+          label?: string
           last_used_at?: string | null
           updated_at?: string
           user_id?: string

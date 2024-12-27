@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { handleSearchBookmarks } from "../_actions/handleFetchBookmarks";
+import { handleSearchBookmarks } from "../_actions/handleSearchBookmarks";
 import { SearchBookmarkType } from "@/lib/repositories/bookmarks";
 import { useDebounce } from "use-debounce";
-import { appendQuerySegment, CategoryOperator, extractLastQuerySegment, replaceLastQuerySegment, TagOperator } from "../_utils/parseSearchQuery";
+import { appendQuerySegment, CategoryOperator, extractLastQuerySegment, replaceLastQuerySegment, TagOperator } from "../../../_logics/bookmarks/parseSearchQuery";
 import { useTagQuery } from "./useTagQuery";
 import { useCategoryQuery } from "./useCategoryQuery";
 
@@ -19,7 +19,7 @@ export const useBookmarkSearch = () => {
     useEffect(() => {
         const fetchBookmarks = async () => {
             const result = await handleSearchBookmarks(0, 10, debouncedSearch)
-            if (result.error) {
+            if ('error' in result) {
                 console.error(result.error)
                 return
             }
