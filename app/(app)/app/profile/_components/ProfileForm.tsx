@@ -10,6 +10,7 @@ import ErrorIndicator from '../../_components/ErrorIndicator/ErrorIndicator'
 import { toast } from 'sonner'
 import { User2 } from 'lucide-react'
 import ApiKeyItem from './ApiKeyItem'
+import ApiKeyTable from './ApiKeyTable'
 type Props = {
     user: UserType,
     apiKeys: ApiKeyType[]
@@ -32,8 +33,8 @@ const ProfileForm: React.FC<Props> = ({ user, apiKeys }) => {
                         if (result?.success) {
                             toast.success('Profile updated')
                         }
-                    }} className='flex items-end gap-2'>
-                        <div className='w-[250px] flex flex-col gap-1
+                    }} className='flex items-end gap-2 w-full'>
+                        <div className='w-full md:w-[250px] flex flex-col gap-1
                 '>
                             <Input id='name' name='name' value={name} onChange={(e) => {
                                 setName(e.target.value)
@@ -46,9 +47,7 @@ const ProfileForm: React.FC<Props> = ({ user, apiKeys }) => {
                 <div className='flex flex-col gap-2'>
                     <h3 className='font-semibold'>API Keys</h3>
                     <div className='flex flex-col gap-2'>
-                        {apiKeys.map((apiKey) => (
-                            <ApiKeyItem apiKey={apiKey} key={apiKey.apiKey} />
-                        ))}
+                        <ApiKeyTable apiKeys={apiKeys} />
                     </div>
                     <div className='mt-2'>
                         <Button className='ml-auto' variant='outline' type='button' onClick={() => {

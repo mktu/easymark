@@ -7,6 +7,7 @@ const convertApiKey = (apiKey: Database['public']['Tables']['api_keys']['Row']) 
         userId: apiKey.user_id,
         apiKey: decrypt(apiKey.api_key),
         active: apiKey.active,
+        label: apiKey.label,
         expiresAt: apiKey.expires_at,
     }
 }
