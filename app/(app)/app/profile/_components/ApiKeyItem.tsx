@@ -19,7 +19,7 @@ const ApiKeyItem = ({ apiKey }: Props) => {
                         {apiKey.label}
                     </div>
                 </div>
-                <div className='flex flex-col gap-1 w-[300px]'>
+                <div className='flex w-[300px] flex-col gap-1'>
                     <Input className='text-muted-foreground' id='apiKey' name='apiKey' defaultValue={apiKey.apiKey} readOnly />
                 </div>
                 <Button size='icon' variant='outline' onClick={() => {
@@ -31,7 +31,7 @@ const ApiKeyItem = ({ apiKey }: Props) => {
                 <Delete onDelete={async () => {
                     await handleDeleteApiKey(apiKey.apiKey)
                 }} />
-                <div className='text-muted-foreground text-sm mt-1'>
+                <div className='mt-1 text-sm text-muted-foreground'>
                     {apiKey.expiresAt ? `Expired at: ${apiKey.expiresAt}` : 'No expiration'}
                 </div>
             </div>

@@ -28,21 +28,21 @@ const Welcome: FC<Props> = ({
     const [state, dispatch] = useFormState<AddBookmarkState, FormData>(handleAddBookmarkWithOgp, { error: null })
     return (
         <section className="flex flex-col gap-2">
-            <div className='flex w-full flex-col gap-4 p-4 items-center'>
+            <div className='flex w-full flex-col items-center gap-4 p-4'>
                 <h2 className='flex items-center text-lg font-semibold'>
                     Welcome {user.username}&apos;s Home. Les&apos;s add first bookmark !
                 </h2>
                 <Image src='/images/welcome.svg' width={200} height={200} alt='welcome' />
             </div>
-            <form className='w-full flex flex-col items-center gap-4 p-4' action={dispatch}>
-                <div className='flex items-center gap-1 w-full md:w-[600px]'>
+            <form className='flex w-full flex-col items-center gap-4 p-4' action={dispatch}>
+                <div className='flex w-full items-center gap-1 md:w-[600px]'>
                     <Input value={bookmark} onChange={(e) => {
                         setBookmark(e.target.value)
                     }} id='url' name='url' />
                     <Button disabled={!validBookmark}>Add</Button>
                 </div>
                 {ogp ? (
-                    <div className="flex flex-col gap-2 w-full md:w-[600px] items-center">
+                    <div className="flex w-full flex-col items-center gap-2 md:w-[600px]">
                         <OgpImage
                             url={bookmark}
                             image={ogp?.image?.url}
@@ -50,7 +50,7 @@ const Welcome: FC<Props> = ({
                             width={ImageWitdth}
                             height={ImageHeight} />
                         <h3 className='font-semibold'>{ogp?.title}</h3>
-                        <p className="flex justify-center w-full md:w-[450px] text-sm text-muted-foreground">{ogp?.description}</p>
+                        <p className="flex w-full justify-center text-sm text-muted-foreground md:w-[450px]">{ogp?.description}</p>
                     </div>
                 ) : <Placeholder />}
 

@@ -45,7 +45,7 @@ const ApiKeyDialog: FC<Props> = ({
                     <div className='flex flex-col gap-2 p-2'>
                         <div className='flex flex-col gap-1'>
                             <label htmlFor="apiKey">API Key</label>
-                            <div className="flex items-center gap-2 w-full">
+                            <div className="flex w-full items-center gap-2">
                                 <Input className="text-muted-foreground" id='apiKey' name='apiKey' defaultValue={apiKey} readOnly />
                                 <Button type='button' variant='outline' size='icon' onClick={() => {
                                     toast.info('Copied to clipboard')
@@ -57,7 +57,7 @@ const ApiKeyDialog: FC<Props> = ({
                         </div>
                         <div className='flex flex-col gap-1'>
                             <label htmlFor="label">Label</label>
-                            <div className="flex items-center gap-2 w-full">
+                            <div className="flex w-full items-center gap-2">
                                 <Input id='label' name='label' value={label} onChange={(e) => {
                                     setLabel(e.target.value)
                                 }} />

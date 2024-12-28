@@ -21,10 +21,10 @@ const ProfileForm: React.FC<Props> = ({ user, apiKeys }) => {
     const [name, setName] = useState(user.username || '')
     const [updateResult, setUpdateResult] = useState<HandleUpdateProfileType>()
     return (
-        <section className="flex h-full flex-col p-4 gap-2">
+        <section className="flex h-full flex-col gap-2 p-4">
             <h2 className='flex items-center gap-2 text-lg font-semibold'>
                 <User2 className='size-5' />User Settings</h2>
-            <div className='w-full flex flex-col gap-4 p-2'>
+            <div className='flex w-full flex-col gap-4 p-2'>
                 <div className='flex flex-col gap-2'>
                     <h3 className='font-semibold'>Profile</h3>
                     <form action={async () => {
@@ -33,8 +33,8 @@ const ProfileForm: React.FC<Props> = ({ user, apiKeys }) => {
                         if (result?.success) {
                             toast.success('Profile updated')
                         }
-                    }} className='flex items-end gap-2 w-full'>
-                        <div className='w-full md:w-[250px] flex flex-col gap-1
+                    }} className='flex w-full items-end gap-2'>
+                        <div className='flex w-full flex-col gap-1 md:w-[250px]
                 '>
                             <Input id='name' name='name' value={name} onChange={(e) => {
                                 setName(e.target.value)

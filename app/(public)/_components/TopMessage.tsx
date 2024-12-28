@@ -4,8 +4,8 @@ import { FC } from "react";
 
 const TopMessage: FC = () => {
     return (
-        <div className='flex flex-col md:flex-row items-center gap-4'>
-            <div className='flex flex-col gap-2 items-center'>
+        <div className='flex flex-col items-center gap-4 md:flex-row'>
+            <div className='flex flex-col items-center gap-2'>
                 <h1 className='text-3xl font-bold'>Easy mark</h1>
                 <p className='text-xl font-semibold'>どこからでも簡単に、ブックマーク</p>
                 <div className='mt-4 flex items-center gap-4'>
@@ -17,7 +17,7 @@ const TopMessage: FC = () => {
                     </Button>
                 </div>
             </div>
-            <div className='w-[350px] md:w-[420px] h-[200px] md:h-[300px] border border-dotted rounded'>
+            <div className='h-[200px] w-[350px] rounded border border-dotted md:h-[300px] md:w-[420px]'>
                 img
             </div>
         </div>

@@ -1,7 +1,7 @@
 import { FC } from "react";
 
 const Placeholder: FC = () => (
-    <div className="border border-dotted w-[460px] h-[280px] flex items-center justify-center p-4 text-muted-foreground">
+    <div className="flex h-[280px] w-[460px] items-center justify-center border border-dotted p-4 text-muted-foreground">
         <p>Displaying information from the entered URL.</p>
     </div>
 )

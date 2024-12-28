@@ -19,7 +19,7 @@ const Delete: React.FC<Props> = ({
             </PopoverTrigger>
             <PopoverContent>
                 <div className="text-sm">Are you sure you want to delete this api key?</div>
-                <div className='flex gap-1 text-sm mt-2 justify-end'>
+                <div className='mt-2 flex justify-end gap-1 text-sm'>
                     <PopoverClose asChild>
                         <Button type='button' variant='ghost' >Cancel</Button>
                     </PopoverClose>

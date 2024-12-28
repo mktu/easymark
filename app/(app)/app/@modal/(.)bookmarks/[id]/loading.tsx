@@ -5,8 +5,8 @@ import { FC } from "react";
 
 const Loading: FC = () => {
     return (
-        <div className="flex size-full flex-col gap-2 p-2 mb-4">
-            <Skeleton className={`w-[460px] h-[240px] rounded`} />
+        <div className="mb-4 flex size-full flex-col gap-2 p-2">
+            <Skeleton className={`h-[240px] w-[460px] rounded`} />
             <div className="flex w-full flex-col gap-4 py-4">
                 <Skeleton className="h-[60px] w-full" />
                 <Skeleton className="h-[60px] w-full" />
