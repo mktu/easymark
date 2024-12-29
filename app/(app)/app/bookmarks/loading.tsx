@@ -9,7 +9,7 @@ const Loading: FC = () => {
                 <BookIcon className='size-5' />Bookmarks
             </h2>
             <div className="flex w-full flex-col gap-4 py-4">
-                <Skeleton className={`h-[80px] w-full pl-4 md:w-[400px] rounded`} />
+                <Skeleton className={`h-[80px] w-full rounded pl-4 md:w-[400px]`} />
             </div>
             <div className="flex w-full flex-col gap-4 py-4">
                 <Skeleton className="h-[60px] w-full" />

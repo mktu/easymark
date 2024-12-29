@@ -24,7 +24,7 @@ const Categories = ({ categories }: Props) => {
                 </h3>
                 <AdddCategoryForm />
             </section>
-            <section>
+            <section className='w-full'>
                 <h3 className='mb-2 flex items-center gap-2 font-semibold'>
                     <PinIcon className='size-4' />
                     Your Categories

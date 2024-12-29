@@ -1,8 +1,5 @@
 'use client'
-import ColorPicker from "@/components/domain/ColorPicker/ColorPicker"
-import { InputWithIcon } from "@/components/domain/InputWithIcon"
 import { Button } from "@/components/ui/button"
-import { TagIcon } from "lucide-react"
 import { useState } from "react"
 import { handleAddTag, HandleAddTagReturnType } from "../_actions/handleAddTag"
 import ErrorIndicator from "../../_components/ErrorIndicator/ErrorIndicator"
