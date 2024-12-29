@@ -25,4 +25,9 @@ export const handleDeleteTag = async (data: {
         return { error: 'cannot delete tag' }
     }
     revalidatePath('/app')
+    return {
+        success: true
+    }
 }
+
+export type HandleDeleteTagResultType = Awaited<ReturnType<typeof handleDeleteTag>>

@@ -1,5 +1,5 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { getSortOption } from "../_utils/parseSortOption";
+import { getSortOption } from "../../../_logics/bookmarks/parseSortOption";
 import { useCallback } from "react";
 import { BookmarkSortOption } from "@/lib/types";
 

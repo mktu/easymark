@@ -6,9 +6,9 @@ import { SearchBookmarkType } from "@/lib/repositories/bookmarks"
 import OgpImage from "@/components/domain/OgpImage"
 import { CategoryType } from "@/lib/repositories/categories"
 import { Checkbox } from "@/components/ui/checkbox"
-import TagItem from "@/components/domain/TagItem"
 import OpenLinkButton from "@/components/domain/OpenLinkButton"
 import { handleVisitBookmark } from "../../_actions/handleVisitBookmark"
+import TagItem from "./TagItem"
 
 type Props = {
     bookmark: SearchBookmarkType,

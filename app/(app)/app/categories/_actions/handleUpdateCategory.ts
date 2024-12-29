@@ -31,7 +31,6 @@ export const handleUpdateCategory = async (data: {
     if (error) {
         return { error }
     }
-    console.log('revalidate')
     revalidatePath('/')
     return {
         error: null

@@ -9,6 +9,45 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      api_keys: {
+        Row: {
+          active: boolean
+          api_key: string
+          api_key_id: number
+          created_at: string
+          expires_at: string | null
+          hashed_key: string
+          label: string
+          last_used_at: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          active?: boolean
+          api_key: string
+          api_key_id?: number
+          created_at?: string
+          expires_at?: string | null
+          hashed_key: string
+          label?: string
+          last_used_at?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          active?: boolean
+          api_key?: string
+          api_key_id?: number
+          created_at?: string
+          expires_at?: string | null
+          hashed_key?: string
+          label?: string
+          last_used_at?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       bookmark_accesses: {
         Row: {
           access_count: number | null

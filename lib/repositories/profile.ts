@@ -19,4 +19,16 @@ export const fetchUser = async (supabase: SupabaseClient<Database>, userId: stri
     return convertUser(data[0])
 }
 
+export const upsertUser = async (supabase: SupabaseClient<Database>, userId: string, username: string, imageUrl: string | null) => {
+    const { error } = await supabase.from('users').upsert({
+        id: userId,
+        username,
+        profile_image_url: imageUrl
+    })
+    if (error) {
+        console.error(error)
+        throw Error('cannot update user')
+    }
+}
+
 export type UserType = ReturnType<typeof convertUser>

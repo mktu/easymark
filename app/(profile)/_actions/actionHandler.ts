@@ -1,4 +1,5 @@
 'use server'
+import { uploadImage } from "@/lib/storage/profile"
 import { createClientForServer } from "@/lib/supabase/supabaseServer"
 import { PostgrestError } from "@supabase/supabase-js"
 import { redirect } from "next/navigation"
@@ -31,18 +32,7 @@ const parseParameters = async (formData: FormData) => {
     return { name, image }
 }
 
-const uploadImage = async (image: File, userId: string, supabase: ReturnType<typeof createClientForServer>) => {
-    const filePath = `users/${userId}`
-    const { error } = await supabase.storage.from('user_profiles').upload(filePath, image)
-    if (error) {
-        return { error }
-    }
-    // 画像のURLを取得
-    const { data } = supabase.storage.from('user_profiles').getPublicUrl(filePath)
-    return {
-        imageUrl: data.publicUrl
-    }
-}
+
 
 
 export const handleUpdate = async (state: ProfileState, formData: FormData) => {
