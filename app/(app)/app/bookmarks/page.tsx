@@ -4,8 +4,8 @@ import { getCategories } from "@/lib/repositories/categories"
 import Bookmarks from "./_components/Bookmarks"
 import BookmarkListContainer from "./_components/BookmarkListContainer"
 import { Suspense } from "react"
-import { getSortOption } from "../../_logics/bookmarks/parseSortOption"
 import BookmarkSkelton from "./_components/BookmarkSkelton"
+import { getSortOption } from "../../_logics/bookmarks/parseSortOption"
 import { convertCategoryToQuery, convertTagToQuery } from "../../_logics/bookmarks/convertToQuery"
 
 
