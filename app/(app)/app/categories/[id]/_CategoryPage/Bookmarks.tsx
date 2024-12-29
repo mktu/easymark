@@ -1,5 +1,5 @@
 import { BookmarkType } from "@/lib/repositories/bookmarks"
-import BookmarkListItem from "../../../_components/Home/BookmarkListItem"
+import BookmarkListItem from "../../../home/_component/Home/BookmarkListItem"
 import { CategoryType } from "@/lib/repositories/categories"
 import { Button } from "@/components/ui/button"
 import { PlusCircleIcon } from "lucide-react"
