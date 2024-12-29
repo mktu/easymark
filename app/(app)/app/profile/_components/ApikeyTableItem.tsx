@@ -3,10 +3,10 @@ import { TableCell, TableRow } from "@/components/ui/table"
 import { ApiKeyType } from "@/lib/repositories/api_key"
 import { EyeIcon, EyeOffIcon } from "lucide-react"
 import { toast } from "sonner"
-import Delete from "./Delete"
 import { handleDeleteApiKey } from "../_actions/handleDeleteApiKey"
 import { useState } from "react"
 import BrowserTime from "@/components/domain/BrowserTime"
+import DeleteWithPopup from "@/components/domain/DeleteWithPopup"
 
 type Props = {
     apiKey: ApiKeyType
@@ -15,7 +15,7 @@ type Props = {
 const ApiKeyTableItem = ({ apiKey }: Props) => {
     const [showApiKey, setShowApiKey] = useState(false)
     return (
-        <TableRow key={apiKey.apiKey}>
+        <TableRow>
             <TableCell>{apiKey.label}</TableCell>
             <TableCell className="flex items-center gap-2">
                 {showApiKey ? (
@@ -48,9 +48,11 @@ const ApiKeyTableItem = ({ apiKey }: Props) => {
                 <BrowserTime timestamp={apiKey.expiresAt} dateOnly />
                 : 'No expiration'}</TableCell>
             <TableCell className="text-right">
-                <Delete onDelete={async () => {
-                    await handleDeleteApiKey(apiKey.apiKey)
-                }} />
+                <DeleteWithPopup
+                    message='Are you sure you want to delete this api key?'
+                    onDelete={async () => {
+                        await handleDeleteApiKey(apiKey.apiKey)
+                    }} />
             </TableCell>
         </TableRow >
     )

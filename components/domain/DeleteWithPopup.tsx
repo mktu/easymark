@@ -2,13 +2,16 @@ import { Button } from "@/components/ui/button"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { PopoverClose } from "@radix-ui/react-popover"
 import { TrashIcon } from "lucide-react"
+import { ReactNode } from "react"
 
 type Props = {
     onDelete: () => Promise<void>,
+    message: string | ReactNode
 }
 
-const Delete: React.FC<Props> = ({
-    onDelete
+const DeleteWithPopup: React.FC<Props> = ({
+    onDelete,
+    message
 }) => {
     return (
         <Popover>
@@ -18,7 +21,7 @@ const Delete: React.FC<Props> = ({
                 </Button>
             </PopoverTrigger>
             <PopoverContent>
-                <div className="text-sm">Are you sure you want to delete this api key?</div>
+                <div className="text-sm">{message}</div>
                 <div className='mt-2 flex justify-end gap-1 text-sm'>
                     <PopoverClose asChild>
                         <Button type='button' variant='ghost' >Cancel</Button>
@@ -30,4 +33,4 @@ const Delete: React.FC<Props> = ({
     )
 }
 
-export default Delete
+export default DeleteWithPopup

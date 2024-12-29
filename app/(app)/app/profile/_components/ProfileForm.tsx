@@ -9,7 +9,6 @@ import { handleUpdateProfile, HandleUpdateProfileType } from '../_actions/handle
 import ErrorIndicator from '../../_components/ErrorIndicator/ErrorIndicator'
 import { toast } from 'sonner'
 import { User2 } from 'lucide-react'
-import ApiKeyItem from './ApiKeyItem'
 import ApiKeyTable from './ApiKeyTable'
 type Props = {
     user: UserType,

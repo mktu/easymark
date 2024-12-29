@@ -24,8 +24,10 @@ export const handleDeleteCategory = async (data: { categoryId: number }) => {
     if (bookmarkerror) {
         return { error: bookmarkerror }
     }
-    revalidatePath('/')
+    revalidatePath('/app')
     return {
         success: true
     }
 }
+
+export type HandleDeleteCategoryResultType = Awaited<ReturnType<typeof handleDeleteCategory>>

@@ -30,6 +30,8 @@ export const handleAddCategory = async (data: {
     }
     revalidatePath('/app')
     return {
-        error: null
+        success: true
     }
 }
+
+export type HandleAddCategoryResultType = Awaited<ReturnType<typeof handleAddCategory>>

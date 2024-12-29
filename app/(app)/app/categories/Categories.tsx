@@ -1,7 +1,7 @@
 import { CategoryWithBookmarkCountType } from "@/lib/repositories/categories"
 import AdddCategoryForm from "./AddCategoryForm"
-import CategoryListItem from "./CategoryListItem"
 import { LayoutGridIcon, PinIcon, PlusCircleIcon } from "lucide-react"
+import CategoryTable from "./CategoryTable"
 
 type Props = {
     categories: CategoryWithBookmarkCountType[]
@@ -29,12 +29,7 @@ const Categories = ({ categories }: Props) => {
                     <PinIcon className='size-4' />
                     Your Categories
                 </h3>
-                {categories.length === 0 && <p>No categories</p>}
-                <ul>
-                    {categories.map(category => (
-                        <CategoryListItem key={category.categoryId} category={category} />
-                    ))}
-                </ul>
+                <CategoryTable categories={categories} />
             </section>
 
         </div>
