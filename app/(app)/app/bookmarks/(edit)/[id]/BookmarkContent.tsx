@@ -2,7 +2,7 @@
 import { toast } from "sonner";
 import { FC } from "react"
 import { BookmarkType } from "@/lib/repositories/bookmarks"
-import { useBookmarkUpdate } from "../../../hooks/useBookmarkUpdate"
+import { useBookmarkUpdate } from "../../../../../../hooks/bookmarks/update/useBookmarkUpdate"
 import { CategoryType } from "@/lib/repositories/categories";
 import OgpSection from "./OgpSection";
 import EditSection from "./EditSection";

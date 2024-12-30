@@ -1,9 +1,9 @@
 import { useDebounce } from 'use-debounce';
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { appendQuerySegment, appendQuerySegmentIfNotExists, CategoryOperator, extractCategoryQuery, extractLastQuerySegment, extractTagQuery, FreeWordOperator, parseSearchQuery, replaceLastQuerySegment, TagOperator } from '../../../_logics/bookmarks/parseSearchQuery';
-import { useTagQuery } from './useTagQuery';
+import { appendQuerySegment, appendQuerySegmentIfNotExists, CategoryOperator, extractCategoryQuery, extractLastQuerySegment, extractTagQuery, FreeWordOperator, parseSearchQuery, replaceLastQuerySegment, TagOperator } from '../../../app/(app)/_logics/bookmarks/parseSearchQuery';
 import { useCategoryQuery } from './useCategoryQuery';
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useTagQuery } from './useTagQuery';
 
 export const useBookmarkQuery = (query: string) => {
     const [input, setInput] = useState(query)

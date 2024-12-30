@@ -1,6 +1,6 @@
 'use client'
 import { FC, ReactNode } from "react"
-import { useBookmarkQuery } from "../_hooks/useBookmarkQuery"
+import { useBookmarkQuery } from "../../../../../hooks/bookmarks/search/useBookmarkQuery"
 import SearchBox from "./search-box/SearchBox"
 
 type Props = {

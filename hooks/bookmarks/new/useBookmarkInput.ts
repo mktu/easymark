@@ -1,8 +1,8 @@
 import { useCallback, useMemo, useState } from "react"
-import { validateURL } from "../_lib/validateUrl"
-import { useOgp } from "./useOgp"
-import { handleAddBookmark, HandleAddBookmarkReturnType } from "../_actions/handleAddBookmark"
+import { validateURL } from "../../../app/(app)/app/_lib/validateUrl"
+import { handleAddBookmark, HandleAddBookmarkReturnType } from "../../../app/(app)/app/_actions/handleAddBookmark"
 import { TagUsageType } from "@/lib/repositories/tag_usage"
+import { useOgp } from "../ogp/useOgp"
 
 export const useBookmarkInput = (initialCategoryId?: number) => {
     const [bookmark, setBookmark] = useState('')

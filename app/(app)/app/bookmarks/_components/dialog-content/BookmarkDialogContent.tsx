@@ -1,6 +1,6 @@
 'use client'
 import { FC } from "react";
-import { useBookmarkSearch } from "../../_hooks/useBookmarkSearch";
+import { useBookmarkSearch } from "../../../../../../hooks/bookmarks/search";
 import BookmarkListItem from "./BookmarkListItem";
 import SearchBox from "../search-box/SearchBox";
 import { CategoryOperator, TagOperator } from "../../../../_logics/bookmarks/parseSearchQuery";

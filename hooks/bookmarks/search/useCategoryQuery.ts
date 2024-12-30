@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
-import { handleSeachCategory } from "../_actions/handleSeachCategory";
+import { handleSeachCategory } from "../../../app/(app)/app/bookmarks/_actions/handleSeachCategory";
 import { CategoryType } from "@/lib/repositories/categories";
 
 export const useCategoryQuery = (hasCotegorySegment: boolean, categoryQuery?: string) => {

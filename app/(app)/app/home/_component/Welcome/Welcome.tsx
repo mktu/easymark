@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { FC } from "react";
 import { useFormState } from "react-dom";
 import { AddBookmarkState, handleBookmarkSubmit } from "../../../_actions/handleAddBookmark";
-import { useBookmarkInput } from "../../../hooks/useBookmarkInput";
+import { useBookmarkInput } from "../../../../../../hooks/bookmarks/new/useBookmarkInput";
 import Image from "next/image";
 import OgpImage from "@/components/domain/OgpImage";
 import ErrorIndicator from "../../../_components/ErrorIndicator/ErrorIndicator";
