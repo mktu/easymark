@@ -1,12 +1,12 @@
 import { createClientForServer } from "@/lib/supabase/supabaseServer"
 import { redirect } from "next/navigation"
 import { getCategories } from "@/lib/repositories/categories"
-import Bookmarks from "./_components/Bookmarks"
-import BookmarkListContainer from "./_components/BookmarkListContainer"
+import Bookmarks from "../_components/Bookmarks"
+import BookmarkListContainer from "../_components/BookmarkListContainer"
 import { Suspense } from "react"
-import BookmarkSkelton from "./_components/BookmarkSkelton"
-import { getSortOption } from "../../_logics/bookmarks/parseSortOption"
-import { convertCategoryToQuery, convertTagToQuery } from "../../_logics/bookmarks/convertToQuery"
+import BookmarkSkelton from "../_components/BookmarkSkelton"
+import { getSortOption } from "../../../_logics/bookmarks/parseSortOption"
+import { convertCategoryToQuery, convertTagToQuery } from "../../../_logics/bookmarks/convertToQuery"
 
 
 export default async function Bookmark({ searchParams }: {

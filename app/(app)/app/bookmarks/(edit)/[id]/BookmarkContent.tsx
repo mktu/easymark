@@ -2,7 +2,7 @@
 import { toast } from "sonner";
 import { FC } from "react"
 import { BookmarkType } from "@/lib/repositories/bookmarks"
-import { useBookmarkUpdate } from "../../hooks/useBookmarkUpdate"
+import { useBookmarkUpdate } from "../../../hooks/useBookmarkUpdate"
 import { CategoryType } from "@/lib/repositories/categories";
 import OgpSection from "./OgpSection";
 import EditSection from "./EditSection";
@@ -37,7 +37,7 @@ const BookmarkContent: FC<Props> = ({
         handleClearAllTags
     } = useBookmarkUpdate(tagUsage, bookmark, selectedCategoryId)
     return (
-        <form className='flex size-full flex-col items-start justify-start gap-2 p-4' action={async () => {
+        <form className='flex w-full flex-col items-start justify-start gap-2 p-4' action={async () => {
             if (await handleSubmit()) {
                 return
             }

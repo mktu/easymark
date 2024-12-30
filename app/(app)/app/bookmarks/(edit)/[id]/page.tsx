@@ -4,6 +4,7 @@ import { redirect } from "next/navigation"
 import BookmarkContent from "./BookmarkContent"
 import { getCategories } from "@/lib/repositories/categories"
 import { getTagUsageByBookmarkId } from "@/lib/repositories/tag_usage"
+import Loading from "./loading"
 
 export default async function Bookmark({ params, searchParams }: {
     params: { id: string },
