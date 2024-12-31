@@ -9,6 +9,7 @@
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "test": "jest",
+    "typecheck": "tsc",
     "test:watch": "jest --watch"
   },
   "dependencies": {

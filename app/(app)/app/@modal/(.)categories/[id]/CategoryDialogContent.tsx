@@ -12,6 +12,7 @@ import { ColorPallet } from "@/components/domain/ColorPicker/ColorPallet"
 import { toast } from "sonner"
 import { handleUpdateCategory, HandleUpdateCategoryType } from "@/actions/categories/handleUpdateCategory"
 import ErrorIndicator from "../../../_components/ErrorIndicator/ErrorIndicator"
+import { handleDeleteCategory } from "@/actions/categories/handleDeleteCategory"
 
 
 type Props = {

@@ -1,4 +1,4 @@
-import { handleSignout } from "@/actions/auth/authHandler";
+import { handleSignout } from "@/actions/auth/handleSignOut";
 import { Button } from "@/components/ui/button";
 import { SheetFooter } from "@/components/ui/sheet";
 import { LogOutIcon } from "lucide-react";

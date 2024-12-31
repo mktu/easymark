@@ -1,6 +1,6 @@
 'use client'
 import ValidationErrors from '../_components/ValidationErrors';
-import { handleSignup, SigninState } from '../../../actions/auth/authHandler';
+import { handleSignup, SigninState } from '../../../actions/auth/handleSignup';
 import { useFormState, useFormStatus } from 'react-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
