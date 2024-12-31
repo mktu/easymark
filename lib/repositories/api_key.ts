@@ -12,18 +12,21 @@ const convertApiKey = (apiKey: Database['public']['Tables']['api_keys']['Row']) 
     }
 }
 
-export const getUserId = async (key: string, supabase: SupabaseClient) => {
+export const getApiKey = async (key: string, supabase: SupabaseClient) => {
     const { data: apiKeyData, error: apiKeyError } = await supabase
         .from('api_keys')
-        .select('user_id')
-        .eq('api_key', key)
+        .select('*')
+        .eq('hashed_key', hashApiKey(key))
         .single();
 
     if (apiKeyError) {
         console.error(apiKeyError)
         throw Error('cannot get apikey')
     }
-    return apiKeyData.user_id
+    if (!apiKeyData) {
+        throw Error('cannot get apikey')
+    }
+    return convertApiKey(apiKeyData!);
 }
 
 export const addApiKey = async (
@@ -71,6 +74,7 @@ export const deleteApiKey = async (userId: string, apiKey: string, supabase: Sup
         throw Error('cannot delete apikey')
     }
 }
+
 
 export const getApiKeys = async (userId: string, supabase: SupabaseClient) => {
     const { data: apiKeyData, error: apiKeyError } = await supabase
