@@ -4,7 +4,7 @@ import { associateTags, getTagMappings } from "@/lib/repositories/tag_mappings";
 import { createClientForServer } from "@/lib/supabase/supabaseServer";
 import { revalidatePath } from "next/cache";
 
-export const handleUpdateTags = async (bookmarks: number[], tags: number[]) => {
+export const handleSetTags = async (bookmarks: number[], tags: number[]) => {
     const supabase = createClientForServer();
     const { data: authData } = await supabase.auth.getUser();
     if (!authData?.user) {

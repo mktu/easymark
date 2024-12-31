@@ -3,7 +3,7 @@ import { SearchBookmarkType } from "@/lib/repositories/bookmarks";
 import { BookmarkSortOption } from "@/lib/types";
 import { useCallback, useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
-import { handleFetchBookmarksByIds, handleSearchBookmarks } from "../../../app/(app)/app/bookmarks/_actions/handleSearchBookmarks";
+import { handleFetchBookmarksByIds, handleSearchBookmarks } from "../../../actions/bookmarks/handleSearchBookmarks";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export const useBookmarks = (

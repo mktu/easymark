@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button"
 import { TableCell, TableRow } from "@/components/ui/table"
 import { CategoryWithBookmarkCountType } from "@/lib/repositories/categories"
 import Link from "next/link"
-import { handleDeleteCategory } from "./_actions/handleDeleteCategory"
+import { handleDeleteCategory } from "@/actions/categories/handleDeleteCategory"
 import { toast } from "sonner"
 import DeleteWithPopup from "@/components/domain/DeleteWithPopup"
 

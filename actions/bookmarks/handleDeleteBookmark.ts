@@ -1,6 +1,5 @@
 'use server'
 import { z } from "zod"
-import { createUrlRegExp } from "../_lib/validateUrl"
 import { createClientForServer } from "@/lib/supabase/supabaseServer"
 import { revalidatePath } from "next/cache"
 import { deleteBookmark } from "@/lib/repositories/bookmarks"

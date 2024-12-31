@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from "react"
 import { validateURL } from "../../../app/(app)/app/_lib/validateUrl"
-import { handleAddBookmark, HandleAddBookmarkReturnType } from "../../../app/(app)/app/_actions/handleAddBookmark"
+import { handleAddBookmark, HandleAddBookmarkReturnType } from "../../../actions/bookmarks/handleAddBookmark"
 import { TagUsageType } from "@/lib/repositories/tag_usage"
 import { useOgp } from "../ogp/useOgp"
 

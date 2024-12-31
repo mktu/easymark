@@ -1,8 +1,8 @@
 import { useCallback, useState } from "react"
 import { useOgp } from "../ogp/useOgp"
 import { BookmarkType } from "@/lib/repositories/bookmarks"
-import { handleUpdateBookmark, HandleUpdateBookmarkReturnType } from "../../../app/(app)/app/_actions/handleUpdateBookmark";
-import { handleDeleteBookmark } from "../../../app/(app)/app/_actions/handleDeleteBookmark";
+import { handleUpdateBookmark, HandleUpdateBookmarkReturnType } from "../../../actions/bookmarks/handleUpdateBookmark";
+import { handleDeleteBookmark } from "../../../actions/bookmarks/handleDeleteBookmark";
 import { TagUsageType } from "@/lib/repositories/tag_usage";
 
 export const useBookmarkUpdate = (initialTags: TagUsageType[], bookmark?: BookmarkType, initCategory?: number) => {

@@ -7,7 +7,7 @@ import { calculateExpiryDate, expiryOptions } from "../_utils/apiKeyExpiredAt";
 import { generateApiKey } from "../_utils/generateApiKey";
 import { CopyIcon } from "lucide-react";
 import { toast } from "sonner";
-import { handleAddApikey, HandleAddApikeyType } from "../_actions/handleAddApiKey";
+import { handleAddApikey, HandleAddApikeyType } from "@/actions/apikey/handleAddApiKey";
 import ErrorIndicator from "../../_components/ErrorIndicator/ErrorIndicator";
 
 type Props = {

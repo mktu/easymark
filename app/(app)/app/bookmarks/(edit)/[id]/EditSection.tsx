@@ -7,9 +7,9 @@ import CategorySelector from "@/components/domain/CategorySelector"
 import { CategoryType } from "@/lib/repositories/categories"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { PopoverClose } from "@radix-ui/react-popover"
-import { HandleUpdateBookmarkReturnType } from "../../../_actions/handleUpdateBookmark"
 import { TagUsageType } from "@/lib/repositories/tag_usage"
 import { TagSelectableInput } from "@/components/domain/TagSetter"
+import { HandleUpdateBookmarkReturnType } from "@/actions/bookmarks/handleUpdateBookmark"
 
 type Props = {
     note?: string,

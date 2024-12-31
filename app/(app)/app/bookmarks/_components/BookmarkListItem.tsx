@@ -7,7 +7,7 @@ import OgpImage from "@/components/domain/OgpImage"
 import { CategoryType } from "@/lib/repositories/categories"
 import { Checkbox } from "@/components/ui/checkbox"
 import OpenLinkButton from "@/components/domain/OpenLinkButton"
-import { handleVisitBookmark } from "../../_actions/handleVisitBookmark"
+import { handleVisitBookmark } from "@/actions/bookmarks/handleVisitBookmark"
 import TagItem from "./TagItem"
 
 type Props = {

@@ -1,5 +1,5 @@
 'use client'
-import { handleSignout } from "@/app/(auth)/_actions/authHandler";
+import { handleSignout } from "@/actions/auth/authHandler";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { UserCircle2Icon } from "lucide-react";

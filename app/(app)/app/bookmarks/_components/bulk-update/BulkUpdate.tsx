@@ -4,9 +4,9 @@ import { CategoryType } from "@/lib/repositories/categories"
 import { cn } from "@/lib/utils"
 import { LayoutGridIcon, TagIcon, Trash2Icon } from "lucide-react"
 import { FC } from "react"
-import UpdateCategory from "./UpdateCategory"
-import UpdateTags from "./UpdateTags"
-import { handleDeleteBookmarks } from "../../_actions/handleDeleteBookmarks"
+import SetCategory from "./SetCategory"
+import SetTags from "./SetTags"
+import { handleDeleteBookmarks } from "@/actions/bookmarks/handleDeleteBookmarks"
 import { useSignalContext } from "@/contexts/signal"
 import { PopoverClose } from "@radix-ui/react-popover"
 import { toast } from "sonner"
@@ -29,7 +29,7 @@ const BulkUpdate: FC<Props> = ({
                     <TagIcon className={'size-6 stroke-muted-foreground'} />
                 </PopoverTrigger>
                 <PopoverContent className="flex w-[320px]">
-                    <UpdateTags
+                    <SetTags
                         bookmarks={bookmarks}
                     />
                 </PopoverContent>
@@ -39,7 +39,7 @@ const BulkUpdate: FC<Props> = ({
                     <LayoutGridIcon className={'size-6 stroke-muted-foreground'} />
                 </PopoverTrigger>
                 <PopoverContent className="w-[320px]">
-                    <UpdateCategory categories={categories} bookmarks={bookmarks} />
+                    <SetCategory categories={categories} bookmarks={bookmarks} />
                 </PopoverContent>
             </Popover>
             <Popover>

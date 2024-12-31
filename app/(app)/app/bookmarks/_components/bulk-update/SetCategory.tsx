@@ -2,7 +2,7 @@ import CategorySelector from "@/components/domain/CategorySelector";
 import { Button } from "@/components/ui/button";
 import { CategoryType } from "@/lib/repositories/categories";
 import { useState } from "react";
-import { handleUpdateCategory } from "../../_actions/handleUpdateCategory";
+import { handleSetCategory } from "@/actions/bookmarks/handleSetCategory";
 import { useSignalContext } from "@/contexts/signal";
 import { PopoverClose } from "@radix-ui/react-popover";
 
@@ -11,7 +11,7 @@ type Props = {
     bookmarks: number[]
 }
 
-const UpdateCategory = ({ categories, bookmarks }: Props) => {
+const SetCategory = ({ categories, bookmarks }: Props) => {
     const [category, setCategory] = useState<number | null>(null)
     const { fireBookmarkFetchSignal } = useSignalContext()
     return (
@@ -21,7 +21,7 @@ const UpdateCategory = ({ categories, bookmarks }: Props) => {
             <PopoverClose asChild>
                 <Button className="ml-auto" onClick={async () => {
                     if (!category) return
-                    const result = await handleUpdateCategory(bookmarks, category)
+                    const result = await handleSetCategory(bookmarks, category)
                     if (result.error) {
                         console.error(result.error)
                         return
@@ -35,4 +35,4 @@ const UpdateCategory = ({ categories, bookmarks }: Props) => {
     )
 }
 
-export default UpdateCategory
+export default SetCategory

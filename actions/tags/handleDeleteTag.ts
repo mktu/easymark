@@ -1,5 +1,5 @@
 'use server'
-import { addTag, deleteTag, isExistTag } from "@/lib/repositories/tags";
+import { deleteTag } from "@/lib/repositories/tags";
 import { createClientForServer } from "@/lib/supabase/supabaseServer";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";

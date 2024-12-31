@@ -1,7 +1,7 @@
 'use server'
 import { createClientForServer } from '@/lib/supabase/supabaseServer';
 import { z } from 'zod';
-import { createUrlRegExp } from '../_lib/validateUrl';
+import { createUrlRegExp } from '../../app/(app)/app/_lib/validateUrl';
 import { revalidatePath } from 'next/cache';
 import { doScrape, OgpResponse } from '@/lib/supabase/ogp';
 import { addBookmark } from '@/lib/repositories/bookmarks';

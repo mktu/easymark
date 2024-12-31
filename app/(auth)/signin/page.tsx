@@ -1,9 +1,9 @@
 'use client'
 import Link from 'next/link';
-import { handleSignin, SigninState } from '../_actions/authHandler';
+import { handleSignin, SigninState } from '../../../actions/auth/authHandler';
 import { useFormState, useFormStatus } from 'react-dom';
 import ValidationErrors from '../_components/ValidationErrors';
-import { handleGoogleSignin } from '../_actions/googleHandler';
+import { handleGoogleSignin } from '../../../actions/auth/googleHandler';
 import { Button } from '@/components/ui/button';
 
 export default function Signin() {

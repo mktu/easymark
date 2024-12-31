@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { TagUsageType } from "@/lib/repositories/tag_usage"
 import { useState } from "react"
-import { handleUpdateTags } from "../../_actions/handleUpdateTags"
+import { handleSetTags } from "@/actions/bookmarks/handleSetTags"
 import { useSignalContext } from "@/contexts/signal"
 import { PopoverClose } from "@radix-ui/react-popover"
 import { TagSelectableInput } from "@/components/domain/TagSetter"
@@ -10,7 +10,7 @@ type Props = {
     bookmarks: number[]
 }
 
-const UpdateTags = ({
+const SetTags = ({
     bookmarks
 }: Props) => {
     const [tags, setTags] = useState<TagUsageType[]>([])
@@ -27,7 +27,7 @@ const UpdateTags = ({
             }} />
             <PopoverClose asChild>
                 <Button className="ml-auto w-fit" onClick={async () => {
-                    const result = await handleUpdateTags(bookmarks, tags.map(t => t.tagId))
+                    const result = await handleSetTags(bookmarks, tags.map(t => t.tagId))
                     if (result.error) {
                         console.error(result.error)
                         return
@@ -41,4 +41,4 @@ const UpdateTags = ({
     )
 }
 
-export default UpdateTags
+export default SetTags

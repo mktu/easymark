@@ -4,7 +4,7 @@ import { bulkUpdateCategory } from "@/lib/repositories/bookmarks";
 import { createClientForServer } from "@/lib/supabase/supabaseServer";
 import { revalidatePath } from "next/cache";
 
-export const handleUpdateCategory = async (bookmarks: number[], category: number) => {
+export const handleSetCategory = async (bookmarks: number[], category: number) => {
     const supabase = createClientForServer();
     const { data: authData } = await supabase.auth.getUser();
     if (!authData?.user) {

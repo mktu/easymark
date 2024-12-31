@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { handleSearchBookmarks } from "../../../app/(app)/app/bookmarks/_actions/handleSearchBookmarks";
+import { handleSearchBookmarks } from "../../../actions/bookmarks/handleSearchBookmarks";
 import { SearchBookmarkType } from "@/lib/repositories/bookmarks";
 import { useDebounce } from "use-debounce";
 import { appendQuerySegment, CategoryOperator, extractLastQuerySegment, replaceLastQuerySegment, TagOperator } from "../../../app/(app)/_logics/bookmarks/parseSearchQuery";

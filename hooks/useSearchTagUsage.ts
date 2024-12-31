@@ -1,5 +1,5 @@
-import { handleSearchTag } from "@/app/(app)/app/_actions/handleSearchTag";
-import { handleAddTag } from "@/app/(app)/app/tags/_actions/handleAddTag";
+import { handleSearchTag } from "@/actions/tags/handleSearchTag";
+import { handleAddTag } from "@/actions/tags/handleAddTag";
 import { TagUsageType } from "@/lib/repositories/tag_usage";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDebounce } from "use-debounce";

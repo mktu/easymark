@@ -35,7 +35,7 @@ const parseParameters = async (formData: FormData) => {
 
 
 
-export const handleUpdate = async (state: ProfileState, formData: FormData) => {
+const handleUpsert = async (state: ProfileState, formData: FormData) => {
     const supabase = createClientForServer();
     const { data: authData } = await supabase.auth.getUser()
     if (!authData?.user) {
@@ -68,8 +68,8 @@ export const handleUpdate = async (state: ProfileState, formData: FormData) => {
     } : { success: true }
 }
 
-export const handleRegister = async (state: ProfileState, formData: FormData) => {
-    const ret = handleUpdate(state, formData)
+export const handleRegisterProfile = async (state: ProfileState, formData: FormData) => {
+    const ret = handleUpsert(state, formData)
     if ('error' in ret) {
         return { error: ret.error }
     }

@@ -1,7 +1,7 @@
 'use client'
 
 import OpenLinkButton from "@/components/domain/OpenLinkButton"
-import { handleVisitBookmark } from "../../../_actions/handleVisitBookmark"
+import { handleVisitBookmark } from "@/actions/bookmarks/handleVisitBookmark"
 
 type Props = {
     url: string

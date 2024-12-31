@@ -6,13 +6,12 @@ import { Button } from "@/components/ui/button"
 import { EditIcon, TrashIcon } from "lucide-react"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { PopoverClose } from "@radix-ui/react-popover"
-import ErrorIndicator from "../../../_components/ErrorIndicator/ErrorIndicator"
 import { useRouter } from 'next/navigation';
 import { CategoryType } from "@/lib/repositories/categories"
 import { ColorPallet } from "@/components/domain/ColorPicker/ColorPallet"
-import { handleUpdateCategory, HandleUpdateCategoryType } from "../../../categories/_actions/handleUpdateCategory"
-import { handleDeleteCategory } from "../../../categories/_actions/handleDeleteCategory"
 import { toast } from "sonner"
+import { handleUpdateCategory, HandleUpdateCategoryType } from "@/actions/categories/handleUpdateCategory"
+import ErrorIndicator from "../../../_components/ErrorIndicator/ErrorIndicator"
 
 
 type Props = {
