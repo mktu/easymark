@@ -1,9 +1,8 @@
 import OgpImage from "@/components/domain/OgpImage"
 import { Textarea } from "@/components/ui/textarea"
-import { CircleAlertIcon } from "lucide-react"
 import { FC } from "react"
 import { Input } from "@/components/ui/input"
-import { AddBookmarkState, HandleAddBookmarkReturnType } from "../_actions/handleAddBookmark"
+import { HandleAddBookmarkReturnType } from "@/actions/bookmarks/handleAddBookmark"
 import { OgpResponse } from "@/lib/supabase/ogp"
 import ErrorIndicator from "../_components/ErrorIndicator/ErrorIndicator"
 

@@ -1,10 +1,10 @@
 import DeleteWithPopup from "@/components/domain/DeleteWithPopup"
 import { TableCell, TableRow } from "@/components/ui/table"
 import { TagUsageType } from "@/lib/repositories/tag_usage"
-import { handleDeleteTag } from "../_actions/handleDeleteTag"
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import { handleDeleteTag } from "@/actions/tags/handleDeleteTag"
 
 type Props = {
     tag: TagUsageType

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ProfileState } from '../_actions/actionHandler';
+import { ProfileState } from '@/actions/profile/handleRegisterProfile';
 
 
 const ValidationErrors: React.FC<{ state: ProfileState }> = ({ state }) => {

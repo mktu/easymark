@@ -2,7 +2,7 @@ import BrowserTime from "@/components/domain/BrowserTime";
 import OgpImage from "@/components/domain/OgpImage";
 import OpenLinkButton from "@/components/domain/OpenLinkButton";
 import { SearchBookmarkType } from "@/lib/repositories/bookmarks";
-import { handleVisitBookmark } from "../../../_actions/handleVisitBookmark";
+import { handleVisitBookmark } from "@/actions/bookmarks/handleVisitBookmark";
 import Link from "next/link";
 
 type Props = {

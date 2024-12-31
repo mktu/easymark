@@ -5,11 +5,11 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { CategoryType } from "@/lib/repositories/categories";
 import { EditIcon, TrashIcon } from "lucide-react";
 import { FC, useState } from "react";
-import { handleUpdateCategory } from "../../_actions/handleUpdateCategory";
+import { handleUpdateCategory } from "@/actions/categories/handleUpdateCategory";
 import { toast } from "sonner";
 import { PopoverClose } from "@radix-ui/react-popover";
 import router from "next/router";
-import { handleDeleteCategory } from "../../_actions/handleDeleteCategory";
+import { handleDeleteCategory } from "@/actions/categories/handleDeleteCategory";
 
 type CategorySectionProps = {
     category: CategoryType,

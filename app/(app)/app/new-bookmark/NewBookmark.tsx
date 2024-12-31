@@ -1,7 +1,7 @@
 'use client'
 import { FC } from "react"
 import { useRouter } from "next/navigation"
-import { useBookmarkInput } from "../hooks/useBookmarkInput"
+import { useBookmarkInput } from "../../../../hooks/bookmarks/new/useBookmarkInput"
 import { CategoryType } from "@/lib/repositories/categories"
 import OgpSection from "./OgpSection"
 import EditSection from "./EditSection"

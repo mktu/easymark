@@ -2,7 +2,7 @@
 import ColorPicker from "@/components/domain/ColorPicker/ColorPicker"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
-import { handleAddCategory, HandleAddCategoryResultType } from "./_actions/handleAddCategory"
+import { handleAddCategory, HandleAddCategoryResultType } from "@/actions/categories/handleAddCategory"
 import ErrorIndicator from "../_components/ErrorIndicator/ErrorIndicator"
 
 const AdddCategoryForm = () => {

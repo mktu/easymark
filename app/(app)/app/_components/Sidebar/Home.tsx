@@ -9,7 +9,7 @@ const Home: FC = () => {
         <SidebarMenuItem>
             <SidebarMenuButton asChild className="">
                 <Button variant='ghost' asChild className="w-full justify-start">
-                    <Link href="/app" className="flex items-center gap-2">
+                    <Link href="/app/home" className="flex items-center gap-2">
                         <HomeIcon className="size-6" />
                         <span>Home</span>
                     </Link>

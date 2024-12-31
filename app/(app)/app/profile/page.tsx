@@ -1,4 +1,4 @@
-import { loadProfile } from "@/app/(profile)/_loaders/loadProfile";
+import { loadProfile } from "@/loader/profile/loadProfile";
 import ProfileForm from "./_components/ProfileForm";
 import { redirect } from "next/navigation";
 

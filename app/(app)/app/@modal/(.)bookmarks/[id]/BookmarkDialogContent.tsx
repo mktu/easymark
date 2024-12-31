@@ -8,7 +8,7 @@ import OgpImage from "@/components/domain/OgpImage"
 import CopyableItem from "@/components/domain/CopyableItem"
 import { MoreVertical, RotateCwIcon, TrashIcon } from "lucide-react"
 import { BookmarkType } from "@/lib/repositories/bookmarks"
-import { useBookmarkUpdate } from "../../../hooks/useBookmarkUpdate"
+import { useBookmarkUpdate } from "../../../../../../hooks/bookmarks/update/useBookmarkUpdate"
 import ErrorIndicator from "../../../_components/ErrorIndicator/ErrorIndicator"
 import { useRouter } from 'next/navigation';
 import { CategoryType } from "@/lib/repositories/categories"

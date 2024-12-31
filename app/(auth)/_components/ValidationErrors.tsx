@@ -1,5 +1,5 @@
 import React from 'react';
-import { SigninState } from '../_actions/authHandler';
+import { SigninState } from '@/actions/auth/handleSignup';
 
 
 const ValidationErrors: React.FC<{ state: SigninState }> = ({ state }) => {

@@ -1,5 +1,5 @@
 'use client'
-import { handleSignout } from '@/app/(auth)/_actions/authHandler';
+import { handleSignout } from '@/actions/auth/handleSignOut';
 import { Button } from '@/components/ui/button';
 import { SidebarMenuButton } from '@/components/ui/sidebar';
 import { LogOutIcon } from 'lucide-react';

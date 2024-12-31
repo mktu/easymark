@@ -39,7 +39,8 @@ const TagSelectableInput = ({
         onAddTag } = useSearchTagUsage(onSelectTag, registeredTags)
     const [open, setOpen] = useState(false)
     return (
-        <Command loop shouldFilter={false} className="overflow-visible">
+        // relative is need for unnecceary scrolling
+        <Command loop shouldFilter={false} className="relative overflow-visible">
             <TagInput
                 id={id}
                 variants={variants}

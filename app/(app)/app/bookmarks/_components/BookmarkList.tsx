@@ -3,11 +3,11 @@ import { SearchBookmarkType } from "@/lib/repositories/bookmarks";
 import { FC } from "react";
 import { CategoryType } from "@/lib/repositories/categories";
 import LoadingIcon from "@/components/svg/Loading";
-import { useBookmarks } from "../_hooks/useBookmarks";
+import { useBookmarks } from "../../../../../hooks/bookmarks/search";
 import BookmarkListItem from "./BookmarkListItem";
 import { Checkbox } from "@/components/ui/checkbox";
 import SortSelector from "./SortSelector";
-import { useBookmarkSort } from "../_hooks/useBookmarkSort";
+import { useBookmarkSort } from "../../../../../hooks/bookmarks/search";
 import BulkUpdate from "./bulk-update/BulkUpdate";
 
 type Props = {

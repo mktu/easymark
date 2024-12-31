@@ -1,7 +1,7 @@
 'use client'
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
-import { handleAddTag, HandleAddTagReturnType } from "../_actions/handleAddTag"
+import { handleAddTag, HandleAddTagReturnType } from "@/actions/tags/handleAddTag"
 import ErrorIndicator from "../../_components/ErrorIndicator/ErrorIndicator"
 import { Input } from "@/components/ui/input"
 
