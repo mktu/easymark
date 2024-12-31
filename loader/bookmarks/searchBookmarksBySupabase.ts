@@ -1,7 +1,7 @@
 import { Database } from "@/lib/supabase/schema";
 import { BookmarkSortOption } from "@/lib/types";
 import { SupabaseClient } from "@supabase/supabase-js";
-import { buildQueryData, parseSearchQuery } from "../../_logics/bookmarks/parseSearchQuery";
+import { buildQueryData, parseSearchQuery } from "../../logics/bookmarks/parseSearchQuery";
 import { searchBookmarks } from "@/lib/repositories/bookmarks";
 
 export const searchBookmarksBySupabase = async (supabase: SupabaseClient<Database>, userId: string, page: number, limit: number, query?: string, sort?: BookmarkSortOption) => {

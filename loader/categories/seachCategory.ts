@@ -1,19 +1,21 @@
 'use server'
-import { getTagUsage, searchTagUsage } from "@/lib/repositories/tag_usage";
+import { getCategories, searchCategories } from "@/lib/repositories/categories";
 import { createClientForServer } from "@/lib/supabase/supabaseServer";
 
-export const handleSearchTag = async (query: string) => {
+export const seachCategory = async (query: string) => {
     const supabase = createClientForServer();
     const { data: authData } = await supabase.auth.getUser();
     if (!authData?.user) {
         return { error: 'not authenticated' }
     }
+
     if (!query) {
-        return await getTagUsage(supabase, authData.user.id, 10)
+        return await getCategories(supabase, authData.user.id, 30)
     }
-    return await searchTagUsage(supabase, {
+
+    return await searchCategories(supabase, {
         userId: authData.user.id,
         name: query,
-        limit: 10
+        limit: 30
     })
 }

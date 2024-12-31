@@ -1,4 +1,4 @@
-import { decrypt, encrypt, hashApiKey } from "../encrypt";
+import { decrypt, encrypt, hashApiKey } from "../../logics/apikey/encrypt";
 import { Database } from "../supabase/schema";
 import { SupabaseClient } from "../supabase/supabaseServer";
 

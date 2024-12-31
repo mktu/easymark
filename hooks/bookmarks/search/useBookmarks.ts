@@ -3,8 +3,9 @@ import { SearchBookmarkType } from "@/lib/repositories/bookmarks";
 import { BookmarkSortOption } from "@/lib/types";
 import { useCallback, useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
-import { handleFetchBookmarksByIds, handleSearchBookmarks } from "../../../actions/bookmarks/handleSearchBookmarks";
+import { handleSearchBookmarks } from "../../../loader/bookmarks/searchBookmarks";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { loadBookmarksByIds } from "@/loader/bookmarks/loadBookmarks";
 
 export const useBookmarks = (
     query?: string,
@@ -52,7 +53,7 @@ export const useBookmarks = (
     useEffect(() => {
         const fetcher = async () => {
             if (fetchBookmarkSignal && fetchBookmarkSignal.length > 0) {
-                const result = await handleFetchBookmarksByIds(fetchBookmarkSignal)
+                const result = await loadBookmarksByIds(fetchBookmarkSignal)
                 const { bookmarks: fetchedBookmarks } = result
                 if (fetchedBookmarks && fetchedBookmarks.length > 0) {
                     setBookmarks(prev => {

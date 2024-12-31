@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
-import { handleSeachCategory } from "@/actions/categories/handleSeachCategory";
+import { seachCategory } from "@/loader/categories/seachCategory";
 import { CategoryType } from "@/lib/repositories/categories";
 
 export const useCategoryQuery = (hasCotegorySegment: boolean, categoryQuery?: string) => {
@@ -12,7 +12,7 @@ export const useCategoryQuery = (hasCotegorySegment: boolean, categoryQuery?: st
             return
         }
         const searchInternal = async () => {
-            const result = await handleSeachCategory(debouncedSearch || '');
+            const result = await seachCategory(debouncedSearch || '');
             if ('error' in result) {
                 console.error(result.error);
                 return;

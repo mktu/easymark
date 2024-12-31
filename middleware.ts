@@ -1,6 +1,6 @@
 import { type NextRequest } from 'next/server'
 import { updateSession } from './lib/supabase/midleware'
-import { loadViewport } from './app/_loaders/loadViewport'
+import { loadViewport } from './loader/loadViewport'
 
 export async function middleware(request: NextRequest) {
     const res = await updateSession(request)

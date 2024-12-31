@@ -3,8 +3,8 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogTitle } f
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { FC, useMemo, useState } from "react";
-import { calculateExpiryDate, expiryOptions } from "../_utils/apiKeyExpiredAt";
-import { generateApiKey } from "../_utils/generateApiKey";
+import { calculateExpiryDate, expiryOptions } from "@/logics/apikey/apiKeyExpiredAt";
+import { generateApiKey } from "@/logics/apikey/generateApiKey";
 import { CopyIcon } from "lucide-react";
 import { toast } from "sonner";
 import { handleAddApikey, HandleAddApikeyType } from "@/actions/apikey/handleAddApiKey";

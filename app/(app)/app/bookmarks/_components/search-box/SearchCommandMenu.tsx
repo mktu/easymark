@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { LayoutGridIcon, SlidersHorizontalIcon, TagIcon } from "lucide-react"
 import { FC } from "react"
-import { CategoryOperator, TagOperator } from "../../../../_logics/bookmarks/parseSearchQuery"
+import { CategoryOperator, TagOperator } from "../../../../../../logics/bookmarks/parseSearchQuery"
 
 type Props = {
     className?: string,

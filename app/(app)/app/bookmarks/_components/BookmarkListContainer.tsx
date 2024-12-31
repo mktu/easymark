@@ -1,7 +1,7 @@
 import { CategoryType } from "@/lib/repositories/categories"
 import { BookmarkSortOption } from "@/lib/types"
 import BookmarkList from "./BookmarkList"
-import { handleSearchBookmarks } from "@/actions/bookmarks/handleSearchBookmarks"
+import { handleSearchBookmarks } from "@/loader/bookmarks/searchBookmarks"
 
 type Props = {
     sortOption?: BookmarkSortOption,

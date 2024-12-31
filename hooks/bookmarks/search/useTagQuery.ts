@@ -1,7 +1,7 @@
 import { TagUsageType } from "@/lib/repositories/tag_usage";
 import { useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
-import { handleSearchTag } from "@/actions/tags/handleSearchTag";
+import { searchTags } from "@/loader/tags/searchTags";
 
 export const useTagQuery = (hasTagSegment: boolean, tagQuery?: string) => {
     const [tags, setTags] = useState<TagUsageType[]>([]);
@@ -13,7 +13,7 @@ export const useTagQuery = (hasTagSegment: boolean, tagQuery?: string) => {
             return
         }
         const searchInternal = async () => {
-            const result = await handleSearchTag(debouncedSearch || '')
+            const result = await searchTags(debouncedSearch || '')
             if ('error' in result) {
                 console.error(result.error);
                 return;
