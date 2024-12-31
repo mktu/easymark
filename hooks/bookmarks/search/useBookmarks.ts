@@ -3,7 +3,7 @@ import { SearchBookmarkType } from "@/lib/repositories/bookmarks";
 import { BookmarkSortOption } from "@/lib/types";
 import { useCallback, useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
-import { handleSearchBookmarks } from "../../../loader/bookmarks/searchBookmarks";
+import { searchBookmarks } from "../../../loader/bookmarks/searchBookmarks";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { loadBookmarksByIds } from "@/loader/bookmarks/loadBookmarks";
 
@@ -24,7 +24,7 @@ export const useBookmarks = (
     const { replace } = useRouter();
 
     const fetchBookmarks = useCallback(async (targetPage: number) => {
-        const result = await handleSearchBookmarks(targetPage, 10, query, sortOption)
+        const result = await searchBookmarks(targetPage, 10, query, sortOption)
         if ('error' in result) {
             console.error(result.error)
             return

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { handleSearchBookmarks } from "../../../loader/bookmarks/searchBookmarks";
+import { searchBookmarks } from "../../../loader/bookmarks/searchBookmarks";
 import { SearchBookmarkType } from "@/lib/repositories/bookmarks";
 import { useDebounce } from "use-debounce";
 import { appendQuerySegment, CategoryOperator, extractLastQuerySegment, replaceLastQuerySegment, TagOperator } from "../../../logics/bookmarks/parseSearchQuery";
@@ -18,7 +18,7 @@ export const useBookmarkSearch = () => {
 
     useEffect(() => {
         const fetchBookmarks = async () => {
-            const result = await handleSearchBookmarks(0, 10, debouncedSearch)
+            const result = await searchBookmarks(0, 10, debouncedSearch)
             if ('error' in result) {
                 console.error(result.error)
                 return
