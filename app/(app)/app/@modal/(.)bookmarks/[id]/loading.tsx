@@ -6,7 +6,7 @@ import { FC } from "react";
 const Loading: FC = () => {
     return (
         <div className="mb-4 flex size-full flex-col gap-2 p-2">
-            <Skeleton className={`h-[240px] w-full md:w-[460px] rounded`} />
+            <Skeleton className={`h-[240px] w-full rounded md:w-[460px]`} />
             <div className="flex w-full flex-col gap-4 py-4">
                 <Skeleton className="h-[60px] w-full" />
                 <Skeleton className="h-[60px] w-full" />

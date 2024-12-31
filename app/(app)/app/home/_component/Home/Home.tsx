@@ -1,7 +1,7 @@
 import { BookmarkType } from "@/lib/repositories/bookmarks";
 import { CategoryType } from "@/lib/repositories/categories";
 import { FC } from "react";
-import { HeartIcon, HomeIcon, StarsIcon } from "lucide-react";
+import { HeartIcon, HomeIcon, StarsIcon, Volume2Icon, VolumeIcon } from "lucide-react";
 import HomePanel from "./HomePanel";
 import BookmarkList from "./BookmarkList";
 
@@ -27,18 +27,20 @@ const Home: FC<Props> = ({
                 <HomeIcon className='size-5' />
                 <span>{user.username}&apos;s Home</span>
             </h2>
+            {/* <div className='flex w-full flex-col items-center gap-1'>
+                <div className='w-full md:w-[500px] h-[200px] border border-input rounded p-4'>
+                    <h3 className="text-muted-foreground flex items-center gap-1">
+                        <span>News</span>
+                        <Volume2Icon className='size-5' />
+                    </h3>
+                </div>
+            </div> */}
             <div className='flex w-full flex-col items-center gap-1'>
                 <HomePanel title={<>
                     <StarsIcon className='size-5' />
                     <span>Your Recent Registered Bookmarks</span>
                 </>}>
                     <BookmarkList bookmarks={recentBookmarks} categories={categories} detailLink="/app/bookmarks?sort=date" />
-                </HomePanel>
-                <HomePanel title={<>
-                    <HeartIcon className='size-5' />
-                    <span>Frequently Accessed Bookmarks</span>
-                </>}>
-                    <BookmarkList bookmarks={frequentBookmarks} categories={categories} detailLink="/app/bookmarks?sort=frequency" />
                 </HomePanel>
             </div>
         </div >
