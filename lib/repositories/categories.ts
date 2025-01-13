@@ -1,17 +1,19 @@
 import { SupabaseClient } from "@supabase/supabase-js";
 import { Database } from "../supabase/schema";
 
+const convertCategory = (category: Database['public']['Tables']['categories']['Row']) => {
+    return {
+        categoryId: category.id!,
+        userId: category.user_id!,
+        name: category.name!,
+        createdAt: category.created_at!,
+        parentId: category.parent_id,
+        color: category.color
+    }
+}
+
 const convertCategories = (categories: Database['public']['Tables']['categories']['Row'][]) => {
-    return categories.map(category => {
-        return {
-            categoryId: category.id!,
-            userId: category.user_id!,
-            name: category.name!,
-            createdAt: category.created_at!,
-            parentId: category.parent_id,
-            color: category.color
-        }
-    })
+    return categories.map(convertCategory)
 }
 
 const convertCategoriesWithBookmarkCount = (categories: Database['public']['Views']['categories_with_bookmark_count']['Row'][]) => {
@@ -46,6 +48,15 @@ export const getCategory = async (supabase: SupabaseClient<Database>, userId: st
     return convertCategories(data)[0]
 }
 
+export const getCategoryByName = async (supabase: SupabaseClient<Database>, userId: string, name: string) => {
+    const { data, error } = await supabase.from('categories').select('*').eq('user_id', userId).eq('name', name).limit(1)
+    if (error) {
+        console.error(error)
+        throw Error('cannot fetch category')
+    }
+    return convertCategories(data)[0]
+}
+
 export const getCategoriesWithBookmarkCount = async (supabase: SupabaseClient<Database>, userId: string) => {
     const { data: categories, error: categoriesError } = await supabase.from('categories_with_bookmark_count').select('*').eq('user_id', userId).order('created_at', { ascending: false })
     if (categoriesError) {
@@ -66,12 +77,12 @@ export const addCategory = async (supabase: SupabaseClient<Database>, {
     parentId?: number,
     color?: string
 }) => {
-    const { error } = await supabase.from('categories').insert({ user_id: userId, name, parent_id: parentId, color })
+    const { error, data } = await supabase.from('categories').insert({ user_id: userId, name, parent_id: parentId, color }).select('*').single()
     if (error) {
         console.error(error)
         return { error: 'cannnot add category' }
     }
-    return { error: null }
+    return { categoryId: convertCategory(data).categoryId, success: true }
 }
 
 export const updateCategory = async (supabase: SupabaseClient<Database>, {
