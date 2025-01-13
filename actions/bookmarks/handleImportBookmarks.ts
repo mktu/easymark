@@ -90,6 +90,7 @@ const importBookmarksTask = async (
         const result = await batchImportBookmarks(supabase, userId, category, batch);
         const processedCount = i + BatchSize > targetBookmarks.length ? targetBookmarks.length : i + BatchSize
         await updateImportStatus(supabase, {
+            statusId,
             userId,
             status: 'processing',
             progress: Math.round(1.0 * processedCount / targetBookmarks.length * 100),
@@ -104,6 +105,13 @@ const importBookmarksTask = async (
             importErrors
         })
     }
+    await updateImportStatus(supabase, {
+        statusId,
+        userId,
+        status: 'completed',
+        progress: 100,
+        completedItems: targetBookmarks.length,
+    })
 }
 
 export const handleImportBookmarks = async (targetBookmarks: ImportBookmarkType[]) => {

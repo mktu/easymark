@@ -39,11 +39,13 @@ export const addImportStatus = async (supabase: SupabaseClient, {
 }
 
 export const updateImportStatus = async (supabase: SupabaseClient, {
+    statusId,
     userId,
     status,
     progress,
     completedItems
 }: {
+    statusId: number,
     userId: string,
     status: ImportProcessingStatus,
     progress: number,
@@ -52,7 +54,8 @@ export const updateImportStatus = async (supabase: SupabaseClient, {
     const { error: importStatusError } = await supabase
         .from('import_status')
         .update({ status, progress, completed_items: completedItems })
-        .eq('user_id', userId);
+        .eq('user_id', userId)
+        .eq('id', statusId);
 
     if (importStatusError) {
         console.error(importStatusError)

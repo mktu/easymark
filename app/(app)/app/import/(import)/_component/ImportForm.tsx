@@ -63,8 +63,11 @@ const ImportForm: React.FC<Props> = ({ bookmarks: initialBookmarks }) => {
                     </TableBody>
                 </Table>
             </ScrollArea>
-            <div className='flex items-center justify-end gap-2'>
-                <Button disabled={bookmarks.length === 0} type='submit'>Import</Button>
+            <div className='flex items-center gap-2'>
+                <Button asChild variant='link'>
+                    <Link href='/app/import/status'>過去のインポート結果</Link>
+                </Button>
+                <Button className='ml-auto' disabled={bookmarks.length === 0} type='submit'>Import</Button>
             </div>
         </form>
     )
