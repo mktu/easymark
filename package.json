@@ -31,7 +31,7 @@
     "cmdk": "^1.0.0",
     "lucide-react": "^0.469.0",
     "next": "14.2.23",
-    "open-graph-scraper": "6.8.3",
+    "open-graph-scraper": "6.8.4",
     "react": "^18",
     "react-dom": "^18",
     "react-intersection-observer": "9.14.1",
