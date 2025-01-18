@@ -229,6 +229,77 @@ export type Database = {
           },
         ]
       }
+      failed_bookmark_imports: {
+        Row: {
+          created_at: string | null
+          error_message: string | null
+          id: number
+          import_status_id: number
+          url: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          error_message?: string | null
+          id?: number
+          import_status_id: number
+          url: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          error_message?: string | null
+          id?: number
+          import_status_id?: number
+          url?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "failed_bookmark_imports_import_status_id_fkey"
+            columns: ["import_status_id"]
+            isOneToOne: false
+            referencedRelation: "import_status"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      import_status: {
+        Row: {
+          completed_at: string | null
+          completed_items: number | null
+          created_at: string | null
+          id: number
+          progress: number | null
+          status: string
+          total_items: number | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string | null
+          completed_items?: number | null
+          created_at?: string | null
+          id?: number
+          progress?: number | null
+          status: string
+          total_items?: number | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          completed_at?: string | null
+          completed_items?: number | null
+          created_at?: string | null
+          id?: number
+          progress?: number | null
+          status?: string
+          total_items?: number | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       ogp_data: {
         Row: {
           description: string | null

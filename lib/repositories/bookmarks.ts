@@ -44,6 +44,26 @@ export const convertBookmark = (bookmark: RawBookmarkType) => {
     }
 }
 
+export const importBookmarks = async (supabase: SupabaseClient<Database>, bookmarks: {
+    userId: string,
+    url: string,
+    categoryId?: number | null
+}[]) => {
+    const { error, data } = await supabase.from('bookmarks').upsert(
+        bookmarks.map(bookmark => ({ url: bookmark.url, user_id: bookmark.userId, category_id: bookmark.categoryId }))
+    ).select('url');
+    const importedUrls = data?.map(v => v.url) || []
+    const dupplicate = error?.code === '23505'
+    if (error) {
+        console.error(error)
+        if (importedUrls.length === 0) {
+            return { error: 'cannnot import bookmarks', dupplicate }
+        }
+    }
+    const failedUrls = bookmarks.filter(v => !importedUrls.includes(v.url)).map(v => v.url)
+    return { success: true, failedUrls, dupplicate }
+}
+
 export const addBookmark = async (supabase: SupabaseClient<Database>, {
     url,
     userId,
