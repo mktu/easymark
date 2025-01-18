@@ -24,7 +24,7 @@ const ImportForm: React.FC<Props> = ({ bookmarks: initialBookmarks }) => {
                 const result = await handleImportBookmarks(bookmarks.filter((b) => b.checked))
                 if (typeof result === 'number') {
                     setImportingStatus(result)
-                    router.push(`/app/import/${result}`)
+                    router.push(`/app/import/status/${result}`)
                 } else {
                     toast.error('Failed to import bookmarks.')
                 }

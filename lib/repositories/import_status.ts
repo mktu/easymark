@@ -10,7 +10,8 @@ const convertImportStatus = (status: Database['public']['Tables']['import_status
         status: status.status,
         totalItems: status.total_items,
         completedItems: status.completed_items,
-        progress: status.progress
+        progress: status.progress,
+        createdAt: status.created_at
     }
 }
 
@@ -75,6 +76,21 @@ export const getImportStatus = async (supabase: SupabaseClient, statusId: number
         throw Error('cannot get import status')
     }
     return convertImportStatus(data);
+}
+
+export const getImportStatusList = async (supabase: SupabaseClient, userId: string, limit: number) => {
+    const { data, error } = await supabase
+        .from('import_status')
+        .select('*')
+        .eq('user_id', userId)
+        .order('created_at', { ascending: false })
+        .limit(limit);
+
+    if (error) {
+        console.error(error)
+        throw Error('cannot get import status list')
+    }
+    return data.map(convertImportStatus);
 }
 
 export type ImportStatusType = ReturnType<typeof convertImportStatus>;

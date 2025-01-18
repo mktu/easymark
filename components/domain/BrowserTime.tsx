@@ -1,5 +1,5 @@
 'use client'
-import { formatTimestamp } from "@/lib/client/dateConverter"
+import { formatTimestamp } from "@/logics/dateConverter"
 import { FC } from "react"
 
 type Props = {
