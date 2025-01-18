@@ -3,7 +3,7 @@ import { getImportStatusList } from "@/lib/repositories/import_status"
 import { createClientForServer } from "@/lib/supabase/supabaseServer"
 
 export const loadImportStatusList = async () => {
-    const supabase = createClientForServer()
+    const supabase = await createClientForServer()
     const { data: authData } = await supabase.auth.getUser();
     if (!authData?.user) {
         throw new Error('not authenticated')

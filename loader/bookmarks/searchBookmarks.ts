@@ -4,7 +4,7 @@ import { BookmarkSortOption } from "@/lib/types";
 import { searchBookmarksBySupabase } from "@/loader/bookmarks/searchBookmarksBySupabase";
 
 export const searchBookmarks = async (page: number, limit: number, query?: string, sort?: BookmarkSortOption) => {
-    const supabase = createClientForServer();
+    const supabase = await createClientForServer();
     const { data: authData } = await supabase.auth.getUser();
     if (!authData?.user) {
         return { error: 'not authenticated' }

@@ -47,7 +47,7 @@ export const handleAddBookmark = async (data: {
     let imageUrl = validated.data.imageUrl
     let title = validated.data.title
     const { url, note, category } = validated.data
-    const supabase = createClientForServer();
+    const supabase = await createClientForServer();
     const { data: authData } = await supabase.auth.getUser();
     if (!authData?.user) {
         return { error: 'not authenticated' }
@@ -97,7 +97,7 @@ export const handleBookmarkSubmit = async (ogp: OgpResponse | null, state: AddBo
     const title = ogp?.title;
     const description = ogp?.description;
     const imageUrl = ogp?.image?.url;
-    const supabase = createClientForServer();
+    const supabase = await createClientForServer();
     const { data: authData } = await supabase.auth.getUser();
     const { error: bookmarkerror } = await supabase.from('bookmarks').insert({ url, user_id: authData?.user?.id });
     if (bookmarkerror) {

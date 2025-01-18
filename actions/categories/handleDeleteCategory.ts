@@ -14,7 +14,7 @@ export const handleDeleteCategory = async (data: { categoryId: number }) => {
         return { validatedErrors: validated.error.flatten().fieldErrors }
     }
     const { categoryId } = validated.data
-    const supabase = createClientForServer();
+    const supabase = await createClientForServer();
     const { data: authData } = await supabase.auth.getUser();
     if (!authData?.user) {
         return { error: 'not authenticated' }

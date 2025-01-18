@@ -5,7 +5,7 @@ import { createClientForServer } from "@/lib/supabase/supabaseServer";
 import { revalidatePath } from "next/cache";
 
 export const handleSetCategory = async (bookmarks: number[], category: number) => {
-    const supabase = createClientForServer();
+    const supabase = await createClientForServer();
     const { data: authData } = await supabase.auth.getUser();
     if (!authData?.user) {
         return { error: 'not authenticated' }

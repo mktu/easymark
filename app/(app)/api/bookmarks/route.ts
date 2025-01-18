@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
     if (!apiKey) {
         return new Response('Unauthorized', { status: 401 })
     }
-    const supabase = createClientForServer()
+    const supabase = await createClientForServer()
     let apiKeyData: ApiKeyType;
     try {
         apiKeyData = await getApiKey(apiKey, supabase)

@@ -30,7 +30,7 @@ export const handleSignin = async (state: SigninState, formData: FormData) => {
 
     const email = validatedFields.data.email;
     const password = validatedFields.data.password;
-    const supabase = createClientForServer();
+    const supabase = await createClientForServer();
     const { error, data } = await supabase.auth.signInWithPassword({ email, password });
     if (error) {
         return { error: error.message }

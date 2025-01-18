@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import Landing from "./(public)/_components/Landing";
 
 export default async function Home() {
-  const supabase = createClientForServer()
+  const supabase = await createClientForServer()
   const { data, error } = await supabase.auth.getUser()
   if (data?.user) {
     redirect('/app')

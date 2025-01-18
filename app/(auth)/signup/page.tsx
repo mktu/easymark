@@ -1,12 +1,13 @@
+import { useActionState } from "react";
 'use client'
 import ValidationErrors from '../_components/ValidationErrors';
 import { handleSignup, SigninState } from '../../../actions/auth/handleSignup';
-import { useFormState, useFormStatus } from 'react-dom';
+import { useFormStatus } from 'react-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
 export default function Signup() {
-    const [state, dispatch] = useFormState<SigninState, FormData>(handleSignup, { error: null })
+    const [state, dispatch] = useActionState<SigninState, FormData>(handleSignup, { error: null })
     const { pending } = useFormStatus()
     return (
         <div>

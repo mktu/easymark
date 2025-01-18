@@ -1,9 +1,9 @@
 import { createServerClient } from "@supabase/ssr"
-import { cookies } from "next/headers"
+import { cookies } from "next/headers";
 import { Database } from "./schema";
 
-export function createClientForServer() {
-    const cookieStore = cookies()
+export async function createClientForServer() {
+    const cookieStore = await cookies()
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
     if (!supabaseUrl) {
@@ -37,4 +37,4 @@ export function createClientForServer() {
     )
 }
 
-export type SupabaseClient = ReturnType<typeof createClientForServer>
+export type SupabaseClient = Awaited<ReturnType<typeof createClientForServer>>

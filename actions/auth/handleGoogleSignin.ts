@@ -5,7 +5,7 @@ import { getSiteUrl } from "@/lib/utils";
 import { redirect } from "next/navigation";
 
 export const handleGoogleSignin = async () => {
-    const supabase = createClientForServer()
+    const supabase = await createClientForServer()
     const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {

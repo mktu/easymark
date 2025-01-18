@@ -3,7 +3,7 @@ import RegisterForm from "../_components/RegisterForm"
 import { redirect } from "next/navigation";
 
 export default async function Page() {
-    const supabase = createClientForServer()
+    const supabase = await createClientForServer()
     const { data, error } = await supabase.auth.getUser()
     if (error || !data?.user) {
         redirect('/signin')
