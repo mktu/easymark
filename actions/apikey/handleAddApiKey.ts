@@ -15,7 +15,7 @@ export const handleAddApikey = async (data: {
     label: string,
     expiredAt: string | null,
 }) => {
-    const supabase = createClientForServer();
+    const supabase = await createClientForServer();
     const validated = z.object(schema).safeParse(data)
     if (!validated.success) {
         return { validatedErrors: validated.error.flatten().fieldErrors }

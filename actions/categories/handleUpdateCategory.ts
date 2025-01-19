@@ -18,7 +18,7 @@ export const handleUpdateCategory = async (data: {
     color?: string | null
 }) => {
     const validated = z.object(schema).safeParse(data)
-    const supabase = createClientForServer();
+    const supabase = await createClientForServer();
     if (!validated.success) {
         console.error(validated.error.flatten().fieldErrors)
         return { validatedErrors: validated.error.flatten().fieldErrors }

@@ -1,12 +1,12 @@
 'use client'
-
-import { useFormState, useFormStatus } from "react-dom";
+import { useActionState } from "react";
+import { useFormStatus } from "react-dom";
 import { handleRegisterProfile, ProfileState } from "@/actions/profile/handleRegisterProfile";
 import ValidationErrors from "./ValidationErrors";
 import { Input } from "@/components/ui/input";
 
 const RegisterForm: React.FC = () => {
-    const [state, dispatch] = useFormState<ProfileState, FormData>(handleRegisterProfile, {})
+    const [state, dispatch] = useActionState<ProfileState, FormData>(handleRegisterProfile, {})
     const { pending } = useFormStatus()
     return (
         <div className="flex min-h-screen flex-col items-center justify-between p-24">

@@ -1,8 +1,7 @@
 'use client'
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { FC } from "react";
-import { useFormState } from "react-dom";
+import { FC, useActionState } from "react";
 import { AddBookmarkState, handleBookmarkSubmit } from "@/actions/bookmarks/handleAddBookmark";
 import { useBookmarkInput } from "@/hooks/bookmarks/new/useBookmarkInput";
 import Image from "next/image";
@@ -25,7 +24,7 @@ const Welcome: FC<Props> = ({
 }) => {
     const { ogp, setBookmark, bookmark, validBookmark } = useBookmarkInput()
     const handleAddBookmarkWithOgp = handleBookmarkSubmit.bind(null, ogp || null)
-    const [state, dispatch] = useFormState<AddBookmarkState, FormData>(handleAddBookmarkWithOgp, { error: null })
+    const [state, dispatch] = useActionState<AddBookmarkState, FormData>(handleAddBookmarkWithOgp, { error: null })
     return (
         <section className="flex flex-col gap-2">
             <div className='flex w-full flex-col items-center gap-4 p-4'>

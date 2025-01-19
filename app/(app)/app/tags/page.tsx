@@ -5,7 +5,7 @@ import { MaxTagSize } from "@/lib/constants"
 import { getTagUsage } from "@/lib/repositories/tag_usage"
 
 export default async function TagsPage() {
-    const supabase = createClientForServer()
+    const supabase = await createClientForServer()
     const { data: userData, error } = await supabase.auth.getUser()
 
     if (error || !userData?.user) {

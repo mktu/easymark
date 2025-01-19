@@ -115,7 +115,7 @@ const importBookmarksTask = async (
 }
 
 export const handleImportBookmarks = async (targetBookmarks: ImportBookmarkType[]) => {
-    const supabase = createClientForServer()
+    const supabase = await createClientForServer()
     const { data: authData } = await supabase.auth.getUser();
     if (!authData?.user) {
         return { error: 'not authenticated' }

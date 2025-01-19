@@ -3,8 +3,9 @@ import { createClientForServer } from "@/lib/supabase/supabaseServer"
 import { redirect } from "next/navigation"
 import CategoryDialogContent from "./CategoryDialogContent"
 
-export default async function Page({ params }: { params: { id: number } }) {
-    const supabase = createClientForServer()
+export default async function Page(props: { params: Promise<{ id: number }> }) {
+    const params = await props.params;
+    const supabase = await createClientForServer()
     const { data: userData, error } = await supabase.auth.getUser()
 
     if (error || !userData?.user) {

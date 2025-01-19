@@ -9,11 +9,14 @@ import { getSortOption } from "../../../../../logics/bookmarks/parseSortOption"
 import { convertCategoryToQuery, convertTagToQuery } from "../../../../../logics/bookmarks/convertToQuery"
 
 
-export default async function Bookmark({ searchParams }: {
-    params: { id: string },
-    searchParams: { [key: string]: string | string[] | undefined }
-}) {
-    const supabase = createClientForServer()
+export default async function Bookmark(
+    props: {
+        params: Promise<{ id: string }>,
+        searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+    }
+) {
+    const searchParams = await props.searchParams;
+    const supabase = await createClientForServer()
     const { data: userData, error } = await supabase.auth.getUser()
     if (error || !userData?.user) {
         redirect('/signin')

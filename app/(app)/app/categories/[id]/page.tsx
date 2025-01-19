@@ -4,8 +4,9 @@ import { redirect } from "next/navigation"
 import CategoryPage from "./_CategoryPage"
 import { getBookmarksByCategory } from "@/lib/repositories/bookmarks"
 
-export default async function Page({ params }: { params: { id: number } }) {
-    const supabase = createClientForServer()
+export default async function Page(props: { params: Promise<{ id: number }> }) {
+    const params = await props.params;
+    const supabase = await createClientForServer()
     const { data: userData, error } = await supabase.auth.getUser()
 
     if (error || !userData?.user) {

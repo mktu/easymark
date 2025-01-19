@@ -9,7 +9,7 @@ import { Home } from "./_component/Home";
 
 export default async function AppHome() {
 
-    const supabase = createClientForServer()
+    const supabase = await createClientForServer()
     // get recent bookmarks
     const { data: userData, error } = await supabase.auth.getUser()
     if (error || !userData?.user) {
