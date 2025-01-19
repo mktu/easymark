@@ -1,13 +1,14 @@
 'use client'
+import { useActionState } from "react";
 import Link from 'next/link';
-import { useFormState, useFormStatus } from 'react-dom';
+import { useFormStatus } from 'react-dom';
 import ValidationErrors from '../_components/ValidationErrors';
 import { handleGoogleSignin } from '@/actions/auth/handleGoogleSignin';
 import { Button } from '@/components/ui/button';
 import { handleSignin, SigninState } from '@/actions/auth/handleSignin';
 
 export default function Signin() {
-    const [state, dispatch] = useFormState<SigninState, FormData>(handleSignin, { error: null })
+    const [state, dispatch] = useActionState<SigninState, FormData>(handleSignin, { error: null })
 
     const { pending } = useFormStatus()
     return (

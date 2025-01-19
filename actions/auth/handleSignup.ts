@@ -30,7 +30,7 @@ export const handleSignup = async (state: SigninState, formData: FormData) => {
 
     const email = validatedFields.data.email;
     const password = validatedFields.data.password;
-    const supabase = createClientForServer();
+    const supabase = await createClientForServer();
     const { error, data } = await supabase.auth.signUp({ email, password });
     if (error) {
         return { error }

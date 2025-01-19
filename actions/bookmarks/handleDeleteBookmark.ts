@@ -16,7 +16,7 @@ export const handleDeleteBookmark = async (data: {
         return { validatedErrors: validated.error.flatten().fieldErrors }
     }
     const { bookmarkId } = validated.data
-    const supabase = createClientForServer();
+    const supabase = await createClientForServer();
     const { data: authData } = await supabase.auth.getUser();
     if (!authData?.user) {
         return { error: 'not authenticated' }

@@ -4,7 +4,7 @@ import { redirect } from "next/navigation"
 import Categories from "./Categories"
 
 export default async function CategoriesPage() {
-    const supabase = createClientForServer()
+    const supabase = await createClientForServer()
     const { data: userData, error } = await supabase.auth.getUser()
 
     if (error || !userData?.user) {

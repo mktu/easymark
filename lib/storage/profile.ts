@@ -1,6 +1,6 @@
-import { createClientForServer } from "../supabase/supabaseServer"
+import { SupabaseClient } from "../supabase/supabaseServer"
 
-export const uploadImage = async (image: File, userId: string, supabase: ReturnType<typeof createClientForServer>) => {
+export const uploadImage = async (image: File, userId: string, supabase: SupabaseClient) => {
     const filePath = `users/${userId}`
     const { error } = await supabase.storage.from('user_profiles').upload(filePath, image)
     if (error) {

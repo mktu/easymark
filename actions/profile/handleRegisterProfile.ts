@@ -36,7 +36,7 @@ const parseParameters = async (formData: FormData) => {
 
 
 const handleUpsert = async (state: ProfileState, formData: FormData) => {
-    const supabase = createClientForServer();
+    const supabase = await createClientForServer();
     const { data: authData } = await supabase.auth.getUser()
     if (!authData?.user) {
         throw new Error('User not authenticated')

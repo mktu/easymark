@@ -12,7 +12,7 @@ export const handleAddTag = async (data: {
     name: string
 }) => {
     const validated = z.object(schema).safeParse(data)
-    const supabase = createClientForServer();
+    const supabase = await createClientForServer();
     if (!validated.success) {
         return { validatedErrors: validated.error.flatten().fieldErrors }
     }

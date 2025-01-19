@@ -3,8 +3,9 @@ import { loadImportingStatus } from "@/loader/import/loadImportingStaus";
 import { redirect } from "next/navigation";
 import ImportStatusView from "./_components/ImportStatusView";
 
-export default async function Page({ params }: { params: { id: number } }) {
-    const supabase = createClientForServer()
+export default async function Page(props: { params: Promise<{ id: number }> }) {
+    const params = await props.params;
+    const supabase = await createClientForServer()
     const { data: userData, error } = await supabase.auth.getUser()
     if (error || !userData?.user) {
         redirect('/signin')

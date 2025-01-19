@@ -7,7 +7,7 @@ export async function GET(request: Request) {
     const code = searchParams.get('code')
 
     if (code) {
-        const supabase = createClientForServer()
+        const supabase = await createClientForServer()
         const { error } = await supabase.auth.exchangeCodeForSession(code)
         if (!error) {
             return NextResponse.redirect(`${getSiteUrl()}/app`)
