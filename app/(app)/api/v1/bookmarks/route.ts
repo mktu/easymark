@@ -1,9 +1,9 @@
 import { NextRequest } from 'next/server'
-import { getSortOption } from '../../../../logics/bookmarks/parseSortOption';
-import { convertCategoryToQuery, convertTagToQuery } from '../../../../logics/bookmarks/convertToQuery';
+import { getSortOption } from '../../../../../logics/bookmarks/parseSortOption';
+import { convertCategoryToQuery, convertTagToQuery } from '../../../../../logics/bookmarks/convertToQuery';
 import { createClientForServer } from '@/lib/supabase/supabaseServer';
 import { ApiKeyType, getApiKey } from '@/lib/repositories/api_key';
-import { searchBookmarksBySupabase } from '../../../../loader/bookmarks/searchBookmarksBySupabase';
+import { searchBookmarksBySupabase } from '../../../../../loader/bookmarks/searchBookmarksBySupabase';
 
 export async function GET(request: NextRequest) {
     const requestHeaders = new Headers(request.headers)
