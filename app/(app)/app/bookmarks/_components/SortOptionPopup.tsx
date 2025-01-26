@@ -22,7 +22,7 @@ const SortOptionPopup: React.FC<Props> = ({
                 </Button>
             </PopoverTrigger>
             <PopoverContent>
-                <div className="text-muted-foreground my-2">Select sort option</div>
+                <div className="my-2 text-muted-foreground">Select sort option</div>
                 <RadioGroup defaultValue={sortOption} onValueChange={(value) => {
                     setSortOption(value as BookmarkSortOption)
                 }} >
