@@ -11,3 +11,5 @@ export const searchBookmarks = async (page: number, limit: number, query?: strin
     }
     return await searchBookmarksBySupabase(supabase, authData.user.id, page, limit, query, sort)
 }
+
+export type SearchBookmarkReturnType = Awaited<ReturnType<typeof searchBookmarks>>;

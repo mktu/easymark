@@ -3,9 +3,23 @@ import { SearchBookmarkType } from "@/lib/repositories/bookmarks";
 import { BookmarkSortOption } from "@/lib/types";
 import { useCallback, useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
-import { searchBookmarks } from "../../../loader/bookmarks/searchBookmarks";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { loadBookmarksByIds } from "@/loader/bookmarks/loadBookmarks";
+import { SearchBookmarkReturnType } from "@/loader/bookmarks/searchBookmarks";
+
+const searchBookmarks = async (page: number, limit: number, query?: string, sort?: BookmarkSortOption) => {
+    const searchParams = new URLSearchParams();
+    searchParams.set('page', page.toString());
+    searchParams.set('limit', limit.toString());
+    if (query) {
+        searchParams.set('query', query);
+    }
+    if (sort) {
+        searchParams.set('sort', sort);
+    }
+    const res = await fetch(`/api/internal/bookmarks?${searchParams.toString()}`);
+    return await res.json() as SearchBookmarkReturnType;
+}
 
 export const useBookmarks = (
     query?: string,
@@ -18,6 +32,7 @@ export const useBookmarks = (
     const [bookmarks, setBookmarks] = useState<SearchBookmarkType[]>(initialBookmarks || []);
     const [hasMore, setHasMore] = useState(Boolean(initialHasMore));
     const [checked, setChecked] = useState<number[]>([]);
+    const [loading, setLoading] = useState(false);
     const { fetchBookmarkSignal, fireBookmarkFetchSignal, bookmarkReloadSignal, fireBookmarkReloadSignal } = useSignalContext();
     const searchParams = useSearchParams();
     const pathname = usePathname();
@@ -41,6 +56,7 @@ export const useBookmarks = (
             const newBookmarks = dataBookmarks.filter(newBookmark => !prev.some(prevBookmark => prevBookmark.bookmarkId === newBookmark.bookmarkId));
             return [...renewed, ...newBookmarks];
         });
+        setLoading(false);
         return dataBookmarks;
     }, [query, sortOption]);
 
@@ -95,10 +111,11 @@ export const useBookmarks = (
 
 
     useEffect(() => {
-        if (inView && hasMore) {
+        if (inView && hasMore && !loading) {
+            setLoading(true);
             setPage(prev => prev + 1);
         }
-    }, [hasMore, inView]);
+    }, [hasMore, inView, loading]);
 
     return {
         bookmarks,

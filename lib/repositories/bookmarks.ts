@@ -171,7 +171,7 @@ const sortOptionMap = {
 
 export const searchBookmarks = async (supabase: SupabaseClient<Database>, {
     userId,
-    page,
+    offset,
     limit,
     tags,
     filter,
@@ -179,7 +179,7 @@ export const searchBookmarks = async (supabase: SupabaseClient<Database>, {
     category
 }: {
     userId: string,
-    page: number,
+    offset: number,
     limit: number,
     tags?: string[] | null,
     filter?: string[] | null,
@@ -189,7 +189,7 @@ export const searchBookmarks = async (supabase: SupabaseClient<Database>, {
     const filterString = filter ? filter.map(v => `%${v}%`) : null
     const data = await supabase.rpc('search_bookmarks', {
         input_user_id: userId,
-        input_offset: page,
+        input_offset: offset,
         input_limit: limit,
         input_tags: tags || null,
         input_title_keywords: filterString || null,

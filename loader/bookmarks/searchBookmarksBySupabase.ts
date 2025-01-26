@@ -13,7 +13,7 @@ export const searchBookmarksBySupabase = async (supabase: SupabaseClient<Databas
 
         const { bookmarks, count } = await searchBookmarks(supabase, {
             userId,
-            page,
+            offset: start,
             limit,
             tags: queryData['tag'],
             filter: queryData['freeWord'],
@@ -27,7 +27,7 @@ export const searchBookmarksBySupabase = async (supabase: SupabaseClient<Databas
     }
     const { bookmarks, count } = await searchBookmarks(supabase, {
         userId,
-        page,
+        offset: start,
         limit,
         tags: null,
         filter: null,
@@ -36,6 +36,6 @@ export const searchBookmarksBySupabase = async (supabase: SupabaseClient<Databas
     })
     return {
         bookmarks: bookmarks,
-        hasMore: count ? count > end : false
+        hasMore: count ? count === limit : false
     }
 }
