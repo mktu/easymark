@@ -2,7 +2,7 @@
 import { getTagUsage, searchTagUsage } from "@/lib/repositories/tag_usage";
 import { createClientForServer } from "@/lib/supabase/supabaseServer";
 
-export const searchTags = async (query: string) => {
+export const searchTags = async (query?: string) => {
     const supabase = await createClientForServer();
     const { data: authData } = await supabase.auth.getUser();
     if (!authData?.user) {
@@ -17,3 +17,5 @@ export const searchTags = async (query: string) => {
         limit: 10
     })
 }
+
+export type SearchTagsReturnType = Awaited<ReturnType<typeof searchTags>>;

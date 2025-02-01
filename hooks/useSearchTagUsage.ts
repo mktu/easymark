@@ -1,8 +1,8 @@
-import { searchTags } from "@/loader/tags/searchTags";
 import { handleAddTag } from "@/actions/tags/handleAddTag";
 import { TagUsageType } from "@/lib/repositories/tag_usage";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDebounce } from "use-debounce";
+import { callSearchTags } from "@/fetcher/tags/callSearchTags";
 
 export const useSearchTagUsage = (
     onSelectTag: (tag: TagUsageType, registered: boolean) => void,
@@ -14,7 +14,7 @@ export const useSearchTagUsage = (
     const [debouncedSearch] = useDebounce(searchTag, 500);
     const [error, setError] = useState<string | null>(null);
     const fetchTags = useCallback(async (search: string) => {
-        const result = await searchTags(search)
+        const result = await callSearchTags(search)
         if ('error' in result) {
             setError(result.error)
             return []

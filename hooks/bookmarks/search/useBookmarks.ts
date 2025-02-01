@@ -4,22 +4,8 @@ import { BookmarkSortOption } from "@/lib/types";
 import { useCallback, useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { loadBookmarksByIds } from "@/loader/bookmarks/loadBookmarks";
-import { SearchBookmarkReturnType } from "@/loader/bookmarks/searchBookmarks";
-
-const searchBookmarks = async (page: number, limit: number, query?: string, sort?: BookmarkSortOption) => {
-    const searchParams = new URLSearchParams();
-    searchParams.set('page', page.toString());
-    searchParams.set('limit', limit.toString());
-    if (query) {
-        searchParams.set('query', query);
-    }
-    if (sort) {
-        searchParams.set('sort', sort);
-    }
-    const res = await fetch(`/api/internal/bookmarks?${searchParams.toString()}`);
-    return await res.json() as SearchBookmarkReturnType;
-}
+import { callSearchBookmarks } from "@/fetcher/bookmarks/callSearchBookmarks";
+import { callLoadBookmarksByIds } from "@/fetcher/bookmarks/callLoadBookmarksByIds";
 
 export const useBookmarks = (
     query?: string,
@@ -39,7 +25,7 @@ export const useBookmarks = (
     const { replace } = useRouter();
 
     const fetchBookmarks = useCallback(async (targetPage: number) => {
-        const result = await searchBookmarks(targetPage, 10, query, sortOption)
+        const result = await callSearchBookmarks(targetPage, 10, query, sortOption)
         if ('error' in result) {
             console.error(result.error)
             return
@@ -69,7 +55,11 @@ export const useBookmarks = (
     useEffect(() => {
         const fetcher = async () => {
             if (fetchBookmarkSignal && fetchBookmarkSignal.length > 0) {
-                const result = await loadBookmarksByIds(fetchBookmarkSignal)
+                const result = await callLoadBookmarksByIds(fetchBookmarkSignal)
+                if ('error' in result) {
+                    console.error(result.error)
+                    return
+                }
                 const { bookmarks: fetchedBookmarks } = result
                 if (fetchedBookmarks && fetchedBookmarks.length > 0) {
                     setBookmarks(prev => {

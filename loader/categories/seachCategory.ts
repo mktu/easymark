@@ -2,7 +2,7 @@
 import { getCategories, searchCategories } from "@/lib/repositories/categories";
 import { createClientForServer } from "@/lib/supabase/supabaseServer";
 
-export const seachCategory = async (query: string) => {
+export const seachCategory = async (query?: string) => {
     const supabase = await createClientForServer();
     const { data: authData } = await supabase.auth.getUser();
     if (!authData?.user) {
@@ -19,3 +19,5 @@ export const seachCategory = async (query: string) => {
         limit: 30
     })
 }
+
+export type SearchCategoryReturnType = Awaited<ReturnType<typeof seachCategory>>;
