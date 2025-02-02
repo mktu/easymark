@@ -12,3 +12,7 @@ export function getSortOption(searchParams: { [key: string]: string | string[] |
     }
     return isBookmarkSortOption(searchParams.sort as string) ? searchParams.sort as BookmarkSortOption : 'date'
 }
+
+export function getSortOptionFromQuery(query?: string): BookmarkSortOption {
+    return query && isBookmarkSortOption(query) ? query : 'date'
+}

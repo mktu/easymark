@@ -9,6 +9,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import SortSelector from "./SortSelector";
 import { useBookmarkSort } from "../../../../../hooks/bookmarks/search";
 import BulkUpdate from "./bulk-update/BulkUpdate";
+import { useIsMobile } from "@/hooks/use-mobile";
+import SortOptionPopup from "./SortOptionPopup";
 
 type Props = {
     query?: string,
@@ -32,6 +34,7 @@ const BookmarkList: FC<Props> = ({
         setChecked,
         onSelectTag
     } = useBookmarks(query, sortOption, initialBookmarks, initialHasMore)
+    const isMobile = useIsMobile()
     return (
         <ul className="flex w-full flex-col gap-2 p-1">
             <li className='flex items-center gap-2 border-b border-input py-2 pr-2'>
@@ -48,8 +51,12 @@ const BookmarkList: FC<Props> = ({
                         bookmarks={checked}
                         categories={categories}
                     />
-                    <span className='ml-4 text-muted-foreground'>Sort By</span>
-                    <SortSelector setSortOption={onSort} sortOption={sortOption} />
+                    {isMobile ? <>
+                        <SortOptionPopup setSortOption={onSort} sortOption={sortOption} />
+                    </> : <>
+                        <span className='ml-4 text-muted-foreground'>Sort By</span>
+                        <SortSelector setSortOption={onSort} sortOption={sortOption} />
+                    </>}
                 </div>
             </li>
             {bookmarks.map((bookmark) => (

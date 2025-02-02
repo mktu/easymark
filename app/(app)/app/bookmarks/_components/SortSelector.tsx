@@ -1,4 +1,3 @@
-import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger } from "@/components/ui/select"
 import { BookmarkSortOption, BookmarkSortOptions } from "@/lib/types"
 import { FC } from "react"

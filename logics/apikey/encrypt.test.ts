@@ -1,4 +1,4 @@
-import { encrypt, decrypt } from './encrypt';
+import { encrypt, decrypt, hashApiKey } from './encrypt';
 
 describe('cryptoFunctions', () => {
     it('should encrypt and decrypt text correctly', () => {
@@ -16,13 +16,16 @@ describe('cryptoFunctions', () => {
 
         expect(decryptedEmpty).toBe(emptyText);
     });
+});
 
-    it('encrypt again', () => {
-        const sampleText = '1547380813q85';
-        const encrypted = encrypt(sampleText);
-        const decrypted = decrypt(encrypted);
-        const reEncrypted = encrypt(decrypted);
+describe('hashApiKey', () => {
 
-        expect(encrypted).toBe(reEncrypted);
+    it('should produce the same hash for the same API key', () => {
+        const apiKey = 'testApiKey123';
+
+        const hash1 = hashApiKey(apiKey);
+        const hash2 = hashApiKey(apiKey);
+
+        expect(hash1).toBe(hash2);
     });
 });

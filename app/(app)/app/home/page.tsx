@@ -16,8 +16,8 @@ export default async function AppHome() {
         redirect('/signin')
     }
     const user = await fetchUser(supabase, userData.user.id)
-    const { bookmarks: recentBookmarks } = await searchBookmarks(supabase, { userId: userData.user.id, page: 0, limit: 5, sortOption: 'date' })
-    const { bookmarks: frequentBookmarks } = await searchBookmarks(supabase, { userId: userData.user.id, page: 0, limit: 5, sortOption: 'frequency' })
+    const { bookmarks: recentBookmarks } = await searchBookmarks(supabase, { userId: userData.user.id, offset: 0, limit: 5, sortOption: 'date' })
+    const { bookmarks: frequentBookmarks } = await searchBookmarks(supabase, { userId: userData.user.id, offset: 0, limit: 5, sortOption: 'frequency' })
     const categories = await getCategories(supabase, userData.user.id)
     return recentBookmarks && recentBookmarks.length > 0 ? (
         <Home recentBookmarks={recentBookmarks} frequentBookmarks={frequentBookmarks} categories={categories} user={user} />) : (

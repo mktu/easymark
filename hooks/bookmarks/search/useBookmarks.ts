@@ -3,9 +3,9 @@ import { SearchBookmarkType } from "@/lib/repositories/bookmarks";
 import { BookmarkSortOption } from "@/lib/types";
 import { useCallback, useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
-import { searchBookmarks } from "../../../loader/bookmarks/searchBookmarks";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { loadBookmarksByIds } from "@/loader/bookmarks/loadBookmarks";
+import { callSearchBookmarks } from "@/fetcher/bookmarks/callSearchBookmarks";
+import { callLoadBookmarksByIds } from "@/fetcher/bookmarks/callLoadBookmarksByIds";
 
 export const useBookmarks = (
     query?: string,
@@ -18,13 +18,14 @@ export const useBookmarks = (
     const [bookmarks, setBookmarks] = useState<SearchBookmarkType[]>(initialBookmarks || []);
     const [hasMore, setHasMore] = useState(Boolean(initialHasMore));
     const [checked, setChecked] = useState<number[]>([]);
+    const [loading, setLoading] = useState(false);
     const { fetchBookmarkSignal, fireBookmarkFetchSignal, bookmarkReloadSignal, fireBookmarkReloadSignal } = useSignalContext();
     const searchParams = useSearchParams();
     const pathname = usePathname();
     const { replace } = useRouter();
 
     const fetchBookmarks = useCallback(async (targetPage: number) => {
-        const result = await searchBookmarks(targetPage, 10, query, sortOption)
+        const result = await callSearchBookmarks(targetPage, 10, query, sortOption)
         if ('error' in result) {
             console.error(result.error)
             return
@@ -41,6 +42,7 @@ export const useBookmarks = (
             const newBookmarks = dataBookmarks.filter(newBookmark => !prev.some(prevBookmark => prevBookmark.bookmarkId === newBookmark.bookmarkId));
             return [...renewed, ...newBookmarks];
         });
+        setLoading(false);
         return dataBookmarks;
     }, [query, sortOption]);
 
@@ -53,7 +55,11 @@ export const useBookmarks = (
     useEffect(() => {
         const fetcher = async () => {
             if (fetchBookmarkSignal && fetchBookmarkSignal.length > 0) {
-                const result = await loadBookmarksByIds(fetchBookmarkSignal)
+                const result = await callLoadBookmarksByIds(fetchBookmarkSignal)
+                if ('error' in result) {
+                    console.error(result.error)
+                    return
+                }
                 const { bookmarks: fetchedBookmarks } = result
                 if (fetchedBookmarks && fetchedBookmarks.length > 0) {
                     setBookmarks(prev => {
@@ -95,10 +101,11 @@ export const useBookmarks = (
 
 
     useEffect(() => {
-        if (inView && hasMore) {
+        if (inView && hasMore && !loading) {
+            setLoading(true);
             setPage(prev => prev + 1);
         }
-    }, [hasMore, inView]);
+    }, [hasMore, inView, loading]);
 
     return {
         bookmarks,
