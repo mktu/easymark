@@ -27,6 +27,7 @@ export const authenticateByApiKey = async (request: NextRequest, supabase: Supab
             }
         }
     } catch (e) {
+        console.error(e)
         return {
             error: 'Unauthorized',
             code: 401

@@ -1,10 +1,10 @@
 'use client'
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import { useRouter } from "next/navigation";
-import { FC } from "react";
+import { FC, ReactNode } from "react";
 
 type Props = {
-    children: React.ReactNode
+    children: ReactNode
 }
 
 const Layout: FC<Props> = ({ children }) => {

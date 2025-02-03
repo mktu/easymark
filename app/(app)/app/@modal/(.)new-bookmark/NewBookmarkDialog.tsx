@@ -1,6 +1,6 @@
 'use client'
 import { FC } from "react"
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogTitle } from "@/components/ui/dialog"
+import { DialogFooter } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import OgpImage from "@/components/domain/OgpImage"

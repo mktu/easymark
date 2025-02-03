@@ -7,8 +7,8 @@ type Props = {
     selectableTags: TagUsageType[],
     selectableCategories: CategoryType[],
     isSuggesting: boolean,
-    onSelectTag: (tag: TagUsageType) => void,
-    onSelectCategory: (category: CategoryType) => void
+    onSelectTag: (_: TagUsageType) => void,
+    onSelectCategory: (_: CategoryType) => void
 }
 
 const Suggestion: FC<Props> = ({

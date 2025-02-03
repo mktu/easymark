@@ -5,7 +5,7 @@ import { FC } from "react"
 
 type Props = {
     sortOption: BookmarkSortOption,
-    setSortOption: (option: BookmarkSortOption) => void,
+    setSortOption: (_: BookmarkSortOption) => void,
     id?: string
 }
 

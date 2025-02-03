@@ -1,11 +1,11 @@
 'use client'
-import { useActionState } from "react";
+import { FC, useActionState } from "react";
 import { useFormStatus } from "react-dom";
 import { handleRegisterProfile, ProfileState } from "@/actions/profile/handleRegisterProfile";
 import ValidationErrors from "./ValidationErrors";
 import { Input } from "@/components/ui/input";
 
-const RegisterForm: React.FC = () => {
+const RegisterForm: FC = () => {
     const [state, dispatch] = useActionState<ProfileState, FormData>(handleRegisterProfile, {})
     const { pending } = useFormStatus()
     return (

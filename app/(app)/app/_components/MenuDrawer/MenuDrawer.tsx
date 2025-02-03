@@ -1,8 +1,7 @@
 'use client'
-import { HomeIcon, MenuIcon } from "lucide-react";
+import { MenuIcon } from "lucide-react";
 import { FC, useState } from "react";
-import { Sidebar } from "../Sidebar";
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { DrawerContext } from "./context";
 import Header from "./Header";

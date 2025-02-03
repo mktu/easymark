@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { ApiKeyType } from '@/lib/repositories/api_key'
 import { UserType } from '@/lib/repositories/profile'
-import { useState } from 'react'
+import { FC, useState } from 'react'
 import ApiKeyDialog from './ApiKeyDialog'
 import { handleUpdateProfile, HandleUpdateProfileType } from '@/actions/profile/handleUpdateProfile'
 import ErrorIndicator from '../../_components/ErrorIndicator/ErrorIndicator'
@@ -15,7 +15,7 @@ type Props = {
     apiKeys: ApiKeyType[]
 }
 
-const ProfileForm: React.FC<Props> = ({ user, apiKeys }) => {
+const ProfileForm: FC<Props> = ({ user, apiKeys }) => {
     const [open, setOpen] = useState(false)
     const [name, setName] = useState(user.username || '')
     const [updateResult, setUpdateResult] = useState<HandleUpdateProfileType>()
