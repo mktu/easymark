@@ -1,10 +1,9 @@
 import { Input } from "@/components/ui/input";
-import { FC } from "react";
+import { ChangeEvent, FC } from "react";
 import ErrorIndicator from "../../../_components/ErrorIndicator/ErrorIndicator";
-import Procedure from "./Procedure";
 
 type Props = {
-    onChangeFile: (e: React.ChangeEvent<HTMLInputElement>) => void,
+    onChangeFile: (_: ChangeEvent<HTMLInputElement>) => void,
     error?: string | null
 }
 

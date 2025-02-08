@@ -1,8 +1,7 @@
 'use client'
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { FC, useActionState } from "react";
-import { AddBookmarkState, handleBookmarkSubmit } from "@/actions/bookmarks/handleAddBookmark";
+import { FC } from "react";
 import { useBookmarkInput } from "@/hooks/bookmarks/new/useBookmarkInput";
 import Image from "next/image";
 import OgpImage from "@/components/domain/OgpImage";
@@ -22,9 +21,7 @@ type Props = {
 const Welcome: FC<Props> = ({
     user
 }) => {
-    const { ogp, setBookmark, bookmark, validBookmark } = useBookmarkInput()
-    const handleAddBookmarkWithOgp = handleBookmarkSubmit.bind(null, ogp || null)
-    const [state, dispatch] = useActionState<AddBookmarkState, FormData>(handleAddBookmarkWithOgp, { error: null })
+    const { ogp, setBookmark, bookmark, validBookmark, handleSubmit, addBookmarkResult } = useBookmarkInput()
     return (
         <section className="flex flex-col gap-2">
             <div className='flex w-full flex-col items-center gap-4 p-4'>
@@ -33,7 +30,9 @@ const Welcome: FC<Props> = ({
                 </h2>
                 <Image src='/images/welcome.svg' width={200} height={200} alt='welcome' />
             </div>
-            <form className='flex w-full flex-col items-center gap-4 p-4' action={dispatch}>
+            <form className='flex w-full flex-col items-center gap-4 p-4' action={() => {
+                handleSubmit()
+            }}>
                 <div className='flex w-full items-center gap-1 md:w-[600px]'>
                     <Input value={bookmark} onChange={(e) => {
                         setBookmark(e.target.value)
@@ -52,9 +51,8 @@ const Welcome: FC<Props> = ({
                         <p className="flex w-full justify-center text-sm text-muted-foreground md:w-[450px]">{ogp?.description}</p>
                     </div>
                 ) : <Placeholder />}
-
-                {'error' in state && <ErrorIndicator error={state.error || ''} />}
-                {'validatedErrors' in state && <ErrorIndicator error={state.validatedErrors.url} />}
+                <ErrorIndicator error={addBookmarkResult?.error} />
+                <ErrorIndicator error={addBookmarkResult?.validatedErrors?.url} />
             </form>
         </section>
     )

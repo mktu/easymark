@@ -1,12 +1,13 @@
 import { ViewportType } from '@/contexts/viewport'
 import ViewportProvider from './ViewportProvider'
+import { FC, ReactNode } from 'react'
 
 type Props = {
-    children: React.ReactNode,
+    children: ReactNode,
     viewport: ViewportType
 }
 
-const Provider: React.FC<Props> = ({ children, viewport }) => {
+const Provider: FC<Props> = ({ children, viewport }) => {
     return (
         <ViewportProvider viewport={viewport}>
             {children}

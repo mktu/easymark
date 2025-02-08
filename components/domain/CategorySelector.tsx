@@ -9,7 +9,7 @@ type Props = {
     className?: string,
     categories: CategoryType[],
     selectedCategory?: number | null,
-    selectCategory: (category: number | null) => void
+    selectCategory: (_: number | null) => void
 }
 
 const CategorySelector: FC<Props> = ({

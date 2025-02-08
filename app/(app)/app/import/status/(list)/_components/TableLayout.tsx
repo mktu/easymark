@@ -1,12 +1,13 @@
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { FC, ReactNode } from "react"
 
 type Props = {
-    children?: React.ReactNode,
+    children?: ReactNode,
     error?: string
 }
 
-const TableLayout: React.FC<Props> = ({
+const TableLayout: FC<Props> = ({
     children,
     error
 }) => {

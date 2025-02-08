@@ -4,12 +4,13 @@ import { TableHead, TableRow } from "@/components/ui/table"
 import { ImportStatusType } from "@/lib/repositories/import_status"
 import TableLayout from "./TableLayout"
 import { useRouter } from "next/navigation"
+import { FC } from "react"
 
 type Props = {
     importStatusList: ImportStatusType[]
 }
 
-const ImportList: React.FC<Props> = ({ importStatusList }) => {
+const ImportList: FC<Props> = ({ importStatusList }) => {
     const router = useRouter()
     return (
         <TableLayout>

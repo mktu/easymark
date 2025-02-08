@@ -10,10 +10,10 @@ import SearchCommandMenu from "./SearchCommandMenu"
 
 type Props = {
     searchText?: string,
-    onChangeSearchText: (value: string) => void,
-    onSelectTag: (tag: TagUsageType) => void,
-    onSelectCategory: (category: CategoryType) => void,
-    onAddCommand?: (command: string) => void,
+    onChangeSearchText: (_: string) => void,
+    onSelectTag: (_: TagUsageType) => void,
+    onSelectCategory: (_: CategoryType) => void,
+    onAddCommand?: (_: string) => void,
     selectableTags: TagUsageType[],
     selectableCategories: CategoryType[],
     isSuggesting: boolean

@@ -32,6 +32,7 @@ export const useImportStatus = (initisalStatus: ImportStatusType) => {
                     }
                 }
             } catch (e) {
+                console.error(e)
                 tryCount++
                 if (tryCount > 5) {
                     clearInterval(id)

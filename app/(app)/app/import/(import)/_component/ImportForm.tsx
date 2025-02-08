@@ -5,7 +5,7 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { useImport } from "@/hooks/import/useImport"
 import { UploadBookmarkType } from "@/hooks/import/useUpload"
-import { useState } from "react"
+import { FC, useState } from "react"
 import { toast } from "sonner"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
@@ -14,7 +14,7 @@ type Props = {
     bookmarks: UploadBookmarkType[]
 }
 
-const ImportForm: React.FC<Props> = ({ bookmarks: initialBookmarks }) => {
+const ImportForm: FC<Props> = ({ bookmarks: initialBookmarks }) => {
     const { bookmarks, onCheckBookmark } = useImport(initialBookmarks)
     const [importingStatus, setImportingStatus] = useState<number | null>(null)
     const router = useRouter()

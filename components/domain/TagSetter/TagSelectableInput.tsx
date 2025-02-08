@@ -17,8 +17,8 @@ type Props = {
     className?: string,
     variants?: Variants,
     registeredTags: TagUsageType[],
-    onSelectTag: (tag: TagUsageType) => void,
-    onClearTag: (tag: TagUsageType) => void,
+    onSelectTag: (_: TagUsageType) => void,
+    onClearTag: (_: TagUsageType) => void,
     onClearAll: () => void,
 }
 

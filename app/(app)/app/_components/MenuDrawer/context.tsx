@@ -2,7 +2,7 @@ import { createContext, useContext } from "react"
 
 type ContextType = {
     open: boolean,
-    setOpen: (open: boolean) => void
+    setOpen: (_: boolean) => void
 }
 
 export const DrawerContext = createContext<ContextType>({

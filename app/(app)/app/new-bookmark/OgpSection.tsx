@@ -9,7 +9,7 @@ import ErrorIndicator from "../_components/ErrorIndicator/ErrorIndicator"
 type Props = {
     url: string,
     ogp: OgpResponse | null,
-    setUrl: (url: string) => void,
+    setUrl: (_: string) => void,
     result?: HandleAddBookmarkReturnType | null,
 }
 const ImageWitdth = 460

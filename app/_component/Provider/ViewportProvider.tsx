@@ -1,13 +1,14 @@
 'use client'
 
 import { ViewportContext, ViewportType } from "@/contexts/viewport"
+import { FC, ReactNode } from "react"
 
 type Props = {
-    children: React.ReactNode,
+    children: ReactNode,
     viewport: ViewportType
 }
 
-const Provider: React.FC<Props> = ({ children, viewport }) => {
+const Provider: FC<Props> = ({ children, viewport }) => {
     return (
         <ViewportContext.Provider value={{ viewport }}>{children}</ViewportContext.Provider>
     )

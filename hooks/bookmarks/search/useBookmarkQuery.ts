@@ -1,6 +1,6 @@
 import { useDebounce } from 'use-debounce';
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { appendQuerySegment, appendQuerySegmentIfNotExists, CategoryOperator, extractCategoryQuery, extractLastQuerySegment, extractTagQuery, FreeWordOperator, parseSearchQuery, replaceLastQuerySegment, TagOperator } from '../../../logics/bookmarks/parseSearchQuery';
+import { appendQuerySegment, appendQuerySegmentIfNotExists, CategoryOperator, extractCategoryQuery, extractLastQuerySegment, extractTagQuery, parseSearchQuery, replaceLastQuerySegment, TagOperator } from '../../../logics/bookmarks/parseSearchQuery';
 import { useCategoryQuery } from './useCategoryQuery';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTagQuery } from './useTagQuery';

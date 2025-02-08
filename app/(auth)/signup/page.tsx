@@ -1,13 +1,15 @@
 'use client'
 import { useActionState } from "react";
-import ValidationErrors from '../_components/ValidationErrors';
-import { handleSignup, SigninState } from '../../../actions/auth/handleSignup';
+import { handleSignup, HandleSignupReturnType } from '../../../actions/auth/handleSignup';
 import { useFormStatus } from 'react-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import ErrorIndicator from "@/app/(app)/app/_components/ErrorIndicator/ErrorIndicator";
 
 export default function Signup() {
-    const [state, dispatch] = useActionState<SigninState, FormData>(handleSignup, { error: null })
+    const [state, dispatch] = useActionState<HandleSignupReturnType, FormData>((_, form) => {
+        return handleSignup(form)
+    }, { error: '' })
     const { pending } = useFormStatus()
     return (
         <div>
@@ -19,14 +21,16 @@ export default function Signup() {
                     placeholder="Email"
                     required
                 />
+                <ErrorIndicator error={state.validatedErrors?.email} />
                 <Input
                     name='password'
                     type="password"
                     placeholder="Password"
                     required
                 />
+                <ErrorIndicator error={state.validatedErrors?.password} />
                 <Button disabled={pending} type="submit">Sign Up</Button>
-                <ValidationErrors state={state} />
+                <ErrorIndicator error={state.error} />
             </form>
         </div>
     );

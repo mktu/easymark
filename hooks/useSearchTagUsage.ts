@@ -5,7 +5,7 @@ import { useDebounce } from "use-debounce";
 import { callSearchTags } from "@/fetcher/tags/callSearchTags";
 
 export const useSearchTagUsage = (
-    onSelectTag: (tag: TagUsageType, registered: boolean) => void,
+    onSelectTag: (_: TagUsageType, __: boolean) => void,
     registeredTags: TagUsageType[]) => {
     const [loading, setLoading] = useState(true)
     const [searchTag, setSearchTag] = useState('');

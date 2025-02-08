@@ -3,7 +3,6 @@ import { createClientForServer } from '@/lib/supabase/supabaseServer';
 import { z } from 'zod';
 import { createUrlRegExp } from '../../logics/bookmarks/validateUrl';
 import { revalidatePath } from 'next/cache';
-import { OgpResponse } from '@/lib/supabase/ogp';
 import { addBookmarksBySupabase } from './addBookmarksBySupabase';
 
 export type AddBookmarkState = {
@@ -14,7 +13,7 @@ export type AddBookmarkState = {
     }
 } | {
     success: true
-} | {}
+}
 
 const schema = {
     url: z.string().regex(
@@ -66,39 +65,3 @@ export const handleAddBookmark = async (data: {
 }
 
 export type HandleAddBookmarkReturnType = Awaited<ReturnType<typeof handleAddBookmark>>;
-
-
-export const handleBookmarkSubmit = async (ogp: OgpResponse | null, state: AddBookmarkState, formData: FormData) => {
-
-    const validatedFields = z.object(schema).safeParse(Object.fromEntries(formData))
-
-    if (!validatedFields.success) {
-        return { validatedErrors: validatedFields.error.flatten().fieldErrors }
-    }
-
-    const supabase = await createClientForServer();
-    const { data: authData } = await supabase.auth.getUser();
-    if (!authData?.user) {
-        return { error: 'not authenticated' }
-    }
-
-    const url = validatedFields.data.url;
-    const title = ogp?.title;
-    const description = ogp?.description;
-    const imageUrl = ogp?.image?.url;
-
-    const result = await addBookmarksBySupabase({
-        url,
-        title,
-        description,
-        imageUrl,
-        userId: authData.user.id
-    }, supabase)
-    if (result?.error) {
-        return { error: result.error }
-    }
-    revalidatePath('/')
-    return {
-        success: true
-    }
-};

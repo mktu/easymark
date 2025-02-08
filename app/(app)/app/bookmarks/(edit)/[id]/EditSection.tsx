@@ -13,14 +13,14 @@ import { HandleUpdateBookmarkReturnType } from "@/actions/bookmarks/handleUpdate
 
 type Props = {
     note?: string,
-    setNote: (note: string) => void,
+    setNote: (_: string) => void,
     categories: CategoryType[],
     category?: number | null,
-    setCategory: (category: number | null) => void,
+    setCategory: (_: number | null) => void,
     result?: HandleUpdateBookmarkReturnType | null,
     registeredTags: TagUsageType[],
-    onSelectTag: (tag: TagUsageType) => void
-    onClearTag: (tag: TagUsageType) => void
+    onSelectTag: (_: TagUsageType) => void
+    onClearTag: (_: TagUsageType) => void
     onClearAllTags: () => void
     onDelete: () => void
 }
