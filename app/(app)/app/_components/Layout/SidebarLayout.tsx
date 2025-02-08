@@ -1,22 +1,15 @@
 'use client'
 
-import { useCallback, useState } from "react"
-import useSplit from "./useSplit"
 import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { ChevronLeft, ChevronRight } from "lucide-react"
+import { FC, ReactNode } from "react"
 
 type Props = {
-    sidebar: React.ReactNode,
-    content: React.ReactNode,
-    header: React.ReactNode
+    sidebar: ReactNode,
+    content: ReactNode,
+    header: ReactNode
 }
 
-const MinWidth = 150
-const MaxWidth = 300
-const WidthClosed = 50
-
-const SidebarLayout: React.FC<Props> = ({ sidebar, content, header }) => {
+const SidebarLayout: FC<Props> = ({ sidebar, content, header }) => {
 
     // const [width, setWidth] = useState(MinWidth)
     // const onDragEnd = useCallback((lastWidth: number) => {

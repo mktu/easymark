@@ -1,12 +1,10 @@
-import { DropdownMenu, DropdownMenuContent } from "@/components/ui/dropdown-menu"
 import { TagUsageType } from "@/lib/repositories/tag_usage"
-import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu"
 import { CommandItem, CommandList } from "cmdk"
 import { FC } from "react"
 
 type Props = {
     selectableTags: TagUsageType[],
-    onSelect: (tag: TagUsageType) => void
+    onSelect: (_: TagUsageType) => void
 }
 
 const TagSuggestions: FC<Props> = ({

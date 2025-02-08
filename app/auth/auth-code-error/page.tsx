@@ -1,4 +1,6 @@
-const AuthCodeErrorPage: React.FC = () => {
+import { FC } from "react";
+
+const AuthCodeErrorPage: FC = () => {
     return (
         <div>
             <h1>Auth Code Error</h1>

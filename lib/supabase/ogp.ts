@@ -15,7 +15,7 @@ export type OgpResponse = {
 
 export const doScrape = async (url: string) => {
     try {
-        const { error, html, result, response } = await ogs({ url })
+        const { error, result } = await ogs({ url })
         if (error) {
             console.error(error)
             throw error

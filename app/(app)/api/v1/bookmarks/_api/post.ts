@@ -1,6 +1,5 @@
 import { NextRequest } from 'next/server'
 import { createClientForServer } from '@/lib/supabase/supabaseServer';
-import { ApiKeyType, getApiKey } from '@/lib/repositories/api_key';
 import { z } from 'zod';
 import { createUrlRegExp } from '@/logics/bookmarks/validateUrl';
 import { addBookmarksBySupabase } from '@/actions/bookmarks/addBookmarksBySupabase';

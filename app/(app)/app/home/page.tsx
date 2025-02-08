@@ -17,10 +17,9 @@ export default async function AppHome() {
     }
     const user = await fetchUser(supabase, userData.user.id)
     const { bookmarks: recentBookmarks } = await searchBookmarks(supabase, { userId: userData.user.id, offset: 0, limit: 5, sortOption: 'date' })
-    const { bookmarks: frequentBookmarks } = await searchBookmarks(supabase, { userId: userData.user.id, offset: 0, limit: 5, sortOption: 'frequency' })
     const categories = await getCategories(supabase, userData.user.id)
     return recentBookmarks && recentBookmarks.length > 0 ? (
-        <Home recentBookmarks={recentBookmarks} frequentBookmarks={frequentBookmarks} categories={categories} user={user} />) : (
+        <Home recentBookmarks={recentBookmarks} categories={categories} user={user} />) : (
         <Welcome user={user} />
     );
 }

@@ -1,10 +1,9 @@
-import { ChangeEventHandler, useCallback, useState } from "react";
-import { hex2rgb } from "./util"
+import { ChangeEventHandler, FC, useCallback, useState } from "react";
 import { cn } from "@/lib/utils";
 
 type Props = {
     className?: string,
-    selectColor: (color: string) => void,
+    selectColor: (_: string) => void,
 }
 
 const commonColors = [
@@ -12,7 +11,7 @@ const commonColors = [
     '#333FFF', '#FF3333', '#33FFB8', '#FFB833', '#8D33FF', '#FF3380',
 ];
 
-export const ColorPallet: React.FC<Props> = ({
+export const ColorPallet: FC<Props> = ({
     className,
     selectColor: handleColorClick
 }) => {

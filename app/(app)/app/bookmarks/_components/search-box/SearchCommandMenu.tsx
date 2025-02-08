@@ -6,7 +6,7 @@ import { CategoryOperator, TagOperator } from "../../../../../../logics/bookmark
 
 type Props = {
     className?: string,
-    onSelectCommand?: (command: string) => void
+    onSelectCommand?: (_: string) => void
 }
 
 const SearchCommandMenu: FC<Props> = ({
@@ -25,14 +25,18 @@ const SearchCommandMenu: FC<Props> = ({
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
                     <DropdownMenuItem onSelect={() => {
-                        onSelectCommand && onSelectCommand(TagOperator)
+                        if (onSelectCommand) {
+                            onSelectCommand(TagOperator)
+                        }
                     }}>
                         <TagIcon />
                         <span>Tag</span>
                         <DropdownMenuShortcut>tag:</DropdownMenuShortcut>
                     </DropdownMenuItem>
                     <DropdownMenuItem onSelect={() => {
-                        onSelectCommand && onSelectCommand(CategoryOperator)
+                        if (onSelectCommand) {
+                            onSelectCommand(CategoryOperator)
+                        }
                     }}>
                         <LayoutGridIcon />
                         <span>Category</span>

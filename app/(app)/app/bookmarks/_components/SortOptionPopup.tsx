@@ -3,14 +3,15 @@ import { Label } from "@/components/ui/label"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { BookmarkSortOption, BookmarkSortOptions } from "@/lib/types"
-import { SortDescIcon, TrashIcon } from "lucide-react"
+import { SortDescIcon } from "lucide-react"
+import { FC } from "react"
 
 type Props = {
     sortOption: BookmarkSortOption,
-    setSortOption: (option: BookmarkSortOption) => void,
+    setSortOption: (_: BookmarkSortOption) => void,
 }
 
-const SortOptionPopup: React.FC<Props> = ({
+const SortOptionPopup: FC<Props> = ({
     sortOption,
     setSortOption,
 }) => {

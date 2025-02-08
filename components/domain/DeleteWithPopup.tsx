@@ -2,14 +2,14 @@ import { Button } from "@/components/ui/button"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { PopoverClose } from "@radix-ui/react-popover"
 import { TrashIcon } from "lucide-react"
-import { ReactNode } from "react"
+import { FC, ReactNode } from "react"
 
 type Props = {
     onDelete: () => Promise<void>,
     message: string | ReactNode
 }
 
-const DeleteWithPopup: React.FC<Props> = ({
+const DeleteWithPopup: FC<Props> = ({
     onDelete,
     message
 }) => {

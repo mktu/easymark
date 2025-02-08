@@ -1,8 +1,8 @@
 import { TagIcon } from "lucide-react"
-import { FC } from "react"
+import { FC, ReactNode } from "react"
 
 type Props = {
-    children: React.ReactNode
+    children: ReactNode
 }
 
 const Layout: FC<Props> = ({ children }) => {

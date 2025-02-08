@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react"
+import { ChangeEvent, useCallback, useState } from "react"
 
 
 
@@ -11,7 +11,7 @@ export const useUpload = () => {
     const [bookmarks, setBookmarks] = useState<UploadBookmarkType[]>([])
     const [error, setError] = useState<string | null>(null)
 
-    const onChangeFile = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const onChangeFile = useCallback(async (e: ChangeEvent<HTMLInputElement>) => {
         if (!e.target.files) return;
         const file = e.target.files[0];
         if (!file) return;
@@ -30,6 +30,7 @@ export const useUpload = () => {
 
             setBookmarks(parsedBookmarks);
         } catch (err) {
+            console.error(err);
             setError('Failed to parse the file. Please make sure it is a valid HTML bookmark file.');
         }
     }, [])

@@ -1,7 +1,7 @@
 export type BookmarkSortOption = 'date' | 'title' | 'frequency'
 
 export const BookmarkSortOptions: {
-    [key in BookmarkSortOption]: {
+    [_ in BookmarkSortOption]: {
         label: string,
     }
 } = {

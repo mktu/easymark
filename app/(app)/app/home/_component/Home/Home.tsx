@@ -1,7 +1,7 @@
 import { BookmarkType } from "@/lib/repositories/bookmarks";
 import { CategoryType } from "@/lib/repositories/categories";
 import { FC } from "react";
-import { HeartIcon, HomeIcon, StarsIcon, Volume2Icon, VolumeIcon } from "lucide-react";
+import { HomeIcon, StarsIcon } from "lucide-react";
 import HomePanel from "./HomePanel";
 import BookmarkList from "./BookmarkList";
 
@@ -10,7 +10,6 @@ type Props = {
         username: string
     },
     recentBookmarks: BookmarkType[],
-    frequentBookmarks: BookmarkType[],
     categories: CategoryType[]
 
 }
@@ -18,7 +17,6 @@ type Props = {
 const Home: FC<Props> = ({
     user,
     recentBookmarks,
-    frequentBookmarks,
     categories
 }) => {
     return (

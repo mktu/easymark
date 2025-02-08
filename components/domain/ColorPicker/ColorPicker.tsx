@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils'
 
 type Props = {
     color: string | null,
-    onChandeColor: (color: string) => void,
+    onChandeColor: (_: string) => void,
     caption?: string
     size?: 'small' | 'medium' | 'large'
 }

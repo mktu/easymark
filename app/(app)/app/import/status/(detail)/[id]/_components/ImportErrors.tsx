@@ -1,6 +1,7 @@
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { FailedBookmarkImportType } from "@/lib/repositories/failed_bookmark_imports"
+import { FC } from "react"
 
 type Props = {
     importErrors: FailedBookmarkImportType[]
@@ -21,7 +22,7 @@ const getErrorMessage = (errorType: string) => {
     }
 }
 
-const ImportErrors: React.FC<Props> = ({ importErrors }) => {
+const ImportErrors: FC<Props> = ({ importErrors }) => {
     const urls = Array.from(new Set(importErrors.map(importError => importError.url)))
 
     const checkAndGetErrors = (url: string, fbis: FailedBookmarkImportType[]) => {

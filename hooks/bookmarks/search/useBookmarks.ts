@@ -11,7 +11,7 @@ export const useBookmarks = (
     query?: string,
     sortOption?: BookmarkSortOption,
     initialBookmarks?: SearchBookmarkType[],
-    initialHasMore?: Boolean
+    initialHasMore?: boolean
 ) => {
     const { ref: bookmarkLoaderRef, inView } = useInView({ initialInView: false });
     const [page, setPage] = useState(0);

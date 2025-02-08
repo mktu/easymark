@@ -13,9 +13,9 @@ import TagItem from "./TagItem"
 type Props = {
     bookmark: SearchBookmarkType,
     category?: CategoryType,
-    onCheck?: (checked: boolean) => void
+    onCheck?: (_: boolean) => void
     checked?: boolean,
-    onSelectTag: (tag: string) => void
+    onSelectTag: (_: string) => void
 }
 
 const ImageSize = 64
@@ -32,7 +32,9 @@ const BookmarkListItem: FC<Props> = ({
         <div className="flex items-center gap-2">
             <Checkbox className="border-muted-foreground bg-background" checked={checked}
                 onCheckedChange={(c) => {
-                    onCheck && onCheck(c === true)
+                    if (onCheck) {
+                        onCheck(c === true)
+                    }
                 }} />
             <Link href={`/app/bookmarks/${bookmarkId}`}
                 style={{ borderLeftColor: category?.color || 'transparent' }}

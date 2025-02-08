@@ -3,15 +3,6 @@ import { createClientForServer } from '@/lib/supabase/supabaseServer';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
 
-export type SigninState = {
-    error: string | null,
-} | {
-    validatedErrors: {
-        email?: string,
-        password?: string
-    }
-} | {}
-
 const schema = {
     email: z.string().regex(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, {
         message:
@@ -20,7 +11,7 @@ const schema = {
     password: z.string().min(8, { message: "Password must be at least 8 characters long" })
 }
 
-export const handleSignup = async (state: SigninState, formData: FormData) => {
+export const handleSignup = async (formData: FormData) => {
 
     const validatedFields = z.object(schema).safeParse(Object.fromEntries(formData))
 
@@ -33,12 +24,12 @@ export const handleSignup = async (state: SigninState, formData: FormData) => {
     const supabase = await createClientForServer();
     const { error, data } = await supabase.auth.signUp({ email, password });
     if (error) {
-        return { error }
+        return { error: error.message }
     }
     if (!data.user) {
-        throw new Error('User not authenticated')
+        return { error: 'Failed to sign up' }
     }
     redirect('/signup/verification')
 };
 
-
+export type HandleSignupReturnType = Awaited<ReturnType<typeof handleSignup>>;

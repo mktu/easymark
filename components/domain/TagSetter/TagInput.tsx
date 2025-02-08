@@ -56,9 +56,9 @@ type Variants = {
 
 type Props = {
     selectedTags: TagUsageType[],
-    onClearTag: (tag: TagUsageType) => void,
+    onClearTag: (_: TagUsageType) => void,
     onClearAll: () => void,
-    onSearchTag: (input: string) => void,
+    onSearchTag: (_: string) => void,
     onEnter?: () => void,
     onFocus?: () => void,
     onBlur?: FocusEventHandler<HTMLInputElement>,
@@ -101,7 +101,9 @@ const TagInput: FC<Props> = ({
                     onBlur={onBlur}
                     onKeyDown={(e) => {
                         if (e.key === 'Enter') {
-                            onEnter && onEnter();
+                            if (onEnter) {
+                                onEnter();
+                            }
                         } else if (e.key === 'Escape') {
                             onEscape();
                         }

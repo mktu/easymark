@@ -1,6 +1,5 @@
 import { FC } from "react"
 import NoImage from "../svg/NoImage"
-import { Button } from "../ui/button"
 
 type Props = {
     image?: string | null,

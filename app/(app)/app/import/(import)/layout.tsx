@@ -1,9 +1,9 @@
 import { ImportIcon } from "lucide-react"
-import { FC } from "react"
+import { FC, ReactNode } from "react"
 import Procedure from "./_component/Procedure"
 
 type Props = {
-    children: React.ReactNode
+    children: ReactNode
 }
 
 const Layout: FC<Props> = ({ children }) => {

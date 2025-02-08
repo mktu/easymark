@@ -7,7 +7,7 @@ import Link from "next/link";
 
 type Props = {
     bookmark: SearchBookmarkType,
-    onSelectTag: (tag: string) => void
+    onSelectTag: (_: string) => void
 }
 
 const ImageSize = 64

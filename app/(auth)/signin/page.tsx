@@ -2,13 +2,15 @@
 import { useActionState } from "react";
 import Link from 'next/link';
 import { useFormStatus } from 'react-dom';
-import ValidationErrors from '../_components/ValidationErrors';
 import { handleGoogleSignin } from '@/actions/auth/handleGoogleSignin';
 import { Button } from '@/components/ui/button';
-import { handleSignin, SigninState } from '@/actions/auth/handleSignin';
+import { handleSignin, HandleSigninReturnType } from '@/actions/auth/handleSignin';
+import ErrorIndicator from "@/app/(app)/app/_components/ErrorIndicator/ErrorIndicator";
 
 export default function Signin() {
-    const [state, dispatch] = useActionState<SigninState, FormData>(handleSignin, { error: null })
+    const [state, dispatch] = useActionState<HandleSigninReturnType, FormData>((_, form) => {
+        return handleSignin(form)
+    }, { error: '' })
 
     const { pending } = useFormStatus()
     return (
@@ -21,15 +23,17 @@ export default function Signin() {
                     placeholder="Email"
                     required
                 />
+                <ErrorIndicator error={state.validatedErrors?.email} />
                 <input
                     name='password'
                     type="password"
                     placeholder="Password"
                     required
                 />
+                <ErrorIndicator error={state.validatedErrors?.password} />
                 <Button disabled={pending} type="submit">Sign In</Button>
                 <Link href="/signup">Sign Up</Link>
-                <ValidationErrors state={state} />
+                <ErrorIndicator error={state.error} />
             </form>
             <Button disabled={pending} type="submit" onClick={() => {
                 handleGoogleSignin()

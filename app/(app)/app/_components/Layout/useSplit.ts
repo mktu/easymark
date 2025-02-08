@@ -6,8 +6,8 @@ const useSplit = ({
     minWidth,
     maxWidth
 }: {
-    onDragEnd?: (lastWidth: number) => void,
-    onDragStart?: (startWidth: number) => void,
+    onDragEnd?: (_: number) => void,
+    onDragStart?: (_: number) => void,
     minWidth?: number,
     maxWidth?: number
 }) => {
@@ -23,7 +23,7 @@ const useSplit = ({
             console.error('child nodes must be 3 or more')
             return
         }
-        let unregisters: VoidFunction[] = []
+        let unregisters: (() => void)[] = []
         const clear = () => {
             unregisters.forEach(f => f())
             unregisters = []
@@ -34,7 +34,9 @@ const useSplit = ({
                 maxWidth && maxWidth <= e.clientX ? maxWidth :
                     e.clientX
             root.children[0].setAttribute('style', `width:${w}px`)
-            onDragEnd && onDragEnd(w)
+            if (onDragEnd) {
+                onDragEnd(w)
+            }
             clear()
         }
         const move = (e: MouseEvent) => {
@@ -49,7 +51,9 @@ const useSplit = ({
         const dragstart = (e: MouseEvent) => {
             e.preventDefault()
             setMoving(true)
-            onDragStart && onDragStart(e.clientX)
+            if (onDragStart) {
+                onDragStart(e.clientX)
+            }
             window.addEventListener('mousemove', move)
             window.addEventListener('mouseup', stop)
             unregisters.push(

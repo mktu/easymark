@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
-import { ImportIcon, LayoutGridIcon } from "lucide-react";
+import { ImportIcon } from "lucide-react";
 import Link from "next/link";
 import { FC } from "react";
 

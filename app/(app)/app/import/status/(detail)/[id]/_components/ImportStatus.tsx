@@ -1,5 +1,4 @@
 import LoadingIcon from "@/components/svg/Loading";
-import { useImportStatus } from "@/hooks/import/useImportStatus";
 import { ImportStatusType } from "@/lib/repositories/import_status";
 import { CheckCircle2Icon } from "lucide-react";
 import { FC } from "react";
