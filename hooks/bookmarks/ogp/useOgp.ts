@@ -10,11 +10,13 @@ export const useOgp = (url: string | null, manual = false) => {
     }, [])
     useEffect(() => {
         let canGo = true
-        url && !manual && fetchOgp(url).then((ogp) => {
-            if (canGo) {
-                setOgp(ogp)
-            }
-        })
+        if (url && manual) {
+            fetchOgp(url).then((ogp) => {
+                if (canGo) {
+                    setOgp(ogp)
+                }
+            })
+        }
         return () => {
             canGo = false
         }

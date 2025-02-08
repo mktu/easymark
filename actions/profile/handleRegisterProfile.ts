@@ -1,19 +1,8 @@
 'use server'
 import { uploadImage } from "@/lib/storage/profile"
 import { createClientForServer } from "@/lib/supabase/supabaseServer"
-import { PostgrestError } from "@supabase/supabase-js"
 import { redirect } from "next/navigation"
 import { z } from "zod"
-
-export type ProfileState = {
-    validatedErrors: {
-        name?: string
-    }
-} |
-{ error: PostgrestError | null } |
-{ error: Error | null } |
-{ success: true } |
-{}
 
 const schema = {
     name: z.string(),
@@ -35,11 +24,11 @@ const parseParameters = async (formData: FormData) => {
 
 
 
-const handleUpsert = async (state: ProfileState, formData: FormData) => {
+const handleUpsert = async (formData: FormData) => {
     const supabase = await createClientForServer();
     const { data: authData } = await supabase.auth.getUser()
     if (!authData?.user) {
-        throw new Error('User not authenticated')
+        return { error: 'not authenticated' }
     }
     const { name, image, validatedErrors } = await parseParameters(formData)
     if (validatedErrors) {
@@ -53,8 +42,9 @@ const handleUpsert = async (state: ProfileState, formData: FormData) => {
             username: name,
             image: imageUrl
         })
+        console.error(updateError)
         return updateError ? {
-            error: updateError
+            error: 'Failed to update profile'
         } : {
             success: true
         }
@@ -64,14 +54,19 @@ const handleUpsert = async (state: ProfileState, formData: FormData) => {
         username: name
     })
     return updateError ? {
-        error: updateError
+        error: 'Failed to update profile'
     } : { success: true }
 }
 
-export const handleRegisterProfile = async (state: ProfileState, formData: FormData) => {
-    const ret = handleUpsert(state, formData)
+export const handleRegisterProfile = async (formData: FormData) => {
+    const ret = await handleUpsert(formData)
     if ('error' in ret) {
         return { error: ret.error }
     }
+    if ('validatedErrors' in ret) {
+        return { validatedErrors: ret.validatedErrors }
+    }
     redirect('/app/')
 };
+
+export type HandleRegisterProfileReturnType = Awaited<ReturnType<typeof handleRegisterProfile>>;
