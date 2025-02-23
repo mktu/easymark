@@ -3,12 +3,12 @@ import ProfileForm from "./_components/ProfileForm";
 import { redirect } from "next/navigation";
 
 export default async function Page() {
-    const { user, apiKeys } = await loadProfile()
+    const { user } = await loadProfile()
     if (!user) {
         redirect('/signin')
     }
     return (
-        <ProfileForm user={user} apiKeys={apiKeys} />
+        <ProfileForm user={user} />
     );
 }
 

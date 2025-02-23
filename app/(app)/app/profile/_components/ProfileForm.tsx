@@ -1,22 +1,17 @@
 'use client'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { ApiKeyType } from '@/lib/repositories/api_key'
 import { UserType } from '@/lib/repositories/profile'
 import { FC, useState } from 'react'
-import ApiKeyDialog from './ApiKeyDialog'
 import { handleUpdateProfile, HandleUpdateProfileType } from '@/actions/profile/handleUpdateProfile'
 import ErrorIndicator from '../../_components/ErrorIndicator/ErrorIndicator'
 import { toast } from 'sonner'
 import { User2 } from 'lucide-react'
-import ApiKeyTable from './ApiKeyTable'
 type Props = {
     user: UserType,
-    apiKeys: ApiKeyType[]
 }
 
-const ProfileForm: FC<Props> = ({ user, apiKeys }) => {
-    const [open, setOpen] = useState(false)
+const ProfileForm: FC<Props> = ({ user }) => {
     const [name, setName] = useState(user.username || '')
     const [updateResult, setUpdateResult] = useState<HandleUpdateProfileType>()
     return (
@@ -42,24 +37,6 @@ const ProfileForm: FC<Props> = ({ user, apiKeys }) => {
                         <Button className='whitespace-nowrap' type="submit">Update</Button>
                     </form>
                     <ErrorIndicator error={updateResult?.validatedErrors?.name} />
-                </div>
-                <div className='flex flex-col gap-2'>
-                    <h3 className='font-semibold'>API Keys</h3>
-                    <div className='flex flex-col gap-2'>
-                        <ApiKeyTable apiKeys={apiKeys} />
-                    </div>
-                    <div className='mt-2'>
-                        <Button className='ml-auto' variant='outline' type='button' onClick={() => {
-                            setOpen(true)
-                        }}>Generate API Key</Button>
-                    </div>
-                    {open && (
-                        <ApiKeyDialog
-                            onClose={() => {
-                                setOpen(false)
-                            }}
-                        />
-                    )}
                 </div>
             </div>
         </section>

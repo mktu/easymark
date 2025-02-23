@@ -8,6 +8,7 @@ import Tags from "./Tags";
 import SignoutButton from "./SignoutButton";
 import Home from "./Home";
 import Import from "./Import";
+import Settings from "./Settings";
 
 
 const AppSidebar: FC = () => {
@@ -24,6 +25,7 @@ const AppSidebar: FC = () => {
                     <Bookmarks />
                     <Tags />
                     <Import />
+                    <Settings />
                 </SidebarMenu>
             </SidebarContent>
             <SidebarFooter>
