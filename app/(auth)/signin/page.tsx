@@ -15,7 +15,6 @@ export default function Signin() {
     const { pending } = useFormStatus()
     return (
         <div>
-            <h1>Sign In</h1>
             <form action={dispatch}>
                 <input
                     name='email'
