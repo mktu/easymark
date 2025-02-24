@@ -1,3 +1,4 @@
+import CenterizedLayout from "@/app/_component/Layout/CenterizedLayout"
 import { LogInIcon } from "lucide-react"
 import { ReactNode } from "react"
 
@@ -7,12 +8,14 @@ type Props = {
 
 const Layout = ({ children }: Props) => {
     return (
-        <section className='flex size-full flex-col items-start justify-start gap-2 p-4'>
-            <h2 className='flex items-center gap-2 text-lg font-semibold'>
-                <LogInIcon className='size-5' />Signin
-            </h2>
-            {children}
-        </section>
+        <CenterizedLayout>
+            <section className='flex w-full flex-col items-center justify-center gap-2 p-4 md:w-[320px]'>
+                <h2 className='mb-4 flex items-center gap-2 text-lg font-semibold'>
+                    <LogInIcon className='size-5' />Signin to Easymark
+                </h2>
+                {children}
+            </section>
+        </CenterizedLayout>
     )
 }
 
