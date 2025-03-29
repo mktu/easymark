@@ -21,7 +21,7 @@ export default function Error({
             <Image src='/images/warning.svg' width={200} height={200} alt='error' />
             <Button asChild variant='link'>
                 <Link
-                    href={'/'}
+                    href={'/app'}
                 >
                     ホームへ戻る
                 </Link>

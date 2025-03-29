@@ -52,10 +52,6 @@ const batchImportBookmarks = async (supabase: SupabaseClient<Database>, userId: 
         bookmarkResult.failedUrls.map(url => importErrors.push({ url, cause: 'save-bookmark' }))
     }
     const ogpResult = await importOgps(supabase, withOgps)
-    if (ogpResult.error) {
-        withOgps.map(b => importErrors.push({ url: b.url, cause: 'save-ogp' }))
-        return { error: ogpResult.error, importErrors }
-    }
     if (ogpResult.failedUrls && ogpResult.failedUrls.length > 0) {
         ogpResult.failedUrls.map(url => importErrors.push({ url, cause: 'save-ogp' }))
     }

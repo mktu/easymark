@@ -20,10 +20,7 @@ export const handleDeleteTag = async (data: {
     if (!authData?.user) {
         return { error: 'not authenticated' }
     }
-    const { error } = await deleteTag(supabase, validated.data.tagId)
-    if (error) {
-        return { error: 'cannot delete tag' }
-    }
+    await deleteTag(supabase, validated.data.tagId)
     revalidatePath('/app')
     return {
         success: true

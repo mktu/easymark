@@ -10,14 +10,8 @@ export const handleDeleteBookmarks = async (bookmarks: number[]) => {
     if (!authData?.user) {
         return { error: 'not authenticated' }
     }
-    const removeTagResult = await removeTagsFromBookmarks(supabase, bookmarks)
-    if (removeTagResult.error) {
-        return { error: removeTagResult.error }
-    }
-    const { error } = await deleteBookmarks(supabase, { bookmarkIds: bookmarks })
-    if (error) {
-        return { error }
-    }
+    await removeTagsFromBookmarks(supabase, bookmarks)
+    await deleteBookmarks(supabase, { bookmarkIds: bookmarks })
     revalidatePath('/')
     return {
         success: true

@@ -23,7 +23,7 @@ export const importOgps = async (supabase: SupabaseClient<Database>, ogps: {
     if (ogpError) {
         console.error(ogpError)
         if (importedUrls.length === 0) {
-            return { error: 'cannnot import ogp data' }
+            throw Error('cannnot import ogp data')
         }
     }
     return {
@@ -46,12 +46,7 @@ export const addOgp = async (supabase: SupabaseClient<Database>, {
     const { error: ogpError } = await supabase.from('ogp_data').insert({ url, title, description, image_url: imageUrl });
     if (ogpError) {
         console.error(ogpError)
-        return {
-            error: 'cannnot add ogp data'
-        }
-    }
-    return {
-        error: null
+        throw Error('could not add ogp data')
     }
 }
 
@@ -74,9 +69,6 @@ export const upsertOgp = async (supabase: SupabaseClient<Database>, {
     });
     if (ogpError) {
         console.error(ogpError)
-        return { error: 'cannnot add ogp data' }
-    }
-    return {
-        error: null
+        throw Error('could not upsert ogp data')
     }
 }

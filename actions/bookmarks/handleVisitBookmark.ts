@@ -8,10 +8,7 @@ export const handleVisitBookmark = async (bookmarkId: number) => {
     if (!authData?.user) {
         return { error: 'not authenticated' }
     }
-    const { error: bookmarkerror } = await visitBookmark(supabase, { bookmarkId })
-    if (bookmarkerror) {
-        return { error: bookmarkerror }
-    }
+    await visitBookmark(supabase, { bookmarkId })
 
     return {
         success: true

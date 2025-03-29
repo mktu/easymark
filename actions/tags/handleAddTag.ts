@@ -20,18 +20,12 @@ export const handleAddTag = async (data: {
     if (!authData?.user) {
         return { error: 'not authenticated' }
     }
-    const { error: checkError, isExist } = await isExistTag(supabase, { userId: authData.user.id, ...validated.data })
+    const { isExist } = await isExistTag(supabase, { userId: authData.user.id, ...validated.data })
 
-    if (checkError) {
-        return { error: checkError }
-    }
     if (isExist) {
         return { error: 'tag already exists' }
     }
-    const { error, tag } = await addTag(supabase, { userId: authData.user.id, ...validated.data })
-    if (error) {
-        return { error }
-    }
+    const { tag } = await addTag(supabase, { userId: authData.user.id, ...validated.data })
     revalidatePath('/app')
     return {
         success: true,

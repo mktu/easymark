@@ -81,7 +81,7 @@ export const addBookmark = async (supabase: SupabaseClient<Database>, {
         if (bookmarkerror.code === '23505') {
             return { error: 'already bookmarked' }
         }
-        return { error: 'cannnot add bookmark' }
+        throw Error('could not add bookmark')
     }
     return { error: null }
 }
@@ -94,9 +94,8 @@ export const visitBookmark = async (supabase: SupabaseClient<Database>, {
     const { error } = await supabase.rpc('update_bookmark_access', { input_bookmark_id: bookmarkId });
     if (error) {
         console.error(error)
-        return { error: 'cannnot update bookmark' }
+        throw Error('could not update bookmark')
     }
-    return { error: null }
 }
 
 export const updateBookmark = async (supabase: SupabaseClient<Database>, {
@@ -113,9 +112,9 @@ export const updateBookmark = async (supabase: SupabaseClient<Database>, {
     const { error: bookmarkerror, data } = await supabase.from('bookmarks').update({ url, note, user_id: userId, category_id: categoryId || null }).eq('url', url).eq('user_id', userId).select('id');
     if (bookmarkerror) {
         console.error(bookmarkerror)
-        return { error: 'cannnot update bookmark' }
+        throw Error('could not update bookmark')
     }
-    return { error: null, bookmarkId: data![0].id }
+    return { bookmarkId: data![0].id }
 }
 
 export const bulkUpdateCategory = async (supabase: SupabaseClient<Database>, {
@@ -145,9 +144,8 @@ export const deleteBookmark = async (supabase: SupabaseClient<Database>, {
     const { error: bookmarkerror } = await supabase.from('bookmarks').delete().eq('id', bookmarkId).eq('user_id', userId);
     if (bookmarkerror) {
         console.error(bookmarkerror)
-        return { error: 'cannnot delete bookmark' }
+        throw Error('could not delete bookmark')
     }
-    return { error: null }
 }
 
 export const deleteBookmarks = async (supabase: SupabaseClient<Database>, {
@@ -158,9 +156,8 @@ export const deleteBookmarks = async (supabase: SupabaseClient<Database>, {
     const { error: bookmarkerror } = await supabase.from('bookmarks').delete().in('id', bookmarkIds);
     if (bookmarkerror) {
         console.error(bookmarkerror)
-        return { error: 'cannnot delete bookmark' }
+        throw Error('could not delete bookmarks')
     }
-    return { error: null }
 }
 
 const sortOptionMap = {

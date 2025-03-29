@@ -20,10 +20,7 @@ export const handleDeleteCategory = async (data: { categoryId: number }) => {
         return { error: 'not authenticated' }
     }
 
-    const { error: bookmarkerror } = await deleteCategory(supabase, { categoryId, userId: authData.user.id })
-    if (bookmarkerror) {
-        return { error: bookmarkerror }
-    }
+    await deleteCategory(supabase, { categoryId, userId: authData.user.id })
     revalidatePath('/app')
     return {
         success: true

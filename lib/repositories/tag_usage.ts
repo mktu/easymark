@@ -16,7 +16,7 @@ export const searchTagUsage = async (supabase: SupabaseClient<Database>, { userI
     const { data: tags, error: tagError } = await supabase.from('tag_usage').select('*').eq('user_id', userId).ilike('tag_name', `%${name}%`).limit(limit)
     if (tagError) {
         console.error(tagError)
-        return { error: 'cannot fetch tag' }
+        throw Error('cannot search tag usage')
     }
     return convertTagUsage(tags)
 }
@@ -25,7 +25,7 @@ export const getTagUsage = async (supabase: SupabaseClient<Database>, userId: st
     const { data, error: tagError } = await supabase.from('tag_usage').select('*').eq('user_id', userId).limit(limit)
     if (tagError) {
         console.error(tagError)
-        return { error: 'cannot fetch tag' }
+        throw Error('cannot fetch tag usage')
     }
     return convertTagUsage(data)
 }
@@ -34,12 +34,12 @@ export const getTagUsage = async (supabase: SupabaseClient<Database>, userId: st
 export const getTagUsageByBookmarkId = async (supabase: SupabaseClient<Database>, userId: string, bookmarkId: number) => {
     const tagMappings = await supabase.from('tag_mappings').select('tag_id').eq('bookmark_id', bookmarkId)
     if (tagMappings.error) {
-        return { error: 'cannot fetch tag' }
+        throw Error('cannot fetch tag mappings by bookmark id')
     }
     const { data: tags, error: tagError } = await supabase.from('tag_usage').select('*').eq('user_id', userId).in('tag_id', tagMappings.data.map(v => v.tag_id))
     if (tagError) {
         console.error(tagError)
-        return { error: 'cannot fetch tag' }
+        throw Error('cannot fetch tag usage by bookmark id')
     }
     return convertTagUsage(tags)
 }

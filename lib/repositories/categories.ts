@@ -80,7 +80,7 @@ export const addCategory = async (supabase: SupabaseClient<Database>, {
     const { error, data } = await supabase.from('categories').insert({ user_id: userId, name, parent_id: parentId, color }).select('*').single()
     if (error) {
         console.error(error)
-        return { error: 'cannnot add category' }
+        throw Error('could not add category')
     }
     return { categoryId: convertCategory(data).categoryId, success: true }
 }
@@ -101,9 +101,8 @@ export const updateCategory = async (supabase: SupabaseClient<Database>, {
     const { error } = await supabase.from('categories').update({ name, parent_id: parentId, color }).eq('id', categoryId).eq('user_id', userId)
     if (error) {
         console.error(error)
-        return { error: 'cannnot update category' }
+        throw Error('could not update category')
     }
-    return { error: null }
 }
 
 export const deleteCategory = async (supabase: SupabaseClient<Database>, {
@@ -116,16 +115,15 @@ export const deleteCategory = async (supabase: SupabaseClient<Database>, {
     const { error } = await supabase.from('categories').delete().eq('id', categoryId).eq('user_id', userId)
     if (error) {
         console.error(error)
-        return { error: 'cannnot delete category' }
+        throw Error('could not delete category')
     }
-    return { error: null }
 }
 
 export const searchCategories = async (supabase: SupabaseClient<Database>, { userId, name, limit }: { userId: string, name: string, limit: number }) => {
     const { data: categories, error } = await supabase.from('categories').select('*').eq('user_id', userId).ilike('name', `%${name}%`).limit(limit)
     if (error) {
         console.error(error)
-        return { error: 'cannot fetch categories' }
+        throw Error('could not fetch categories')
     }
     return convertCategories(categories)
 }

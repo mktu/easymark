@@ -27,10 +27,7 @@ export const handleUpdateCategory = async (data: {
     if (!authData?.user) {
         return { error: 'not authenticated' }
     }
-    const { error } = await updateCategory(supabase, { userId: authData.user.id, ...validated.data })
-    if (error) {
-        return { error }
-    }
+    await updateCategory(supabase, { userId: authData.user.id, ...validated.data })
     revalidatePath('/')
     return {
         error: null

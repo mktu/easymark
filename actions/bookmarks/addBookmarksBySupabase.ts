@@ -35,8 +35,8 @@ export const addBookmarksBySupabase = async (data: {
             success: true
         }
     }
-    const { error: ogpError } = await addOgp(supabase, { url, title, description, imageUrl });
-    if (ogpError) {
-        return { error: ogpError }
+    await addOgp(supabase, { url, title, description, imageUrl });
+    return {
+        success: true
     }
 }

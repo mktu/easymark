@@ -22,8 +22,5 @@ export default async function Bookmark(
     const bookmark = await getBookmark(supabase, userData.user.id, Number(params.id))
     const categories = await getCategories(supabase, userData.user.id)
     const tagUsage = await getTagUsageByBookmarkId(supabase, userData.user.id, bookmark.bookmarkId)
-    if ('error' in tagUsage) {
-        throw new Error(tagUsage.error)
-    }
     return <BookmarkDialogContent tagUsage={tagUsage} bookmark={bookmark} categories={categories} selectedCategoryId={selectedCategoryId} />
 }

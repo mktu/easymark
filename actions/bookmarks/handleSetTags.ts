@@ -12,20 +12,10 @@ export const handleSetTags = async (bookmarks: number[], tags: number[]) => {
     }
     const results = bookmarks.map(async (bookmarkId) => {
         const result = await getTagMappings(supabase, bookmarkId)
-        if ('error' in result) {
-            return { error: result.error };
-        }
         const targetTags = tags.filter(tag => !result.map(v => v.tag_id).includes(tag))
-        const { error } = await associateTags(supabase, targetTags.map(tagId => ({ tagId, bookmarkId })))
-        if (error) {
-            return { error }
-        }
-        return { error: null }
+        await associateTags(supabase, targetTags.map(tagId => ({ tagId, bookmarkId })))
     })
-    const rets = await Promise.all(results)
-    if (rets.some(ret => ret.error)) {
-        return { error: 'cannot update tags' }
-    }
+    await Promise.all(results)
     revalidatePath('/')
     return {
         success: true

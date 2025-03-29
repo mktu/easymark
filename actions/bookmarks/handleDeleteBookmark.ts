@@ -22,10 +22,7 @@ export const handleDeleteBookmark = async (data: {
         return { error: 'not authenticated' }
     }
 
-    const { error: bookmarkerror } = await deleteBookmark(supabase, { bookmarkId, userId: authData.user.id })
-    if (bookmarkerror) {
-        return { error: bookmarkerror }
-    }
+    await deleteBookmark(supabase, { bookmarkId, userId: authData.user.id })
     revalidatePath('/')
     return {
         success: true

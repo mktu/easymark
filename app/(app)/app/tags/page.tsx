@@ -13,9 +13,5 @@ export default async function TagsPage() {
     }
     const tags = await getTagUsage(supabase, userData.user.id, MaxTagSize)
 
-    if ('error' in tags) {
-        throw new Error(tags.error)
-    }
-
     return <Tags tags={tags} />
 }

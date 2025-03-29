@@ -41,24 +41,12 @@ export const handleUpdateBookmark = async (data: {
     if (!authData?.user) {
         return { error: 'not authenticated' }
     }
-    const { error: bookmarkerror, bookmarkId } = await updateBookmark(supabase, { url, note, userId: authData.user.id, categoryId: category })
-    if (bookmarkerror) {
-        return { error: bookmarkerror }
-    }
-    const { error: ogpError } = await upsertOgp(supabase, { url, title, description, imageUrl })
-    if (ogpError) {
-        return { error: ogpError }
-    }
+    const { bookmarkId } = await updateBookmark(supabase, { url, note, userId: authData.user.id, categoryId: category })
+    await upsertOgp(supabase, { url, title, description, imageUrl })
     if (data.tags && bookmarkId) {
-        const removeResult = await removeTags(supabase, { bookmarkId })
-        if (removeResult.error) {
-            return { error: removeResult.error }
-        }
+        await removeTags(supabase, { bookmarkId })
         if (data.tags?.length > 0) {
-            const associateResult = await associateTags(supabase, data.tags.map(tagId => ({ tagId, bookmarkId })))
-            if (associateResult.error) {
-                return { error: associateResult.error }
-            }
+            await associateTags(supabase, data.tags.map(tagId => ({ tagId, bookmarkId })))
         }
     }
     revalidatePath('/')
